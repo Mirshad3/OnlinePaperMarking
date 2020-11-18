@@ -1607,10 +1607,7 @@ namespace OnlinePapermarking.Controllers
                 
 
                 
-
-                //return Content(list, "application/json");
-
-                //result = true;
+ 
 
                 return Json(new { success = result, dataList = examData }, JsonRequestBehavior.AllowGet);
             }
