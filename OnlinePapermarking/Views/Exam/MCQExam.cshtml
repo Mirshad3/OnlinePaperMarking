@@ -1,0 +1,1784 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["FirstPaperExamId"] == null)
+{
+    Layout = null;
+    @Html.Action("RedirectToExamPage", "Dashboard");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock - MCQ</title>
+
+    <meta name="keywords" content="Disapamock" />
+    <meta name="description" content="Disapamock">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/MainDashboard/vendor/font-awesome/css/fontawesome-all.min.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/custom.css">
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+    <style>
+        .thank-you-pop {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .thank-you-pop img {
+                width: 76px;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+                margin-bottom: 25px;
+            }
+
+            .thank-you-pop h1 {
+                font-size: 42px;
+                margin-bottom: 25px;
+                color: #5C5C5C;
+            }
+
+            .thank-you-pop p {
+                font-size: 20px;
+                margin-bottom: 27px;
+                color: #5C5C5C;
+            }
+
+            .thank-you-pop h3.cupon-pop {
+                font-size: 25px;
+                margin-bottom: 40px;
+                color: #222;
+                display: inline-block;
+                text-align: center;
+                padding: 10px 20px;
+                border: 2px dashed #222;
+                clear: both;
+                font-weight: normal;
+            }
+
+                .thank-you-pop h3.cupon-pop span {
+                    color: #03A9F4;
+                }
+
+            .thank-you-pop a {
+                display: inline-block;
+                margin: 0 auto;
+                padding: 9px 20px;
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 14px;
+                background-color: #8BC34A;
+                border-radius: 17px;
+            }
+
+                .thank-you-pop a i {
+                    margin-right: 5px;
+                    color: #fff;
+                }
+
+        #ignismyModal .modal-header {
+            border: 0px;
+        }
+    </style>
+
+</head>
+<body data-layout="detached" data-topbar="colored" class="vertical-hidden">
+
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <input type="hidden" value="@Session["FirstPaperExamId"]" id="examId" />
+
+    <div class="container-fluid">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="container-fluid">
+                        <div class="float-right">
+
+                            <!-- Mobile Search -->
+                            <div class="dropdown d-inline-block d-lg-none ml-2 wr-mobile-search">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
+
+                                    <form class="p-3">
+                                        <div class="form-group m-0">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary mobile-search-btn" type="submit"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- CART -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-cart-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">5</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-cart-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">3</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-notifications-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- User Profile -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded-circle header-profile-user" src="/Dashboard/LoadProfileImage?LoginId=@Session["LoginId"]" alt="Header Avatar">
+                                    <span class="d-none d-xl-inline-block ml-1">@Session["FirstName"]</span>
+                                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- item-->
+                                    <a class="dropdown-item font-size-13" href="/Dashboard/Dashboard">Dashboard</a>
+                                    <a class="dropdown-item font-size-13" href="#">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger font-size-13" href="/Home/LogOut">Logout</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- LOGO -->
+                            <div class="navbar-brand-box">
+                                <a href="#" class="logo logo-light">
+                                    <span class="logo-sm">
+                                        <img src="~/Content/img/logo-small.png" alt="disapamock">
+                                    </span>
+                                    <span class="logo-lg">
+                                        <img src="~/Content/img/logo-colored.png" alt="disapamock">
+                                    </span>
+                                </a>
+                            </div>
+
+                            <button type="button" class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect" id="vertical-menu-btn">
+                                <i class="fa fa-fw fa-bars"></i>
+                            </button>
+
+                            <!-- Desktop Search-->
+                            <form class="app-search d-none d-lg-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control font-size-13" placeholder="Search...">
+                                    <span class="bx bx-search-alt"></span>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="page-title mb-0 font-size-18">@Session["FirstPaperName"]</h4>
+
+                                <div class="page-title-right wr-mcq-timer">
+                                    <div class="mcq-timer" style="display:none;">
+                                        <h4>
+                                            Status - <p id="cd_status">Not Started </p>
+                                        </h4>
+                                        <h1 class="final-countdown-start">
+                                            <span id="cd_h">00</span>: <span id="cd_m">00</span>: <span id="cd_s">00</span>
+                                        </h1>
+                                    </div>
+                                    <a href="javascript:void(0)" id="cd_start" class="w-100 btn btn-info waves-effect waves-light radius-4 font-weight-medium">Click This to Start Timer</a>
+
+
+                                    <!-- Set TIME -->
+                                    <input type="text" hidden value="60" id="cd_seconds" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <table class="wr-mcq-main-tbl">
+                        <tr>
+                            <td>
+                                @*<div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-3">Exam paper</h4>
+                                            <div class="wr-paper-preview">
+                                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                    <div class="carousel-inner">
+                                                        <div class="carousel-item active">
+                                                            <img class="d-block w-100" src="~/Content/img/PastPapers/2009.jpg" alt="First slide">
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <img class="d-block w-100" src="~/Content/img/PastPapers/2010.jpg" alt="Second slide">
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <img class="d-block w-100" src="~/Content/img/PastPapers/2011.jpg" alt="Third slide">
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <img class="d-block w-100" src="~/Content/img/PastPapers/2012.jpg" alt="Third slide">
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Exam paper</h4>
+                                        <div class="wr-paper-preview">
+                                            <div style="text-align:center">
+                                                <iframe src="/Exam/GetFirstPaper" frameborder="0" height="1000px" width="100%"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Answer Sheet</h4>
+
+                                        <div class="mcq-answer-sheet" id="radioBtnList">
+                                            <ol>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="1.1" name="1" id="1-1" />
+                                                        <label for="1-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="1.2" name="1" id="1-2" />
+                                                        <label for="1-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="1.3" name="1" id="1-3" />
+                                                        <label for="1-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="1.4" name="1" id="1-4" />
+                                                        <label for="1-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="1.5" name="1" id="1-5" />
+                                                        <label for="1-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="2.1" name="2" id="2-1" />
+                                                        <label for="2-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="2.2" name="2" id="2-2" />
+                                                        <label for="2-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="2.3" name="2" id="2-3" />
+                                                        <label for="2-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="2.4" name="2" id="2-4" />
+                                                        <label for="2-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="2.5" name="2" id="2-5" />
+                                                        <label for="2-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="3.1" name="3" id="3-1" />
+                                                        <label for="3-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="3.2" name="3" id="3-2" />
+                                                        <label for="3-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="3.3" name="3" id="3-3" />
+                                                        <label for="3-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="3.4" name="3" id="3-4" />
+                                                        <label for="3-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="3.5" name="3" id="3-5" />
+                                                        <label for="3-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="4.1" name="4" id="4-1" />
+                                                        <label for="4-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="4.2" name="4" id="4-2" />
+                                                        <label for="4-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="4.3" name="4" id="4-3" />
+                                                        <label for="4-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="4.4" name="4" id="4-4" />
+                                                        <label for="4-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="4.5" name="4" id="4-5" />
+                                                        <label for="4-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="5.1" name="5" id="5-1" />
+                                                        <label for="5-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="5.2" name="5" id="5-2" />
+                                                        <label for="5-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="5.3" name="5" id="5-3" />
+                                                        <label for="5-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="5.4" name="5" id="5-4" />
+                                                        <label for="5-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="5.5" name="5" id="5-5" />
+                                                        <label for="5-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="6.1" name="6" id="6-1" />
+                                                        <label for="6-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="6.2" name="6" id="6-2" />
+                                                        <label for="6-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="6.3" name="6" id="6-3" />
+                                                        <label for="6-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="6.4" name="6" id="6-4" />
+                                                        <label for="6-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="6.5" name="6" id="6-5" />
+                                                        <label for="6-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="7.1" name="7" id="7-1" />
+                                                        <label for="7-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="7.2" name="7" id="7-2" />
+                                                        <label for="7-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="7.3" name="7" id="7-3" />
+                                                        <label for="7-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="7.4" name="7" id="7-4" />
+                                                        <label for="7-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="7.5" name="7" id="7-5" />
+                                                        <label for="7-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="8.1" name="8" id="8-1" />
+                                                        <label for="8-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="8.2" name="8" id="8-2" />
+                                                        <label for="8-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="8.3" name="8" id="8-3" />
+                                                        <label for="8-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="8.4" name="8" id="8-4" />
+                                                        <label for="8-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="8.5" name="8" id="8-5" />
+                                                        <label for="8-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="9.1" name="9" id="9-1" />
+                                                        <label for="9-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="9.2" name="9" id="9-2" />
+                                                        <label for="9-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="9.3" name="9" id="9-3" />
+                                                        <label for="9-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="9.4" name="9" id="9-4" />
+                                                        <label for="9-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="9.5" name="9" id="9-5" />
+                                                        <label for="9-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="10.1" name="10" id="10-1" />
+                                                        <label for="10-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="10.2" name="10" id="10-2" />
+                                                        <label for="10-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="10.3" name="10" id="10-3" />
+                                                        <label for="10-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="10.4" name="10" id="10-4" />
+                                                        <label for="10-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="10.5" name="10" id="10-5" />
+                                                        <label for="10-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="11.1" name="11" id="11-1" />
+                                                        <label for="11-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="11.2" name="11" id="11-2" />
+                                                        <label for="11-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="11.3" name="11" id="11-3" />
+                                                        <label for="11-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="11.4" name="11" id="11-4" />
+                                                        <label for="11-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="11.5" name="11" id="11-5" />
+                                                        <label for="11-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="12.1" name="12" id="12-1" />
+                                                        <label for="12-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="12.2" name="12" id="12-2" />
+                                                        <label for="12-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="12.3" name="12" id="12-3" />
+                                                        <label for="12-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="12.4" name="12" id="12-4" />
+                                                        <label for="12-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="12.5" name="12" id="12-5" />
+                                                        <label for="12-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="13.1" name="13" id="13-1" />
+                                                        <label for="13-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="13.2" name="13" id="13-2" />
+                                                        <label for="13-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="13.3" name="13" id="13-3" />
+                                                        <label for="13-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="13.4" name="13" id="13-4" />
+                                                        <label for="13-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="13.5" name="13" id="13-5" />
+                                                        <label for="13-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="14.1" name="14" id="14-1" />
+                                                        <label for="14-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="14.2" name="14" id="14-2" />
+                                                        <label for="14-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="14.3" name="14" id="14-3" />
+                                                        <label for="14-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="14.4" name="14" id="14-4" />
+                                                        <label for="14-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="14.5" name="14" id="14-5" />
+                                                        <label for="14-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="15.1" name="15" id="15-1" />
+                                                        <label for="15-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="15.2" name="15" id="15-2" />
+                                                        <label for="15-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="15.3" name="15" id="15-3" />
+                                                        <label for="15-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="15.4" name="15" id="15-4" />
+                                                        <label for="15-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="15.5" name="15" id="15-5" />
+                                                        <label for="15-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="16.1" name="16" id="16-1" />
+                                                        <label for="16-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="16.2" name="16" id="16-2" />
+                                                        <label for="16-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="16.3" name="16" id="16-3" />
+                                                        <label for="16-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="16.4" name="16" id="16-4" />
+                                                        <label for="16-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="16.5" name="16" id="16-5" />
+                                                        <label for="16-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="17.1" name="17" id="17-1" />
+                                                        <label for="17-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="17.2" name="17" id="17-2" />
+                                                        <label for="17-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="17.3" name="17" id="17-3" />
+                                                        <label for="17-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="17.4" name="17" id="17-4" />
+                                                        <label for="17-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="17.5" name="17" id="17-5" />
+                                                        <label for="17-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="18.1" name="18" id="18-1" />
+                                                        <label for="18-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="18.2" name="18" id="18-2" />
+                                                        <label for="18-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="18.3" name="18" id="18-3" />
+                                                        <label for="18-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="18.4" name="18" id="18-4" />
+                                                        <label for="18-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="18.5" name="18" id="18-5" />
+                                                        <label for="18-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="19.1" name="19" id="19-1" />
+                                                        <label for="19-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="19.2" name="19" id="19-2" />
+                                                        <label for="19-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="19.3" name="19" id="19-3" />
+                                                        <label for="19-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="19.4" name="19" id="19-4" />
+                                                        <label for="19-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="19.5" name="19" id="19-5" />
+                                                        <label for="19-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="20.1" name="20" id="20-1" />
+                                                        <label for="20-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="20.2" name="20" id="20-2" />
+                                                        <label for="20-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="20.3" name="20" id="20-3" />
+                                                        <label for="20-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="20.4" name="20" id="20-4" />
+                                                        <label for="20-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="20.5" name="20" id="20-5" />
+                                                        <label for="20-5"></label>
+                                                    </span>
+                                                </li>
+                                            </ol>
+                                            <ol start="21">
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="21.1" name="21" id="21-1" />
+                                                        <label for="21-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="21.2" name="21" id="21-2" />
+                                                        <label for="21-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="21.3" name="21" id="21-3" />
+                                                        <label for="21-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="21.4" name="21" id="21-4" />
+                                                        <label for="21-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="21.5" name="21" id="21-5" />
+                                                        <label for="21-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="22.1" name="22" id="22-1" />
+                                                        <label for="22-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="22.2" name="22" id="22-2" />
+                                                        <label for="22-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="22.3" name="22" id="22-3" />
+                                                        <label for="22-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="22.4" name="22" id="22-4" />
+                                                        <label for="22-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="22.5" name="22" id="22-5" />
+                                                        <label for="22-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="23.1" name="23" id="23-1" />
+                                                        <label for="23-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="23.2" name="23" id="23-2" />
+                                                        <label for="23-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="23.3" name="23" id="23-3" />
+                                                        <label for="23-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="23.4" name="23" id="23-4" />
+                                                        <label for="23-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="23.5" name="23" id="23-5" />
+                                                        <label for="23-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="24.1" name="24" id="24-1" />
+                                                        <label for="24-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="24.2" name="24" id="24-2" />
+                                                        <label for="24-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="24.3" name="24" id="24-3" />
+                                                        <label for="24-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="24.4" name="24" id="24-4" />
+                                                        <label for="24-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="24.5" name="24" id="24-5" />
+                                                        <label for="24-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="25.1" name="25" id="25-1" />
+                                                        <label for="25-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="25.2" name="25" id="25-2" />
+                                                        <label for="25-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="25.3" name="25" id="25-3" />
+                                                        <label for="25-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="25.4" name="25" id="25-4" />
+                                                        <label for="25-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="25.5" name="25" id="25-5" />
+                                                        <label for="25-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="26.1" name="26" id="26-1" />
+                                                        <label for="26-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="26.2" name="26" id="26-2" />
+                                                        <label for="26-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="26.3" name="26" id="26-3" />
+                                                        <label for="26-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="26.4" name="26" id="26-4" />
+                                                        <label for="26-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="26.5" name="26" id="26-5" />
+                                                        <label for="26-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="27.1" name="27" id="27-1" />
+                                                        <label for="27-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="27.2" name="27" id="27-2" />
+                                                        <label for="27-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="27.3" name="27" id="27-3" />
+                                                        <label for="27-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="27.4" name="27" id="27-4" />
+                                                        <label for="27-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="27.5" name="27" id="27-5" />
+                                                        <label for="27-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="28.1" name="28" id="28-1" />
+                                                        <label for="28-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="28.2" name="28" id="28-2" />
+                                                        <label for="28-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="28.3" name="28" id="28-3" />
+                                                        <label for="28-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="28.4" name="28" id="28-4" />
+                                                        <label for="28-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="28.5" name="28" id="28-5" />
+                                                        <label for="28-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="29.1" name="29" id="29-1" />
+                                                        <label for="29-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="29.2" name="29" id="29-2" />
+                                                        <label for="29-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="29.3" name="29" id="29-3" />
+                                                        <label for="29-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="29.4" name="29" id="29-4" />
+                                                        <label for="29-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="29.5" name="29" id="29-5" />
+                                                        <label for="29-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="30.1" name="30" id="30-1" />
+                                                        <label for="30-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="30.2" name="30" id="30-2" />
+                                                        <label for="30-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="30.3" name="30" id="30-3" />
+                                                        <label for="30-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="30.4" name="30" id="30-4" />
+                                                        <label for="30-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="30.5" name="30" id="30-5" />
+                                                        <label for="30-5"></label>
+                                                    </span>
+                                                </li>
+
+
+
+
+
+
+
+
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="31.1" name="31" id="31-1" />
+                                                        <label for="31-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="31.2" name="31" id="31-2" />
+                                                        <label for="31-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="31.3" name="31" id="31-3" />
+                                                        <label for="31-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="31.4" name="31" id="31-4" />
+                                                        <label for="31-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="31.5" name="31" id="31-5" />
+                                                        <label for="31-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="32.1" name="32" id="32-1" />
+                                                        <label for="32-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="32.2" name="32" id="32-2" />
+                                                        <label for="32-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="32.3" name="32" id="32-3" />
+                                                        <label for="32-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="32.4" name="32" id="32-4" />
+                                                        <label for="32-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="32.5" name="32" id="32-5" />
+                                                        <label for="32-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="33.1" name="33" id="33-1" />
+                                                        <label for="33-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="33.2" name="33" id="33-2" />
+                                                        <label for="33-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="33.3" name="33" id="33-3" />
+                                                        <label for="33-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="33.4" name="33" id="33-4" />
+                                                        <label for="33-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="33.5" name="33" id="33-5" />
+                                                        <label for="33-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="34.1" name="34" id="34-1" />
+                                                        <label for="34-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="34.2" name="34" id="34-2" />
+                                                        <label for="34-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="34.3" name="34" id="34-3" />
+                                                        <label for="34-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="34.4" name="34" id="34-4" />
+                                                        <label for="34-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="34.5" name="34" id="34-5" />
+                                                        <label for="34-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="35.1" name="35" id="35-1" />
+                                                        <label for="35-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="35.2" name="35" id="35-2" />
+                                                        <label for="35-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="35.3" name="35" id="35-3" />
+                                                        <label for="35-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="35.4" name="35" id="35-4" />
+                                                        <label for="35-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="35.5" name="35" id="35-5" />
+                                                        <label for="35-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="36.1" name="36" id="36-1" />
+                                                        <label for="36-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="36.2" name="36" id="36-2" />
+                                                        <label for="36-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="36.3" name="36" id="36-3" />
+                                                        <label for="36-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="36.4" name="36" id="36-4" />
+                                                        <label for="36-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="36.5" name="36" id="36-5" />
+                                                        <label for="36-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="37.1" name="37" id="37-1" />
+                                                        <label for="37-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="37.2" name="37" id="37-2" />
+                                                        <label for="37-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="37.3" name="37" id="37-3" />
+                                                        <label for="37-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="37.4" name="37" id="37-4" />
+                                                        <label for="37-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="37.5" name="37" id="37-5" />
+                                                        <label for="37-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="38.1" name="38" id="38-1" />
+                                                        <label for="38-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="38.2" name="38" id="38-2" />
+                                                        <label for="38-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="38.3" name="38" id="38-3" />
+                                                        <label for="38-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="38.4" name="38" id="38-4" />
+                                                        <label for="38-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="38.5" name="38" id="38-5" />
+                                                        <label for="38-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="39.1" name="39" id="39-1" />
+                                                        <label for="39-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="39.2" name="39" id="39-2" />
+                                                        <label for="39-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="39.3" name="39" id="39-3" />
+                                                        <label for="39-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="39.4" name="39" id="39-4" />
+                                                        <label for="39-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="39.5" name="39" id="39-5" />
+                                                        <label for="39-5"></label>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="40.1" name="40" id="40-1" />
+                                                        <label for="40-1"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="40.2" name="40" id="40-2" />
+                                                        <label for="40-2"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="40.3" name="40" id="40-3" />
+                                                        <label for="40-3"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="40.4" name="40" id="40-4" />
+                                                        <label for="40-4"></label>
+                                                    </span>
+                                                    <span class="btnSpan">
+                                                        <input type="radio" value="40.5" name="40" id="40-5" />
+                                                        <label for="40-5"></label>
+                                                    </span>
+                                                </li>
+                                            </ol>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                        <div class="border-top mt-5">
+                                            <table class="w-100 mt-3">
+                                                <tr>
+                                                    <td class="align-bottom" width="40%">
+                                                        <div class="exam-no d-inline-block mr-3"><i></i><span class="text-secondary">Not Attempted</span></div>
+                                                        <div class="exam-yes d-inline-block"><i></i><span class="text-secondary">Attempted</span></div>
+                                                    </td>
+                                                    <td class="text-right" width="60%">
+                                                        <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium" data-toggle="modal" data-target=".bs-example-modal-center">Submit Answers</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- End Page-content -->
+
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+    </div>
+
+    <a class="btn btn-primary" data-toggle="modal" href="#ignismyModal" id="popunBtn" style="display:none">open Popup</a>
+    <!-- modal -->
+    <div class="modal fade" id="ignismyModal" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+
+                <div class="modal-body">
+                    <div class="thank-you-pop">
+                        <img src="~/Images/green_check.png" alt="">
+                        <h1>Success!</h1>
+                        <p id="modalP"></p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modalOkBtn">Ok</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Submit Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="lineheight-1-5">
+                        Do you want to submit your answers to the system?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light radius-4 font-weight-medium" data-dismiss="modal" id="submitBtn1">Submit</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <button type="button" class="time-up-click d-none" data-toggle="modal" data-target=".time-up-modal" data-backdrop="static" data-keyboard="false"></button>
+    <div class="modal fade time-up-modal" id="testname" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-toggle="modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Time is up!</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="lineheight-1-5">
+                        Your time is up. Please submit your answers.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium" data-dismiss="modal" style="display:none" id="btnCloseTimeUp">Continue Answering</button>
+                    <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium" id="submitBtn2">Submit Answers</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="table-responsive" style="display:none">
+        <table class="table" id="errorTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ExamNo</th>
+                    <th>Student Name</th>
+                    <th>ExamType</th>
+                    <th>Subject</th>
+                    <th>Medium</th>
+                    <th>Year</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Vendor -->
+    <script src="~/Content/MainDashboard/js/jquery.js"></script>
+    <script src="~/Content/MainDashboard/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/MainDashboard/js/app.js"></script>
+    <script src="~/Content/MainDashboard/js/materialize.min.js"></script>
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        var areYouReallySure = false;
+        function areYouSure() {
+            if (allowPrompt) {
+                if (!areYouReallySure && true) {
+                    areYouReallySure = true;
+                    var confMessage = "***************************************\n\n W A I T !!! \n\nBefore leaving our site, follow CodexWorld for getting regular updates on Programming and Web Development.\n\n\nCLICK THE *CANCEL* BUTTON RIGHT NOW\n\n***************************************";
+                    return confMessage;
+                }
+            } else {
+                allowPrompt = true;
+            }
+        }
+
+        var allowPrompt = true;
+        window.onbeforeunload = areYouSure;
+    </script>
+
+    <script>
+        //disable cut/copy/rightclick
+        $(function () {
+            $(this).bind("contextmenu", function (e) {
+                e.preventDefault();
+            });
+
+            $(this).bind('cut copy', function (e) {
+                e.preventDefault();
+            });
+        });
+
+
+        //PDF Height
+        //var winHeight = jQuery(window).height() - 300;
+        //$('.wr-paper-preview iframe').css({ "height": winHeight + "px" });
+
+
+        //MAIN COUNTDOWN
+        $(document).ready(function () {
+            var timeCount = 0;
+            $('input[type=radio]').attr('disabled', 'true');
+
+            (function ($) {
+
+                $.extend({
+
+                    APP: {
+
+                        formatTimer: function (a) {
+                            if (a < 10) {
+                                a = '0' + a;
+                            }
+                            return a;
+                        },
+
+                        startTimer: function (dir) {
+
+                            var a;
+
+                            // save type
+                            $.APP.dir = dir;
+
+                            // get current date
+                            $.APP.d1 = new Date();
+
+                            switch ($.APP.state) {
+
+                                case 'pause':
+
+                                    // resume timer
+                                    // get current timestamp (for calculations) and
+                                    // substract time difference between pause and now
+                                    $.APP.t1 = $.APP.d1.getTime() - $.APP.td;
+
+                                    break;
+
+                                default:
+
+                                    // get current timestamp (for calculations)
+                                    $.APP.t1 = $.APP.d1.getTime();
+
+                                    // if countdown add ms based on seconds in textfield
+                                    if ($.APP.dir === 'cd') {
+                                        $.APP.t1 += parseInt($('#cd_seconds').val()) * 60000;
+                                    }
+
+                                    break;
+
+                            }
+
+                            // reset state
+                            $.APP.state = 'alive';
+                            $('#' + $.APP.dir + '_status').html('In-progress');
+
+                            // start loop
+                            $.APP.loopTimer();
+
+                        },
+
+                        pauseTimer: function () {
+
+                            // save timestamp of pause
+                            $.APP.dp = new Date();
+                            $.APP.tp = $.APP.dp.getTime();
+
+                            // save elapsed time (until pause)
+                            $.APP.td = $.APP.tp - $.APP.t1;
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Resume');
+
+                            // set state
+                            $.APP.state = 'pause';
+                            $('#' + $.APP.dir + '_status').html('Paused');
+
+                        },
+
+                        stopTimer: function () {
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Restart');
+
+                            // set state
+                            $.APP.state = 'stop';
+                            $('#' + $.APP.dir + '_status').html('Upload Answers');
+
+                        },
+
+                        resetTimer: function () {
+
+                            // reset display
+                            $('#' + $.APP.dir + '_ms,#' + $.APP.dir + '_s,#' + $.APP.dir + '_m,#' + $.APP.dir + '_h').html('00');
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Start');
+
+                            // set state
+                            $.APP.state = 'reset';
+                            $('#' + $.APP.dir + '_status').html('Reset & Idle again');
+
+                        },
+
+                        endTimer: function (callback) {
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Restart');
+
+                            // set state
+                            $.APP.state = 'end';
+
+                            // invoke callback
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
+
+                        },
+
+                        loopTimer: function () {
+
+                            var td;
+                            var d2, t2;
+
+                            var ms = 0;
+                            var s = 0;
+                            var m = 0;
+                            var h = 0;
+
+                            if ($.APP.state === 'alive') {
+
+                                // get current date and convert it into
+                                // timestamp for calculations
+                                d2 = new Date();
+                                t2 = d2.getTime();
+
+                                // calculate time difference between
+                                // initial and current timestamp
+                                if ($.APP.dir === 'sw') {
+                                    td = t2 - $.APP.t1;
+                                    // reversed if countdown
+                                } else {
+                                    td = $.APP.t1 - t2;
+                                    if (td <= 0) {
+                                        // if time difference is 0 end countdown
+                                        $.APP.endTimer(function () {
+                                            $.APP.resetTimer();
+                                            $('#' + $.APP.dir + '_status').html('Time is Up!');
+                                            $(".time-up-click").trigger("click");
+                                            $('.final-countdown-start').addClass('countdown-red');
+                                        });
+                                    }
+                                }
+
+                                // calculate milliseconds
+                                ms = td % 1000;
+                                if (ms < 1) {
+                                    ms = 0;
+                                } else {
+                                    // calculate seconds
+                                    s = (td - ms) / 1000;
+                                    if (s < 1) {
+                                        s = 0;
+                                    } else {
+                                        // calculate minutes
+                                        var m = (s - (s % 60)) / 60;
+                                        if (m < 1) {
+                                            m = 0;
+                                        } else {
+                                            // calculate hours
+                                            var h = (m - (m % 60)) / 60;
+                                            if (h < 1) {
+                                                h = 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // substract elapsed minutes & hours
+                                ms = Math.round(ms / 100);
+                                s = s - (m * 60);
+                                m = m - (h * 60);
+
+                                // update display
+                                $('#' + $.APP.dir + '_ms').html($.APP.formatTimer(ms));
+                                $('#' + $.APP.dir + '_s').html($.APP.formatTimer(s));
+                                $('#' + $.APP.dir + '_m').html($.APP.formatTimer(m));
+                                $('#' + $.APP.dir + '_h').html($.APP.formatTimer(h));
+
+                                timeCount = timeCount + 1;
+
+                                if (timeCount === 3000) {
+                                    $.ajax({
+                                        type: "Post",
+                                        url: "/Exam/UpdateFirstPaperTime?ExamId=" + $('#examId').val() + "&Hours=" + h + "&Minuites=" + m,
+                                        success: function (result) {
+
+                                        }
+                                    })
+
+                                    timeCount = 0
+                                }
+
+                                // loop
+                                $.APP.t = setTimeout($.APP.loopTimer, 1);
+
+                            } else {
+
+                                // kill loop
+                                clearTimeout($.APP.t);
+                                return true;
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+                $('#cd_start').click(function () {
+                    $('input[type=radio]').removeAttr("disabled");
+                    $(this).hide();
+                    $.APP.startTimer('cd');
+                    $('.mcq-timer').fadeIn();
+                });
+                $('.timerResume').click(function () {
+                    $.APP.startTimer('cd');
+                });
+
+                $('#sw_stop,#cd_stop').click(function () {
+                    $.APP.stopTimer();
+                });
+
+                $('#sw_pause,#cd_pause').click(function () {
+                    $.APP.pauseTimer();
+                });
+
+
+
+
+            })(jQuery);
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        var url = '@Url.Action("Exams", "Dashboard")';
+    </script>
+
+    <script src="~/SiteJs/mcq-exam-page.js"></script>
+</body>
+</html>

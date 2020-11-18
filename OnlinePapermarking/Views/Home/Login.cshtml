@@ -1,0 +1,274 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx" class="shop">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock - Login</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="~/Content/img/logo-small.png" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/animate/animate.min.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/Content/css/theme.css">
+    <link rel="stylesheet" href="~/Content/css/theme-elements.css">
+
+    <!-- Current Page CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/settings.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/layers.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/navigation.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="~/Content/css/skins/default.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/css/custom.css">
+
+    <style>
+        #invalidAlert, #newPasswordError, #confirmPasswordError {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <input type="hidden" value="" id="email" />
+    <div class="body">
+        <div role="main" class="main wr-login">
+            <div class="container-fluid">
+                <div class="row height100vh">
+                    <div class="col-md-7 p-0">
+                        <div class="bg-dark-5 h-100 py-5 login-bg appear-animation position-relative" data-appear-animation="fadeInRightShorter">
+                            <div class="header-logo text-center mb-4 appear-animation" data-appear-animation="fadeInRightShorter">
+                                <a href="/">
+                                    <img alt="logo" height="48" src="~/Content/img/logo-colored.png">
+                                </a>
+                            </div>
+                            <h2 class="text-color-light text-center text-6 appear-animation" data-appear-animation="fadeInRightShorter">Welcome to the most comprehensive digital educational workspace in Sri Lanka</h2>
+                            <div class="mobile-show"><a class="tp-caption slider-scroll-button" href="#login" data-hash="" data-hash-offset="0"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 p-5 height100vh-mobile" id="login">
+                        <div class="h-100 d-flex align-items-center">
+                            <div class="wr-registerForm appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
+                                <div class="wr-login-form">
+                                    <!-- Login partial layout - START -->
+                                    <span class="top-sub-title text-4 font-weight-bold">Sign In</span>
+                                    <h2 class="font-weight-bold text-8 mb-5">Welcome Back</h2>
+                                    <form id="shopLoginRegister">
+                                        <fieldset id="SubmitForm">
+                                            <div class="alert" id="invalidAlert">
+                                                Invalid Username or Password
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-lg-12">
+                                                    <label class="text-color-dark" for="">Username</label>
+                                                    <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="Email" id="" required>
+                                                    <p class="text-danger" style="display:none;">Please Enter Username</p>
+                                                </div>
+                                                <div class="form-group col-lg-12">
+                                                    <label class="text-color-dark" for="">Password</label>
+                                                    <input type="password" value="" class="form-control bg-light-5 border-0 rounded" name="Password" id="txtUserPassword" required>
+                                                    <p class="text-danger" style="display:none;">Please Enter Password</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-3">
+                                                <div class="form-group col">
+                                                    <div class="form-check checkbox-custom checkbox-default">
+                                                        <input class="form-check-input" type="checkbox" name="IsRemember" value="true" id="signInRemember">
+                                                        <label class="form-check-label" for="signInRemember">
+                                                            Remember me
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col text-right">
+                                                    <a href="#" id="headerRecover" class="forgot-pw text-color-dark d-block">Forgot password?</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-5">
+                                                <div class="col-12 text-left">
+                                                    <a class="btn btn-primary btn-4 btn-fs-4 mb-2 btn-rounded btn-block" style="color:whitesmoke" id="loginBtn">Sign In</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <p class="col text-center p-0">
+                                                    Don't have have an account? <a href="/Home/Register" class="text-primary">SignUp</a>
+                                                </p>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <!-- Login partial layout - END -->
+                                <!-- Password recovery - START -->
+                                <div class="recover-form" style="display:none;">
+                                    <span class="top-sub-title text-4 font-weight-bold">Members</span>
+                                    <h2 class="font-weight-bold text-8 mb-5">Reset my Password</h2>
+
+                                    <ul class="nav nav-tabs nav-tabs-default registerForm-as" id="tabDefault" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="default-portfolio-tab" data-toggle="tab" href="#default-portfolio" role="tab" aria-controls="default-portfolio" aria-expanded="true">
+                                                <h4>Email</h4>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="default-process-tab" data-toggle="tab" href="#default-process" role="tab" aria-controls="default-process">
+                                                <h4>Mobile</h4>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="tabDefaultContent">
+                                        <div class="tab-pane fade pt-4 pb-4 show active" id="default-portfolio" role="tabpanel" aria-labelledby="default-portfolio-tab">
+                                            <form action="/" id="frmResetPassword" method="post">
+                                                <div class="form-row mb-4">
+                                                    <div class="form-group col mb-2">
+                                                        <input type="email" value="" maxlength="100" class="form-control bg-light-5 border-0 rounded" name="email" id="resetPasswordEmail" placeholder="E-mail" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <a href="#" id="headerRecoverCancel" class="text-color-primary pl-0">Have an account?</a>
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <button type="reset" class="btn btn-primary btn-4 btn-fs-4 mb-2 btn-rounded btn-block email-reset" id="resetPasswordBtn1">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade pt-4 pb-4" id="default-process" role="tabpanel" aria-labelledby="default-process-tab">
+                                            <form action="/" id="frmResetPassword" method="post">
+                                                <div class="form-row mb-4">
+                                                    <div class="form-group col mb-2">
+                                                        <input type="number" value="" maxlength="100" class="form-control bg-light-5 border-0 rounded" id="resetPasswordMobileNo" placeholder="Mobile Number" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <a href="#" id="headerRecoverCancel" class="text-color-primary pl-0">Have an account?</a>
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <button type="reset" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block mobile-reset">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                </div><!-- Password recovery - END -->
+                                <!-- Reset Code Email - START -->
+                                <div class="email-reset-code-form" style="display:none;">
+                                    <span class="top-sub-title text-4 font-weight-bold">Email Reset</span>
+                                    <h2 class="font-weight-bold text-8 mb-2">Get a Verfication Code</h2>
+                                    <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold">testemail@email.com</span></p>
+                                    <div class="form-row mb-4">
+                                        <div class="form-group col mb-2">
+                                            <input type="number" class="form-control bg-light-5 border-0 rounded" id="txtverificationCode" placeholder="Enter Code" required>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <a href="javascript: void(0)" class="text-color-primary pl-0" onclick="ResendVerifyCode()">Resend Code</a>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button type="button" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block" id="resetPasswordBtn2">Submit</button>
+                                        </div>
+                                    </div>
+                                </div><!-- Reset Code Email - END -->
+                                <!-- Reset Code Mobile - START -->
+                                <div class="mobile-reset-code-form" style="display:none;">
+                                    <span class="top-sub-title text-4 font-weight-bold">Mobile Reset</span>
+                                    <h2 class="font-weight-bold text-8 mb-2">Get a Verfication Code</h2>
+                                    <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold">0772985745</span></p>
+                                    <div class="form-row mb-4">
+                                        <div class="form-group col mb-2">
+                                            <input type="number" class="form-control bg-light-5 border-0 rounded" placeholder="Enter Code" required>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <a href="javascript: void(0)" class="text-color-primary pl-0" onclick="ResendVerifyCodeForResetPassword()">Resend Code</a>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button type="submit" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </div><!-- Reset Code Mobile - END -->
+                                <!-- Change Password  - START -->
+                                <div class="password-reset-form" style="display:none;">
+                                    <span class="top-sub-title text-4 font-weight-bold">Email Reset</span>
+                                    <h2 class="font-weight-bold text-8 mb-2">Change Password</h2>
+                                    <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold">testemail@email.com</span></p>
+                                    <div class="form-row mb-4">
+                                        <div class="form-group col mb-2">
+                                            <input type="password" class="form-control bg-light-5 border-0 rounded" id="txtNewPassword" placeholder="New Password" required>
+                                            <div class="text-danger" id="newPasswordError">Email is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="form-group col mb-2">
+                                            <input type="password" class="form-control bg-light-5 border-0 rounded" id="txtConfirmPassword" placeholder="Confirm Password" required>
+                                            <div class="text-danger" id="confirmPasswordError">Email is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <a href="javascript: void(0)" class="text-color-primary pl-0 resetScreen">Try another way</a>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button type="button" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block" id="resetPasswordBtn3">Submit</button>
+                                        </div>
+                                    </div>
+                                </div><!-- Change Password - END -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/Content/vendor/common/common.min.js"></script>
+    <script src="~/Content/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/Content/js/theme.js"></script>
+
+    <!-- Current Page Vendor and Views -->
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="~/Content/js/theme.init.js"></script>
+
+    <!-- Logics & data passes to controller-->
+    <script src="~/SiteJs/login-page.js"></script>
+
+</body>
+</html>

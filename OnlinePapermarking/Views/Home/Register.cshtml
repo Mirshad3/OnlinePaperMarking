@@ -1,0 +1,334 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx" class="shop">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock - Register</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="~/Content/img/logo-small.png" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/animate/animate.min.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/Content/css/theme.css">
+    <link rel="stylesheet" href="~/Content/css/theme-elements.css">
+
+    <!-- Current Page CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/settings.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/layers.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/navigation.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="~/Content/css/skins/default.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/css/custom.css">
+
+    <style>
+        #stdEmailError, #stdFirstNameError, #stdAddressError, #stdDistrictError, #stdLastNameError,
+        #stdMobileNoError, #stdPasswordError, #tutAddressError, #tutNicError, #tutEmailError,
+        #tutFistNameError, #tutLastNameError, #tutMobileNoError, #tutPasswordError, #tutUniversityError, #invalidAlert {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <input type="hidden" id="loginId" />
+    <input type="hidden" id="oldUser" value="@Session["IsOldUser"]" />
+
+
+    @if (Session["IsOldUser"] != null)
+    {
+        if (Session["IsOldUser"].ToString() == "True")
+        {
+            Session["IsOldUser"] = "False";
+        }
+    }
+
+
+    <div class="body">
+        <div role="main" class="main">
+            <div class="container-fluid">
+                <div class="row height100vh">
+                    <div class="col-md-7 p-0">
+                        <div class="bg-dark-5 h-100 py-5 signup-bg appear-animation" data-appear-animation="fadeInRightShorter">
+                            <div class="header-logo text-center mb-4 appear-animation" data-appear-animation="fadeInRightShorter">
+                                <a href="/">
+                                    <img alt="logo" height="48" src="~/Content/img/logo-white.png">
+                                </a>
+                            </div>
+                            <h2 class="text-color-light text-center text-6 appear-animation" data-appear-animation="fadeInRightShorter">Welcome to the most comprehensive digital educational workspace <br /> in Sri Lanka</h2>
+                            <div class="mobile-show"><a class="tp-caption slider-scroll-button" href="#signup" data-hash="" data-hash-offset="0"></a></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 p-5 height100vh-mobile" id="signup">
+                        <div class="h-100 d-flex align-items-center">
+                            <div class="wr-registerForm appear-animation main-registerContainer" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
+                                <span class="top-sub-title text-4 font-weight-bold">Sign Up</span>
+                                <h2 class="font-weight-bold text-8 mb-5">Let's Get Started</h2>
+                                <ul class="nav nav-tabs nav-tabs-default registerForm-as" id="tabDefault" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="default-portfolio-tab" data-toggle="tab" href="#default-portfolio" role="tab" aria-controls="default-portfolio" aria-expanded="true">
+                                            <h6>Signup as a</h6>
+                                            <h3>Student</h3>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="default-process-tab" data-toggle="tab" href="#default-process" role="tab" aria-controls="default-process">
+                                            <h6>Signup as a</h6>
+                                            <h3>Lecturer</h3>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="tabDefaultContent">
+                                    <div class="tab-pane fade pt-4 show active" id="default-portfolio" role="tabpanel" aria-labelledby="default-portfolio-tab">
+                                        <form id="shopLoginRegister" class="needs-validation" novalidate>
+                                            <fieldset id="SubmitForm">
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">First name</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="FirstName" id="txtFirstName" required>
+                                                        <span class="text-danger" id="stdFirstNameError">First name is required</span>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">Surname</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="LastName" id="txtLastName" required>
+                                                        <div class="text-danger" id="stdLastNameError">Last name is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label class="text-color-dark" for="">Address</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="Address" id="txtAddress" required>
+                                                        <div class="text-danger" id="stdAddressError">Address is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="shopLoginRegisterUsername">District</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="District" id="txtDistrict" required>
+                                                        <div class="text-danger" id="stdDistrictError">District is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="shopLoginRegisterPhone">Mobile Number</label>
+                                                        <input type="number" value="" class="form-control bg-light-5 border-0 rounded" name="MobileNo" id="txtMobileNo" required>
+                                                        <div class="text-danger" id="stdMobileNoError">Mobile No is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mb-2">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">Email Address</label>
+                                                        <input type="email" value="" class="form-control bg-light-5 border-0 rounded" name="Email" id="txtEmail" required>
+                                                        <div class="text-danger" id="stdEmailError">Email is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">New Password</label>
+                                                        <input type="password" value="" class="form-control bg-light-5 border-0 rounded" name="Password" id="txtPassword" required>
+                                                        <div class="text-danger" id="stdPasswordError">Password is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mb-5">
+                                                    <p class="col-12 mb-3 text-1">
+                                                        By clicking Sign Up you agree to our terms, Data Policy and Cookie Policy.
+                                                    </p>
+                                                    <div class="col-12 text-left">
+                                                        <button class="btn btn-tertiary btn-4 btn-fs-4 mb-2 btn-rounded btn-block text-white" id="BtnStdReg" type="button">Sign Up</button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <p class="col text-center">
+                                                        Already have an account? <a href="/Home/Login" class="text-primary">Signin</a>
+                                                    </p>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade pt-4" id="default-process" role="tabpanel" aria-labelledby="default-process-tab">
+                                        <form id="shopLoginRegister">
+                                            <fieldset id="SubmitForm2">
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">First name</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="FirstName" id="txtTutFirstName" required>
+                                                        <div class="text-danger" id="tutFistNameError">First name is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">Surname</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="LastName" id="txtTutLastName" required>
+                                                        <div class="text-danger" id="tutLastNameError">Surname is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label class="text-color-dark" for="">Address</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="Address" id="txtTutAddress" required>
+                                                        <div class="text-danger" id="tutAddressError">Address is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="shopLoginRegisterUsername">NIC No</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="NICNo" id="txtTutNic" required>
+                                                        <div class="text-danger" id="tutNicError">NIC No is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="shopLoginRegisterPhone">Mobile Number</label>
+                                                        <input type="number" value="" class="form-control bg-light-5 border-0 rounded" name="MobileNo" id="txtTutMobileNo" required>
+                                                        <div class="text-danger" id="tutMobileNoError">Mobile number is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-12">
+                                                        <label class="text-color-dark" for="">University/School</label>
+                                                        <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="University" id="txtTutUniversity" required>
+                                                        <div class="text-danger" id="tutUniversityError">University/School is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">District</label>
+                                                        <select class="form-control bg-light-5 border-0 rounded" id="cmbTutUniversityDistrict" name="District">
+                                                            @foreach (District district in Model.Districts)
+                                                            {
+                                                                <option value="@district.DistrictID">@district.DistrictName</option>
+                                                            }
+                                                        </select>
+                                                        @*<div class="text-danger" id="tutSubjectError">Password is required</div>*@
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">Occupation</label>
+                                                        <select class="form-control bg-light-5 border-0 rounded" id="cmbTutOccupation" name="Occupation">
+                                                            <option value="Lecture">Lecture</option>
+                                                            <option value="Teacher">Teacher</option>
+                                                            <option value="University Student">University Student</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                        @*<div class="text-danger" id="tutSubjectError">Password is required</div>*@
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mb-2">
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">Email Address</label>
+                                                        <input type="email" value="" class="form-control bg-light-5 border-0 rounded" name="Email" id="txtTutEmail" required>
+                                                        <div class="text-danger" id="tutEmailError">Email is required</div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <label class="text-color-dark" for="">New Password</label>
+                                                        <input type="password" value="" class="form-control bg-light-5 border-0 rounded" name="Password" id="txtTutPassword" required>
+                                                        <div class="text-danger" id="tutPasswordError">Password is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mb-5">
+                                                    <p class="col-12 mb-3 text-1">
+                                                        By clicking Sign Up you agree to our terms, Data Policy and Cookie Policy.
+                                                    </p>
+                                                    <div class="col-12 text-left">
+                                                        <a class="btn btn-tertiary btn-4 btn-fs-4 mb-2 btn-rounded btn-block text-white" id="BtnTutReg">Sign Up</a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <p class="col text-center p-0 m-0">
+                                                        Already have an account? <a href="/Home/Login" class="text-primary">Signin</a>
+                                                    </p>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reset Code Email - START -->
+                            <div class="wr-registerForm register-Code-Container w-100" style="display:none;">
+                                <span class="top-sub-title text-4 font-weight-bold">Sign Up</span>
+                                <h2 class="font-weight-bold text-8 mb-2">Get a Verfication Code</h2>
+                                <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold" id="verifiedEmail">testemail@email.com</span></p>
+                                <div class="alert" id="invalidAlert">
+                                    Invalid Username or Password
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="form-group col mb-2">
+                                        <input type="number" class="form-control bg-light-5 border-0 rounded" placeholder="Enter Code" id="verificationCode" required>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <a href="javascript: void(0)" id="resetScreen" class="text-color-primary pl-0" onclick="VerifyAccount()">Re-send Code</a>
+                                    </div>
+                                    <div class="col text-right">
+                                        <button type="button" class="btn btn-tertiary btn-4 btn-fs-4 btn-rounded btn-block" id="btnVerifyCode">Submit</button>
+                                    </div>
+                                </div>
+                            </div><!-- Reset Code Email - End -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Require New Registration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    System has updated with new features. Please register and complete your profile.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Vendor -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/Content/vendor/common/common.min.js"></script>
+    <script src="~/Content/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/Content/js/theme.js"></script>
+
+    <!-- Current Page Vendor and Views -->
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="~/Content/js/theme.init.js"></script>
+
+    <!-- Notification -->
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Logics & data passes to controller-->
+    <script src="~/SiteJs/register-page.js"></script>
+    @*<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSFTSVBKZE"></script>*@
+    <script src="~/Scripts/AnalyzeScript.js"></script>
+</body>
+</html>

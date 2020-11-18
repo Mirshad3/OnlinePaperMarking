@@ -1,0 +1,168 @@
+﻿
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<style>
+    .link-myCart {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-myCart i.ico-myCart {
+        background: url(../../Content/MainDashboard/img/navigation/ico-myCart-sel.png) no-repeat center left;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">My Cart</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="Student-index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">My Cart</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="card">
+        <div class="card-body">
+            <table class="cart-main-tbl">
+                <tr>
+                    <td class="cart-main-tbl-td">
+                        <div class="main-cart-table">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5>My Shopping Cart</h5>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <h5 id="countHeader"></h5>
+                                </div>
+                            </div>
+                            <table id="cartTable"></table>
+                            <div class="mt-4 pt-2">
+                                <a href="/Dashboard/ProductList" class="continue-shopping">
+                                    <i class="fa fa-arrow-left"></i>
+                                    Continue Shopping
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="cart-main-tbl-td">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Order Summary</h5>
+
+                                <div class="cart-border"></div>
+
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        PAPERS
+                                    </div>
+                                    <div class="col-6 text-right font-size-14 mb-2" id="divCount">
+                                        0
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        TOTAL
+                                    </div>
+                                    <div class="col-6 text-right font-size-14 mb-3" id="divTotal">
+                                        Rs.0
+                                    </div>
+                                </div>
+                                <div class="mt-3 pb-2">
+                                    PROMO CODE
+                                    <input type="text" class="form-control" placeholder="Enter Your Code" id="txtPromoCode" />
+                                    <button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium" id="promoCodeBtn">Apply</button>
+                                </div>
+
+
+                                <div class="cart-border mt-4"></div>
+
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        SUB TOTAL
+                                    </div>
+                                    <div class="col-6 text-right font-size-14 mb-2" id="divSubTotal">
+                                        RS.0
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light radius-4 font-weight-medium w-100" id="checkOutBtn">Checkout</button>
+                                </div>
+                                <div class="mt-3 cart-secure-checkout">
+                                    <fieldset>
+                                        <legend>We Accept</legend>
+                                        <div>
+                                            <img src="~/Content/MainDashboard/img/payment-visa.png" />
+                                            <img src="~/Content/MainDashboard/img/payment-master.png" />
+                                            <img src="~/Content/MainDashboard/img/payment-union.jpg" />
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- End Page-content -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/SiteJs/cart-page.js"></script>
+
+    <script>
+        var url1 = '@Url.Action("PaymentConfirmation", "Dashboard")';
+    </script>
+
+}

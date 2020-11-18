@@ -1,0 +1,184 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Payment Summery</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #ecf0f5;
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 14px;
+        }
+
+        .payment-container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 5%;
+            background-color: #fff;
+        }
+
+        .paymeny-success {
+            background: #1ab394;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .paymeny-error {
+            background: #d75a4a;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .paymeny-body table {
+            width: 100%;
+        }
+
+            .paymeny-body table td:nth-child(1) {
+                font-weight: 400;
+            }
+
+            .paymeny-body table td:nth-child(2) {
+                font-weight: 600;
+            }
+
+        .paymeny-body {
+            padding: 15px;
+        }
+
+            .paymeny-body h2 {
+                text-align: center;
+                padding: 0 0 20px 0;
+                margin: 0;
+                font-weight: 700;
+                font-size: 24px;
+            }
+
+        .paymeny-footer {
+            border-top: 2px solid #ecf0f5;
+            padding: 15px;
+            text-align: center;
+        }
+
+            .paymeny-footer p {
+                padding: 0;
+                margin: 0 0 5px 0;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+        .footer-btn {
+            background: #7d7d7d !important;
+            border-color: #7d7d7d;
+            font-size: 13px;
+            padding: .50rem 2.2rem !important;
+            letter-spacing: 0.5px;
+            color: #fff !important;
+            border-radius: 4px !important;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .paymeny-body-title-success {
+            color: #1ab394;
+        }
+
+        .paymeny-body-title-error {
+            color: #d75a4a;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="loginId" value="@Session["LoginId"]" />
+    <input type="hidden" id="paymentOrderId" value="@Session["PaymentOrderId"]" />
+    <div class="payment-container" id="paymentSuccess" style="display:none">
+        <div class="paymeny-success">
+            <img src="https://lh3.googleusercontent.com/-Zxh4srAEtU0/Wp0cZV-PJuI/AAAAAAAAD4E/En5x5c53s44jzvG8M0sSyFZXoRhGXfBzwCL0BGAYYCw/h100/2018-03-05.png" alt="">
+        </div>
+        <div class="paymeny-body">
+            <h2 class="paymeny-body-title-success">Payment Successful!</h2>
+            <table>
+                <tr>
+                    <td width="20%">Payment Date</td>
+                    <td><label id="lblSuccessDate"></label></td>
+                </tr>
+                <tr>
+                    <td>Transaction ID</td>
+                    <td><label id="lblSuccessOrderId"></label></td>
+                </tr>
+                <tr>
+                    <td>Amount (LKR)</td>
+                    <td><label id="lblSuccessAmount"></label></td>
+                </tr>
+            </table>
+        </div>
+        <div class="paymeny-footer">
+            <p>Thank you. Disapamock.</p>
+            <a href="/Dashboard/Dashboard" class="footer-btn">Home</a>
+        </div>
+    </div>
+    <div class="payment-container" id="paymentError" style="display:none">
+        <div class="paymeny-error">
+            <img src="https://lh3.googleusercontent.com/-ApBj8d4WL1E/Wp0fJeAD6jI/AAAAAAAAD4M/Dh6l_UiA64kln8PS-1SaDQFuhb9KJL40gCL0BGAYYCw/h100/2018-03-05.png" alt="">
+        </div>
+        <div class="paymeny-body">
+            <h2 class="paymeny-body-title-error">Payment failed!</h2>
+            <table>
+                <tr>
+                    <td width="20%">Payment Date</td>
+                    <td><label id="lblErrorDate"></label></td>
+                </tr>
+                <tr>
+                    <td>Transaction ID</td>
+                    <td><label id="lblErrorOrderId"></label></td>
+                </tr>
+            </table>
+        </div>
+        <div class="paymeny-footer">
+            <p>Thank you. Disapamock.</p>
+            <a href="/Dashboard/Dashboard" class="footer-btn">Home</a>
+        </div>
+    </div>
+
+    
+
+    <script src="~/Content/MainDashboard/js/jquery.js"></script>
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $.ajax({
+                type: "Post",
+                url: "/Dashboard/GetPaymentSummery",
+                data: { "LoginId": $('#loginId').val(), "PaymentOrderId": $('#paymentOrderId').val() },
+                success: function (result) {
+                    if (result.success) {
+                        if (result.status === 'SUCCESS') {
+                            $('#lblSuccessDate').text(result.paymentDate);
+                            $('#lblSuccessOrderId').text(result.paymentOrderId);
+                            $('#lblSuccessAmount').text(result.amount);
+                            $('#paymentSuccess').show();
+                            $('#paymentError').hide();
+                        } else {
+                            $('#lblErrorDate').text(result.paymentDate);
+                            $('#lblErrorOrderId').text(result.paymentOrderId);
+                            $('#paymentError').show();
+                            $('#paymentSuccess').hide();
+                        }
+                    }
+                    else {
+
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

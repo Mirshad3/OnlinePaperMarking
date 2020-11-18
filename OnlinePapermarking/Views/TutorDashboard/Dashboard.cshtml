@@ -1,0 +1,249 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_mainPortalSideNavTutor.cshtml";
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+
+<style>
+    .link-dashboard {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-dashboard i.ico-dashboard {
+        background: url(../../Content/MainDashboard/img/navigation/ico-dashboard-sel.png) no-repeat center left;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Dashboard</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>-->
+                        <li class="breadcrumb-item active">Welcome to your Dashboard</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-xl-9 mb-4">
+            <div class="firsttime-bg-left">
+                <div class="h-100 d-flex align-items-center pl-md-5 pr-md-5 p-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-white font-weight-medium" id="headerName"></h2>
+                        </div>
+                        <div class="col-md-7 text-white lineheight-1-5 font-size-12 letterSpacing-0-5">
+                            There are many variations of passages of Lorem Ipsum available, but the
+                            majority have suffered alteration in some form, by injected humour, or
+                            randomised words which don't look even slightly believable.
+                        </div>
+                        <div class="col-md-5 text-right mt-md-0 mt-3">
+                            <button type="button" class="btn btn-light waves-effect mobile-max-100" id="btnCompleteProfile" style="display:none">Complete Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 mb-4">
+            <div class="firsttime-bg-right">
+                <div class="p-3" style="position: relative;">
+                    <h4 class="card-title mb-4 text-white font-size-15 font-weight-medium">Profile Completion</h4>
+                    <h2 class="text-center text-white mb-4" id="headerProfileCompletion"></h2>
+                    <div class="progress mr-2 ml-2" id="divProgressBar">
+                        @*<div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-sm-6">
+            <div class="card green-tile">
+                <div class="card-body p-3 text-center mr-3 ml-3">
+                    <h4 class="card-title mb-3 text-white font-weight-medium font-size-18">Marking Pending Exams</h4>
+                    <div class="display-4 font-weight-normal" id="divMarkingPending">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card green-tile">
+                <div class="card-body p-3 text-center mr-3 ml-3">
+                    <h4 class="card-title mb-3 text-white font-weight-medium font-size-16">Marking Completed Exams</h4>
+                    <div class="display-4 font-weight-normal" id="divMarkingCompleted">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card green-tile">
+                <div class="card-body p-3 text-center mr-3 ml-3">
+                    <h4 class="card-title mb-3 text-white font-weight-medium font-size-16">Money to be Received (Rs.)</h4>
+                    <div class="display-4 font-weight-normal" id="divMoneyToRecieve">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card green-tile">
+                <div class="card-body p-3 text-center mr-3 ml-3">
+                    <h4 class="card-title mb-3 text-danger font-weight-medium font-size-16">Total Money Received (Rs.)</h4>
+                    <div class="display-4 font-weight-normal text-danger" id="divMoneyRecieved">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body" style="position: relative;">
+                    <h4 class="card-title mb-3">Pending to Approve Exams</h4>
+                    <div class="table-responsive">
+                        <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ExamNo</th>
+                                    <th>Student Name</th>
+                                    <th>ExamType</th>
+                                    <th>Subject</th>
+                                    <th>Medium</th>
+                                    <th>Year</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body pb-1">
+                    <h4 class="card-title mb-3">Offers</h4>
+                    <div class="wr-offers">
+                        <div class="font-size-18 text-center">
+                            Mark 5 papers and get<br />
+                            <span class="text-primary font-weight-bolder">Paid for 6</span>
+                        </div>
+                        <div class="font-size-18 text-center">
+                            Mark 10 papers and get get<br />
+                            <span class="text-primary font-weight-bolder">Paid for 12</span>
+                        </div>
+                        <div class="font-size-18 text-center">
+                            50 paper markings and<br />
+                            <span class="text-primary font-weight-bolder">Become a 5 star lecturer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <h4 class="card-title mb-3">News Items</h4>
+                        <ul class="inbox-wid list-unstyled news-item mb-2">
+                            <li class="inbox-list-item">
+                                <a href="#">
+                                    <div class="media">
+                                        <div class="mr-3 align-self-center">
+                                            <img src="~/Content/MainDashboard/img/news-1.jpg" alt="" class="avatar-news">
+                                        </div>
+                                        <div class="media-body overflow-hidden mt-2">
+                                            <h5 class="font-size-15 mb-0 font-weight-semibold">A/L Results release day</h5>
+                                            <p>2 days ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="inbox-list-txt">
+                                        There are many variations passages of Lorem Ipsum available, but the majority have suffered alteration
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="inbox-list-item">
+                                <a href="#">
+                                    <div class="media">
+                                        <div class="mr-3 align-self-center">
+                                            <img src="~/Content/MainDashboard/img/news-2.jpg" alt="" class="avatar-news">
+                                        </div>
+                                        <div class="media-body overflow-hidden mt-2">
+                                            <h5 class="font-size-15 mb-0 font-weight-semibold">Study From Home</h5>
+                                            <p>5 days ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="inbox-list-txt">
+                                        There are many variations passages of Lorem Ipsum available, but the majority have suffered alteration
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="inbox-list-item">
+                                <a href="#">
+                                    <div class="media">
+                                        <div class="mr-3 align-self-center">
+                                            <img src="~/Content/MainDashboard/img/news-3.jpg" alt="" class="avatar-news">
+                                        </div>
+                                        <div class="media-body overflow-hidden mt-2">
+                                            <h5 class="font-size-15 mb-0 font-weight-semibold">O/l Sheduled to start on December 4th</h5>
+                                            <p>1 week ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="inbox-list-txt">
+                                        There are many variations passages of Lorem Ipsum available, but the majority have suffered alteration
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body" style="position: relative;">
+                        <h4 class="card-title mb-3">Most Trending</h4>
+                        Grid
+                    </div>
+                </div>
+            </div>
+        </div>*@
+</div>
+<!-- End Page-content -->
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/tutor_dashboard_page.js"></script>
+
+    <script>
+        var url1 = '@Url.Action("TutorProfile", "TutorDashboard")';
+    </script>
+    
+
+}

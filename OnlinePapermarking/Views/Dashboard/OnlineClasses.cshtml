@@ -1,0 +1,377 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "OnlineClasses";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+<link rel="stylesheet" href="~/Content/css/custom.css">
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<style>
+    .link-Classes {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    .vertical-align-center {
+        /* To center vertically */
+        top: 30%;
+    }
+
+    #sidebar-menu ul li a.link-Classes i.ico-Services {
+        background: url(../../Content/MainDashboard/img/navigation/ico-Services-sel.png) no-repeat center left;
+    }
+
+    .modal-backdrop {
+        z-index: 30 !important;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Online Classes</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/Dashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Online Classes</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        @*<div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="btn btn-link show-lg collapseFilter-btn font-weight-medium" data-toggle="collapse" href="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                            <i class="fa fa-filter mr-2"></i>Filter
+                        </a>
+                        <div class="collapse show" id="collapseFilter">
+                            <a class="btn btn-link show-lg font-weight-medium border-bottom mb-2 text-secondary" data-toggle="collapse" href="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                                <i class="fa fa-times mr-2"></i>Close
+                            </a>
+                            <!-- Language -->
+                            <h5 class="font-weight-medium pb-1">Medium</h5>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
+                                <label class="custom-control-label" for="customRadio1">සිංහල</label>
+                            </div>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2">English</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio3">தமிழ்</label>
+                            </div>
+
+
+                            <div class="border-bottom mt-4"></div>
+                            <!-- Medium -->
+                            <h5 class="font-weight-medium pb-1 mt-4">Exam Type</h5>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="customRadio4" name="customRadio1" class="custom-control-input" checked="">
+                                <label class="custom-control-label" for="customRadio4" id="lblOrdinaryLevel">අ.පො.ස. සාමාන්‍ය පෙළ</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio5" name="customRadio1" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio5" id="lblAdvancedLevel">අ.පො.ස. උසස් පෙළ</label>
+                            </div>
+
+                            <div class="border-bottom mt-4"></div>
+                            <!-- Year -->
+                            <h5 class="font-weight-medium pb-1 mt-4">Year Range</h5>
+                                <div class="range-slider">
+                                    <div id="slider-range" class="mr-1 ml-1"></div>
+                                    <input type="text" id="amount" class="font-size-14 font-weight-normal border-0 p-0 m-0 mt-2 w-100 text-center">
+                                </div>
+
+
+
+                            <div class="border-bottom mt-4"></div>
+                            <!-- Subjects -->
+                            <h5 class="font-weight-medium pb-1 mt-4">Subjects</h5>
+                            <div id="subjectList">
+                                <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck6">
+                                        <label class="custom-control-label" for="customCheck6">English</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck7">
+                                        <label class="custom-control-label" for="customCheck7">Sinhala</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck8">
+                                        <label class="custom-control-label" for="customCheck8">Maths</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck9">
+                                        <label class="custom-control-label" for="customCheck9">Commerce</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck10">
+                                        <label class="custom-control-label" for="customCheck10">Science</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck11">
+                                        <label class="custom-control-label" for="customCheck11">Social Studies</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck12">
+                                        <label class="custom-control-label" for="customCheck12">Religion</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck13">
+                                        <label class="custom-control-label" for="customCheck13">History</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck14">
+                                        <label class="custom-control-label" for="customCheck14">Christianity</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck15">
+                                        <label class="custom-control-label" for="customCheck15">Geography</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="subjectCheck" id="customCheck16">
+                                        <label class="custom-control-label" for="customCheck16">Civil Education</label>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="col-xl-12">
+
+            <div class="row" id="papersList">
+                @*<div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">ගණිතය</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">අ.පො.ස. සාමාන්‍ය පෙළ</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star mr-1"></span>(120)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">Maths</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">Ordinary Level</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star mr-1"></span>(92)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">විද්‍යාව</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">අ.පො.ස. සාමාන්‍ය පෙළ</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star mr-1"></span>(120)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">Science</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">Ordinary Level</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star mr-1"></span>(92)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">සිoහල</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">අ.පො.ස. සාමාන්‍ය පෙළ</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star mr-1"></span>(120)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card border border-secondary">
+                            <div class="card-header bg-transparent border-primary wr-subject-items">
+                                <h5 class="my-0 text-primary">Commerce</h5>
+                                <h5 class="card-title mt-2 mb-2 pb-1 font-size-13 font-weight-medium">Ordinary Level</h5>
+                                <div class="row border-top pt-2">
+                                    <div class="col-12">
+                                        <div class="wr-rating">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star mr-1"></span>(92)
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <h5 class="my-0 font-size-15">Rs.350</h5>
+                                    </div>
+                                </div>
+                                <a href="#" class="wr-subject-items-wish">
+                                    <span class="fa fa-heart"></span>
+                                </a>
+                                <div class="wr-subject-items-btns" style="opacity:0">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light radius-4 font-weight-medium">
+                                        <i class="fa fa-shopping-cart mr-1"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="background: rgba(0, 0, 0, 0.5);">
+                <div class="modal-dialog modal-sm mobile-center " role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body" style="margin:auto" id="popupPaperList">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Page-content -->
+
+@section scripts{
+
+    <script src="~/SiteJs/online-classes-page.js"></script>
+
+   
+
+}

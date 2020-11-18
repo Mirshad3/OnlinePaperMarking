@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="080e6a90df9b4523a3f7a40d315141f7" Name="Diagram1" ZoomLevel="31">
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.BankBranch" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Bank" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.CartItem" Width="1.5" PointX="10.5" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.District" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.ExamType" Width="1.5" PointX="0.75" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.McqDetail" Width="1.5" PointX="8.25" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Medium" Width="1.5" PointX="0.75" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.NotificationAssign" Width="1.5" PointX="5.125" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Notification" Width="1.5" PointX="3" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.OnlineClass" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.OnlineUser" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PastPaper" Width="1.5" PointX="8.25" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PreferedTutorExamType" Width="1.5" PointX="3" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PreferedTutorMedium" Width="1.5" PointX="3" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PreferedTutorSubject" Width="1.5" PointX="5.25" PointY="42.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Province" Width="1.5" PointX="1.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.StudentsMcqAnswer" Width="1.5" PointX="7.5" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Subject" Width="1.5" PointX="3" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.UserRole" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_BankBranches_Banks" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_CartItems_PastPapers" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Districts_Provinces" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_McqDetails_ExamTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PastPapers_ExamTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PreferedTutorExamTypes_ExamTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Subjects_ExamTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_McqDetails_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PastPapers_Mediums" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PreferedTutorMediums_Mediums" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_NotificationAssign_Notifications" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PastPapers_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_PreferedTutorSubject_Subjects" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.ExamMapDetail" Width="1.5" PointX="7.5" PointY="40.125" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.UploadImage" Width="1.5" PointX="8.375" PointY="8.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.TutorHotSpot" Width="1.5" PointX="7.5" PointY="44.25" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.SubjectImage" Width="1.5" PointX="10.25" PointY="35.625" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_SubjectImages_Mediums" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_SubjectImages_Subjects" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.tblTutor" Width="1.5" PointX="3" PointY="1.125" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_tblTutors_Districts" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.OldUser" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.LoggedDetail" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.TutorQualification" Width="1.5" PointX="10.375" PointY="6.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PaperDownloadDetail" Width="1.5" PointX="10.375" PointY="9.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.PromoCode" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.tblOnlineStudentMaster" Width="1.5" PointX="3" PointY="16" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_ExamTypes" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Mediums" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Districts" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Provinces" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Cart" Width="1.5" PointX="8.25" PointY="21.875" />
+        <EntityTypeShape EntityType="OnlinePaperMarkingModel.Exam" Width="1.5" PointX="13.5" PointY="27" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_CartItems_Cart" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_ExamMapDetails_Exams" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Exams_ExamTypes" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Exams_Mediums" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Exams_Notifications" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Exams_PastPapers" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_Exams_Subjects" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_StudentsMcqAnswers_Exams" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_TutorHotSpots_Exams" />
+        <AssociationConnector Association="OnlinePaperMarkingModel.FK_UploadImages_Exams" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

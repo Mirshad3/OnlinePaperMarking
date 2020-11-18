@@ -1,0 +1,2653 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OnlinePaperMarkingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BankBranches">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Banks">
+          <Key>
+            <PropertyRef Name="BankID" />
+          </Key>
+          <Property Name="BankID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BankName" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="bigint" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SubTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsCheckOut" Type="bit" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="IsPromoApplied" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartItems">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PastPaperId" Type="int" />
+          <Property Name="CartId" Type="bigint" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Districts">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProvinceId" Type="int" Nullable="false" />
+          <Property Name="DistrictCode" Type="varchar" MaxLength="50" />
+          <Property Name="DistrictName" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="ExamMapDetails">
+          <Key>
+            <PropertyRef Name="HotSpotID" />
+          </Key>
+          <Property Name="HotSpotID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="X" Type="varchar(max)" />
+          <Property Name="Y" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar" MaxLength="500" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="CreatedType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Exams">
+          <Key>
+            <PropertyRef Name="ExamID" />
+          </Key>
+          <Property Name="ExamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentLoginId" Type="int" Nullable="false" />
+          <Property Name="ExamTypeId" Type="int" Nullable="false" />
+          <Property Name="MediumId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="PastPaperId" Type="int" />
+          <Property Name="Tutor1LoginId" Type="int" />
+          <Property Name="Tutor2LoginId" Type="int" />
+          <Property Name="AssignToTutor" Type="varchar" MaxLength="50" />
+          <Property Name="AssignToTutorReadyDate" Type="datetime" />
+          <Property Name="TutorApprovedDate" Type="datetime" />
+          <Property Name="TutorDeadlineDate" Type="datetime" />
+          <Property Name="TutorCompletedDate" Type="datetime" />
+          <Property Name="NotificationId" Type="bigint" />
+          <Property Name="ExamNo" Type="varchar" MaxLength="500" />
+          <Property Name="FirstPaperAnswerSheetsPath" Type="varchar(max)" />
+          <Property Name="SecondPaperAnswerSheetsPath" Type="varchar(max)" />
+          <Property Name="FirstPaperMarkedSheetsPath" Type="varchar(max)" />
+          <Property Name="SecondPaperMarkedSheetsPath" Type="varchar(max)" />
+          <Property Name="FirstPaperMarks" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SecondPaperMarks" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalMarks" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StudentStatus" Type="varchar" MaxLength="50" />
+          <Property Name="TutorStatus" Type="varchar" MaxLength="50" />
+          <Property Name="IsFirstPaperCompleted" Type="bit" />
+          <Property Name="IsSecondPaperCompleted" Type="bit" Nullable="false" />
+          <Property Name="TutorCommentsForFirstPaper" Type="varchar(max)" />
+          <Property Name="TutorCommentsForSecondPaper" Type="varchar(max)" />
+          <Property Name="IsAdminAssignToTutor" Type="bit" Nullable="false" />
+          <Property Name="AdminAssignToTutorReason" Type="varchar(max)" />
+          <Property Name="PriceForTutor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsPaidForTutor" Type="bit" Nullable="false" />
+          <Property Name="PaidDateForTutor" Type="datetime" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdateUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="IsThirdPaperCompleted" Type="bit" Nullable="false" />
+          <Property Name="FirstPaperRemainingTime" Type="int" Nullable="false" />
+          <Property Name="SecondPaperRemainingTime" Type="int" Nullable="false" />
+          <Property Name="ThirdPaperRemainingTime" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExamTypes">
+          <Key>
+            <PropertyRef Name="ExamTypeID" />
+          </Key>
+          <Property Name="ExamTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamTypeCode" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LoggedDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="bigint" Nullable="false" />
+          <Property Name="LoggedDate" Type="date" Nullable="false" />
+          <Property Name="LoggedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="McqDetails">
+          <Key>
+            <PropertyRef Name="McqID" />
+          </Key>
+          <Property Name="McqID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="ExamTypeID" Type="int" Nullable="false" />
+          <Property Name="QuestionNo" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Mediums">
+          <Key>
+            <PropertyRef Name="MediumID" />
+          </Key>
+          <Property Name="MediumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediumCode" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NotificationAssign">
+          <Key>
+            <PropertyRef Name="AssignID" />
+          </Key>
+          <Property Name="AssignID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationId" Type="bigint" Nullable="false" />
+          <Property Name="LoginId" Type="bigint" Nullable="false" />
+          <Property Name="ControllerName" Type="varchar" MaxLength="50" />
+          <Property Name="MethodName" Type="varchar" MaxLength="500" />
+          <Property Name="IsExpired" Type="bit" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationHeader" Type="varchar(max)" />
+          <Property Name="NotificationDetail" Type="varchar(max)" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OldUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="OnlineClasses">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Date" Type="nvarchar" MaxLength="50" />
+          <Property Name="Time" Type="nvarchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Master" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OnlineUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginID" Type="int" />
+          <Property Name="UserName" Type="varchar" MaxLength="28" />
+          <Property Name="Password" Type="varchar(max)" />
+          <Property Name="ResetPassword" Type="bit" />
+          <Property Name="RecDate" Type="datetime" />
+          <Property Name="RecUser" Type="int" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="UserRoleId" Type="int" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="TrnFlag" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="PassWordExpiryDate" Type="datetime" />
+          <Property Name="VerificationCode" Type="varchar" MaxLength="50" />
+          <Property Name="PasswordResetCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="IsBlocked" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ProfileImagePath" Type="varchar(max)" />
+          <Property Name="ProfileCompletionPercentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaperDownloadDetails">
+          <Key>
+            <PropertyRef Name="DownloadID" />
+          </Key>
+          <Property Name="DownloadID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="int" Nullable="false" />
+          <Property Name="PaperId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PastPapers">
+          <Key>
+            <PropertyRef Name="PastPaerID" />
+          </Key>
+          <Property Name="PastPaerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaperName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Year" Type="int" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="ExamTypeID" Type="int" Nullable="false" />
+          <Property Name="MediumID" Type="int" Nullable="false" />
+          <Property Name="BoxImagePath" Type="varchar(max)" />
+          <Property Name="PaperPreviewPath" Type="varchar(max)" />
+          <Property Name="PaperDownloadPath" Type="varchar(max)" />
+          <Property Name="MarkingSchemePath" Type="varchar(max)" />
+          <Property Name="MapImagePath" Type="varchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="McqQuestionCount" Type="int" />
+          <Property Name="HasMcq" Type="bit" Nullable="false" />
+          <Property Name="HasMap" Type="bit" Nullable="false" />
+          <Property Name="IsOnlineExam" Type="bit" Nullable="false" />
+          <Property Name="HasThirdPaper" Type="bit" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="FirstPaperTime" Type="int" />
+          <Property Name="SecondPaperTime" Type="int" />
+          <Property Name="ThirdPaperTime" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PreferedTutorExamTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="int" Nullable="false" />
+          <Property Name="ExamTypeId" Type="int" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PreferedTutorMediums">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="int" Nullable="false" />
+          <Property Name="MediumId" Type="int" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PreferedTutorSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PromoCodes">
+          <Key>
+            <PropertyRef Name="PromoCodeID" />
+          </Key>
+          <Property Name="PromoCodeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PromoCode" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Provinces">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProvinceCode" Type="varchar" MaxLength="50" />
+          <Property Name="ProvinceName" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="StudentsMcqAnswers">
+          <Key>
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="AnswerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentLoginId" Type="int" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="int" />
+          <Property Name="QuestionNo" Type="int" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SubjectImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="MediumId" Type="int" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamTypeId" Type="int" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="500" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="ImagePath" Type="varchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceForTutor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOnlineStudentMaster">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentInitials" Type="varchar(max)" />
+          <Property Name="StudentFirstName" Type="varchar(max)" />
+          <Property Name="StudentLastName" Type="varchar(max)" />
+          <Property Name="StudentFullName" Type="varchar(max)" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="AddressLine1" Type="varchar(max)" />
+          <Property Name="AddressLine2" Type="varchar(max)" />
+          <Property Name="AddressLine3" Type="varchar(max)" />
+          <Property Name="City" Type="varchar(max)" />
+          <Property Name="District" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNo1" Type="varchar(max)" />
+          <Property Name="ContactNo2" Type="varchar(max)" />
+          <Property Name="StudentEmail" Type="varchar(max)" />
+          <Property Name="Religion" Type="int" />
+          <Property Name="Nationality" Type="varchar(max)" />
+          <Property Name="StudentImage" Type="image" />
+          <Property Name="FirstLanguage" Type="varchar(max)" />
+          <Property Name="StudentNIC" Type="varchar(max)" />
+          <Property Name="PostalID" Type="varchar(max)" />
+          <Property Name="PassportID" Type="varchar(max)" />
+          <Property Name="SessionID" Type="varchar(max)" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="InactivationDate" Type="datetime" />
+          <Property Name="PreviousStudentNo" Type="varchar(max)" />
+          <Property Name="School" Type="varchar(max)" />
+          <Property Name="PreviousSchoolAddress" Type="varchar(max)" />
+          <Property Name="AcademicYear" Type="varchar(max)" />
+          <Property Name="CurrentYear" Type="varchar(max)" />
+          <Property Name="CurrentGrade" Type="varchar(max)" />
+          <Property Name="CurrentClass" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="AlternativeEmail" Type="varchar(max)" />
+          <Property Name="LoginID" Type="int" />
+          <Property Name="OnlineStudentID" Type="int" />
+          <Property Name="DownloadDate" Type="datetime" />
+          <Property Name="RegistartionDate" Type="date" />
+          <Property Name="RegistrationFromTime" Type="varchar" MaxLength="250" />
+          <Property Name="RegistrationToTime" Type="varchar" MaxLength="250" />
+          <Property Name="IsExported" Type="bit" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="ProvinceId" Type="int" />
+          <Property Name="ExamTypeId" Type="int" />
+          <Property Name="MediumId" Type="int" />
+          <Property Name="PurchasedPaperCount" Type="int" Nullable="false" />
+          <Property Name="DownloadedPaperCount" Type="int" Nullable="false" />
+          <Property Name="IsPromoCodeUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTutors">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TutorInitials" Type="varchar(max)" />
+          <Property Name="TutorFirstName" Type="varchar(max)" />
+          <Property Name="TutorLastName" Type="varchar(max)" />
+          <Property Name="TutorFullName" Type="varchar(max)" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="AddressLine1" Type="varchar(max)" />
+          <Property Name="AddressLine2" Type="varchar(max)" />
+          <Property Name="AddressLine3" Type="varchar(max)" />
+          <Property Name="City" Type="varchar(max)" />
+          <Property Name="District" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNo1" Type="varchar(max)" />
+          <Property Name="ContactNo2" Type="varchar(max)" />
+          <Property Name="TutorEmail" Type="varchar(max)" />
+          <Property Name="Religion" Type="int" />
+          <Property Name="Nationality" Type="varchar(max)" />
+          <Property Name="TutorImage" Type="image" />
+          <Property Name="FirstLanguage" Type="varchar(max)" />
+          <Property Name="TutorNIC" Type="varchar(max)" />
+          <Property Name="PostalID" Type="varchar(max)" />
+          <Property Name="PassportID" Type="varchar(max)" />
+          <Property Name="SessionID" Type="varchar(max)" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="InactivationDate" Type="datetime" />
+          <Property Name="PreviousTutorNo" Type="varchar(max)" />
+          <Property Name="School/University" Type="varchar(max)" />
+          <Property Name="DistrictId" Type="int" />
+          <Property Name="PreviousSchoolAddress" Type="varchar(max)" />
+          <Property Name="AcademicYear" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="AlternativeEmail" Type="varchar(max)" />
+          <Property Name="LoginID" Type="int" />
+          <Property Name="DownloadDate" Type="datetime" />
+          <Property Name="RegistartionDate" Type="date" />
+          <Property Name="RegistrationFromTime" Type="varchar" MaxLength="250" />
+          <Property Name="RegistrationToTime" Type="varchar" MaxLength="250" />
+          <Property Name="IsExported" Type="bit" />
+          <Property Name="Medium" Type="varchar" MaxLength="50" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="BranchId" Type="int" />
+          <Property Name="AccountNo" Type="varchar" MaxLength="50" />
+          <Property Name="Subject" Type="varchar" MaxLength="50" />
+          <Property Name="Occupation" Type="varchar" MaxLength="500" />
+          <Property Name="PendingExamsCount" Type="int" Nullable="false" />
+          <Property Name="AdminApproval" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompletedExamsCount" Type="int" Nullable="false" />
+          <Property Name="DownloadedPaperCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TutorHotSpots">
+          <Key>
+            <PropertyRef Name="HotSpotID" />
+          </Key>
+          <Property Name="HotSpotID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="varchar(max)" />
+          <Property Name="X" Type="varchar(max)" />
+          <Property Name="Y" Type="varchar(max)" />
+          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TutorQualifications">
+          <Key>
+            <PropertyRef Name="QualificationID" />
+          </Key>
+          <Property Name="QualificationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginId" Type="bigint" Nullable="false" />
+          <Property Name="CertificateType" Type="varchar(max)" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UploadImages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" />
+          <Property Name="ImageId" Type="varchar(max)" />
+          <Property Name="ImagePath" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CodeFieldName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BankBranches_Banks">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="1" />
+          <End Role="BankBranches" Type="Self.BankBranches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="BankID" />
+            </Principal>
+            <Dependent Role="BankBranches">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartItems_Cart">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartItems_PastPapers">
+          <End Role="PastPapers" Type="Self.PastPapers" Multiplicity="0..1" />
+          <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PastPapers">
+              <PropertyRef Name="PastPaerID" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="PastPaperId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Districts_Provinces">
+          <End Role="Provinces" Type="Self.Provinces" Multiplicity="1" />
+          <End Role="Districts" Type="Self.Districts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="Districts">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamMapDetails_Exams">
+          <End Role="Exams" Type="Self.Exams" Multiplicity="1" />
+          <End Role="ExamMapDetails" Type="Self.ExamMapDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exams">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="ExamMapDetails">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Mediums">
+          <End Role="Mediums" Type="Self.Mediums" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Notifications">
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="0..1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notifications">
+              <PropertyRef Name="NotificationID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_PastPapers">
+          <End Role="PastPapers" Type="Self.PastPapers" Multiplicity="0..1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PastPapers">
+              <PropertyRef Name="PastPaerID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="PastPaperId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_McqDetails_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="1" />
+          <End Role="McqDetails" Type="Self.McqDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="McqDetails">
+              <PropertyRef Name="ExamTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_McqDetails_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="McqDetails" Type="Self.McqDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="McqDetails">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationAssign_Notifications">
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="1" />
+          <End Role="NotificationAssign" Type="Self.NotificationAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notifications">
+              <PropertyRef Name="NotificationID" />
+            </Principal>
+            <Dependent Role="NotificationAssign">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPapers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="ExamTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_Mediums">
+          <End Role="Mediums" Type="Self.Mediums" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPapers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="MediumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPapers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorExamTypes_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="1" />
+          <End Role="PreferedTutorExamTypes" Type="Self.PreferedTutorExamTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="PreferedTutorExamTypes">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorMediums_Mediums">
+          <End Role="Mediums" Type="Self.Mediums" Multiplicity="1" />
+          <End Role="PreferedTutorMediums" Type="Self.PreferedTutorMediums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="PreferedTutorMediums">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorSubject_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="PreferedTutorSubject" Type="Self.PreferedTutorSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="PreferedTutorSubject">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsMcqAnswers_Exams">
+          <End Role="Exams" Type="Self.Exams" Multiplicity="1" />
+          <End Role="StudentsMcqAnswers" Type="Self.StudentsMcqAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exams">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="StudentsMcqAnswers">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectImages_Mediums">
+          <End Role="Mediums" Type="Self.Mediums" Multiplicity="1" />
+          <End Role="SubjectImages" Type="Self.SubjectImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="SubjectImages">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectImages_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="SubjectImages" Type="Self.SubjectImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="SubjectImages">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="0..1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOnlineStudentMaster_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamTypes" Multiplicity="0..1" />
+          <End Role="tblOnlineStudentMaster" Type="Self.tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOnlineStudentMaster_Mediums">
+          <End Role="Mediums" Type="Self.Mediums" Multiplicity="0..1" />
+          <End Role="tblOnlineStudentMaster" Type="Self.tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTutors_Districts">
+          <End Role="Districts" Type="Self.Districts" Multiplicity="0..1" />
+          <End Role="tblTutors" Type="Self.tblTutors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="tblTutors">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorHotSpots_Exams">
+          <End Role="Exams" Type="Self.Exams" Multiplicity="1" />
+          <End Role="TutorHotSpots" Type="Self.TutorHotSpots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exams">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="TutorHotSpots">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadImages_Exams">
+          <End Role="Exams" Type="Self.Exams" Multiplicity="0..1" />
+          <End Role="UploadImages" Type="Self.UploadImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exams">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="UploadImages">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlinePaperMarkingModelStoreContainer">
+          <EntitySet Name="BankBranches" EntityType="Self.BankBranches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Districts" EntityType="Self.Districts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamMapDetails" EntityType="Self.ExamMapDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exams" EntityType="Self.Exams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamTypes" EntityType="Self.ExamTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoggedDetails" EntityType="Self.LoggedDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="McqDetails" EntityType="Self.McqDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mediums" EntityType="Self.Mediums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationAssign" EntityType="Self.NotificationAssign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OldUsers" EntityType="Self.OldUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineClasses" EntityType="Self.OnlineClasses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineUser" EntityType="Self.OnlineUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaperDownloadDetails" EntityType="Self.PaperDownloadDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PastPapers" EntityType="Self.PastPapers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreferedTutorExamTypes" EntityType="Self.PreferedTutorExamTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreferedTutorMediums" EntityType="Self.PreferedTutorMediums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreferedTutorSubject" EntityType="Self.PreferedTutorSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PromoCodes" EntityType="Self.PromoCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provinces" EntityType="Self.Provinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsMcqAnswers" EntityType="Self.StudentsMcqAnswers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectImages" EntityType="Self.SubjectImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOnlineStudentMaster" EntityType="Self.tblOnlineStudentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTutors" EntityType="Self.tblTutors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorHotSpots" EntityType="Self.TutorHotSpots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorQualifications" EntityType="Self.TutorQualifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UploadImages" EntityType="Self.UploadImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BankBranches_Banks" Association="Self.FK_BankBranches_Banks">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="BankBranches" EntitySet="BankBranches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartItems_Cart" Association="Self.FK_CartItems_Cart">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartItems_PastPapers" Association="Self.FK_CartItems_PastPapers">
+            <End Role="PastPapers" EntitySet="PastPapers" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Districts_Provinces" Association="Self.FK_Districts_Provinces">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Districts" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamMapDetails_Exams" Association="Self.FK_ExamMapDetails_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="ExamMapDetails" EntitySet="ExamMapDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_ExamTypes" Association="Self.FK_Exams_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Mediums" Association="Self.FK_Exams_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Notifications" Association="Self.FK_Exams_Notifications">
+            <End Role="Notifications" EntitySet="Notifications" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_PastPapers" Association="Self.FK_Exams_PastPapers">
+            <End Role="PastPapers" EntitySet="PastPapers" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Subjects" Association="Self.FK_Exams_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_McqDetails_ExamTypes" Association="Self.FK_McqDetails_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="McqDetails" EntitySet="McqDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_McqDetails_Subjects" Association="Self.FK_McqDetails_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="McqDetails" EntitySet="McqDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationAssign_Notifications" Association="Self.FK_NotificationAssign_Notifications">
+            <End Role="Notifications" EntitySet="Notifications" />
+            <End Role="NotificationAssign" EntitySet="NotificationAssign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_ExamTypes" Association="Self.FK_PastPapers_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_Mediums" Association="Self.FK_PastPapers_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_Subjects" Association="Self.FK_PastPapers_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorExamTypes_ExamTypes" Association="Self.FK_PreferedTutorExamTypes_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="PreferedTutorExamTypes" EntitySet="PreferedTutorExamTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorMediums_Mediums" Association="Self.FK_PreferedTutorMediums_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="PreferedTutorMediums" EntitySet="PreferedTutorMediums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorSubject_Subjects" Association="Self.FK_PreferedTutorSubject_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="PreferedTutorSubject" EntitySet="PreferedTutorSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsMcqAnswers_Exams" Association="Self.FK_StudentsMcqAnswers_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="StudentsMcqAnswers" EntitySet="StudentsMcqAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectImages_Mediums" Association="Self.FK_SubjectImages_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="SubjectImages" EntitySet="SubjectImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectImages_Subjects" Association="Self.FK_SubjectImages_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectImages" EntitySet="SubjectImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_ExamTypes" Association="Self.FK_Subjects_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOnlineStudentMaster_ExamTypes" Association="Self.FK_tblOnlineStudentMaster_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOnlineStudentMaster_Mediums" Association="Self.FK_tblOnlineStudentMaster_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTutors_Districts" Association="Self.FK_tblTutors_Districts">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="tblTutors" EntitySet="tblTutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorHotSpots_Exams" Association="Self.FK_TutorHotSpots_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="TutorHotSpots" EntitySet="TutorHotSpots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadImages_Exams" Association="Self.FK_UploadImages_Exams">
+            <End Role="Exams" EntitySet="Exams" />
+            <End Role="UploadImages" EntitySet="UploadImages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnlinePaperMarkingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BankBranch">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="BranchCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bank" Relationship="Self.FK_BankBranches_Banks" FromRole="BankBranches" ToRole="Banks" />
+        </EntityType>
+        <EntityType Name="Bank">
+          <Key>
+            <PropertyRef Name="BankID" />
+          </Key>
+          <Property Name="BankID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BankName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BankBranches" Relationship="Self.FK_BankBranches_Banks" FromRole="Banks" ToRole="BankBranches" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PastPaperId" Type="Int32" />
+          <Property Name="CartId" Type="Int64" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PastPaper" Relationship="Self.FK_CartItems_PastPapers" FromRole="CartItems" ToRole="PastPapers" />
+          <NavigationProperty Name="Cart" Relationship="OnlinePaperMarkingModel.FK_CartItems_Cart" FromRole="CartItem" ToRole="Cart" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="DistrictCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Province" Relationship="Self.FK_Districts_Provinces" FromRole="Districts" ToRole="Provinces" />
+          <NavigationProperty Name="tblTutors" Relationship="OnlinePaperMarkingModel.FK_tblTutors_Districts" FromRole="District" ToRole="tblTutor" />
+          <NavigationProperty Name="tblOnlineStudentMasters" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Districts" FromRole="District" ToRole="tblOnlineStudentMaster" />
+        </EntityType>
+        <EntityType Name="ExamType">
+          <Key>
+            <PropertyRef Name="ExamTypeID" />
+          </Key>
+          <Property Name="ExamTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamTypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="McqDetails" Relationship="Self.FK_McqDetails_ExamTypes" FromRole="ExamTypes" ToRole="McqDetails" />
+          <NavigationProperty Name="PastPapers" Relationship="Self.FK_PastPapers_ExamTypes" FromRole="ExamTypes" ToRole="PastPapers" />
+          <NavigationProperty Name="PreferedTutorExamTypes" Relationship="Self.FK_PreferedTutorExamTypes_ExamTypes" FromRole="ExamTypes" ToRole="PreferedTutorExamTypes" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_Subjects_ExamTypes" FromRole="ExamTypes" ToRole="Subjects" />
+          <NavigationProperty Name="tblOnlineStudentMasters" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_ExamTypes" FromRole="ExamType" ToRole="tblOnlineStudentMaster" />
+          <NavigationProperty Name="Exams" Relationship="OnlinePaperMarkingModel.FK_Exams_ExamTypes" FromRole="ExamType" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="McqDetail">
+          <Key>
+            <PropertyRef Name="McqID" />
+          </Key>
+          <Property Name="McqID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="ExamTypeID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionNo" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExamType" Relationship="Self.FK_McqDetails_ExamTypes" FromRole="McqDetails" ToRole="ExamTypes" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_McqDetails_Subjects" FromRole="McqDetails" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Medium">
+          <Key>
+            <PropertyRef Name="MediumID" />
+          </Key>
+          <Property Name="MediumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MediumCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PastPapers" Relationship="Self.FK_PastPapers_Mediums" FromRole="Mediums" ToRole="PastPapers" />
+          <NavigationProperty Name="PreferedTutorMediums" Relationship="Self.FK_PreferedTutorMediums_Mediums" FromRole="Mediums" ToRole="PreferedTutorMediums" />
+          <NavigationProperty Name="SubjectImages" Relationship="OnlinePaperMarkingModel.FK_SubjectImages_Mediums" FromRole="Medium" ToRole="SubjectImage" />
+          <NavigationProperty Name="tblOnlineStudentMasters" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Mediums" FromRole="Medium" ToRole="tblOnlineStudentMaster" />
+          <NavigationProperty Name="Exams" Relationship="OnlinePaperMarkingModel.FK_Exams_Mediums" FromRole="Medium" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="NotificationAssign">
+          <Key>
+            <PropertyRef Name="AssignID" />
+          </Key>
+          <Property Name="AssignID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int64" Nullable="false" />
+          <Property Name="LoginId" Type="Int64" Nullable="false" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MethodName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsExpired" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Notification" Relationship="Self.FK_NotificationAssign_Notifications" FromRole="NotificationAssign" ToRole="Notifications" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NotificationDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="NotificationAssigns" Relationship="Self.FK_NotificationAssign_Notifications" FromRole="Notifications" ToRole="NotificationAssign" />
+          <NavigationProperty Name="Exams" Relationship="OnlinePaperMarkingModel.FK_Exams_Notifications" FromRole="Notification" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="OnlineClass">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Master" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OnlineUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResetPassword" Type="Boolean" />
+          <Property Name="RecDate" Type="DateTime" Precision="3" />
+          <Property Name="RecUser" Type="Int32" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="UserRoleId" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="TrnFlag" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="PassWordExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="VerificationCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordResetCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ProfileImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileCompletionPercentage" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PastPaper">
+          <Key>
+            <PropertyRef Name="PastPaerID" />
+          </Key>
+          <Property Name="PastPaerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaperName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="ExamTypeID" Type="Int32" Nullable="false" />
+          <Property Name="MediumID" Type="Int32" Nullable="false" />
+          <Property Name="BoxImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaperPreviewPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaperDownloadPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="McqQuestionCount" Type="Int32" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="HasMcq" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CartItems" Relationship="Self.FK_CartItems_PastPapers" FromRole="PastPapers" ToRole="CartItems" />
+          <NavigationProperty Name="ExamType" Relationship="Self.FK_PastPapers_ExamTypes" FromRole="PastPapers" ToRole="ExamTypes" />
+          <NavigationProperty Name="Medium" Relationship="Self.FK_PastPapers_Mediums" FromRole="PastPapers" ToRole="Mediums" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_PastPapers_Subjects" FromRole="PastPapers" ToRole="Subjects" />
+          <Property Name="MarkingSchemePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HasMap" Type="Boolean" Nullable="false" />
+          <Property Name="MapImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsOnlineExam" Type="Boolean" Nullable="false" />
+          <Property Name="FirstPaperTime" Type="Int32" />
+          <Property Name="SecondPaperTime" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="HasThirdPaper" Type="Boolean" Nullable="false" />
+          <Property Name="ThirdPaperTime" Type="Int32" />
+          <NavigationProperty Name="Exams" Relationship="OnlinePaperMarkingModel.FK_Exams_PastPapers" FromRole="PastPaper" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="PreferedTutorExamType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="ExamTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExamType" Relationship="Self.FK_PreferedTutorExamTypes_ExamTypes" FromRole="PreferedTutorExamTypes" ToRole="ExamTypes" />
+        </EntityType>
+        <EntityType Name="PreferedTutorMedium">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="MediumId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Medium" Relationship="Self.FK_PreferedTutorMediums_Mediums" FromRole="PreferedTutorMediums" ToRole="Mediums" />
+        </EntityType>
+        <EntityType Name="PreferedTutorSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_PreferedTutorSubject_Subjects" FromRole="PreferedTutorSubject" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProvinceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProvinceName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Districts" Relationship="Self.FK_Districts_Provinces" FromRole="Provinces" ToRole="Districts" />
+          <NavigationProperty Name="tblOnlineStudentMasters" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Provinces" FromRole="Province" ToRole="tblOnlineStudentMaster" />
+        </EntityType>
+        <EntityType Name="StudentsMcqAnswer">
+          <Key>
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="AnswerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentLoginId" Type="Int32" Nullable="false" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="Int32" />
+          <Property Name="QuestionNo" Type="Int32" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Exam" Relationship="OnlinePaperMarkingModel.FK_StudentsMcqAnswers_Exams" FromRole="StudentsMcqAnswer" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamTypeId" Type="Int32" />
+          <Property Name="SubjectName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceForTutor" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ExamType" Relationship="Self.FK_Subjects_ExamTypes" FromRole="Subjects" ToRole="ExamTypes" />
+          <NavigationProperty Name="McqDetails" Relationship="Self.FK_McqDetails_Subjects" FromRole="Subjects" ToRole="McqDetails" />
+          <NavigationProperty Name="PastPapers" Relationship="Self.FK_PastPapers_Subjects" FromRole="Subjects" ToRole="PastPapers" />
+          <NavigationProperty Name="PreferedTutorSubjects" Relationship="Self.FK_PreferedTutorSubject_Subjects" FromRole="Subjects" ToRole="PreferedTutorSubject" />
+          <NavigationProperty Name="SubjectImages" Relationship="OnlinePaperMarkingModel.FK_SubjectImages_Subjects" FromRole="Subject" ToRole="SubjectImage" />
+          <NavigationProperty Name="Exams" Relationship="OnlinePaperMarkingModel.FK_Exams_Subjects" FromRole="Subject" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodeFieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_BankBranches_Banks">
+          <End Role="Banks" Type="Self.Bank" Multiplicity="1" />
+          <End Role="BankBranches" Type="Self.BankBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="BankID" />
+            </Principal>
+            <Dependent Role="BankBranches">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartItems_PastPapers">
+          <End Role="PastPapers" Type="Self.PastPaper" Multiplicity="0..1" />
+          <End Role="CartItems" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PastPapers">
+              <PropertyRef Name="PastPaerID" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="PastPaperId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Districts_Provinces">
+          <End Role="Provinces" Type="Self.Province" Multiplicity="1" />
+          <End Role="Districts" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="Districts">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_McqDetails_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamType" Multiplicity="1" />
+          <End Role="McqDetails" Type="Self.McqDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="McqDetails">
+              <PropertyRef Name="ExamTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamType" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPaper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="ExamTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorExamTypes_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamType" Multiplicity="1" />
+          <End Role="PreferedTutorExamTypes" Type="Self.PreferedTutorExamType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="PreferedTutorExamTypes">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_ExamTypes">
+          <End Role="ExamTypes" Type="Self.ExamType" Multiplicity="0..1" />
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamTypes">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_McqDetails_Subjects">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="McqDetails" Type="Self.McqDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="McqDetails">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_Mediums">
+          <End Role="Mediums" Type="Self.Medium" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPaper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="MediumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorMediums_Mediums">
+          <End Role="Mediums" Type="Self.Medium" Multiplicity="1" />
+          <End Role="PreferedTutorMediums" Type="Self.PreferedTutorMedium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mediums">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="PreferedTutorMediums">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationAssign_Notifications">
+          <End Role="Notifications" Type="Self.Notification" Multiplicity="1" />
+          <End Role="NotificationAssign" Type="Self.NotificationAssign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notifications">
+              <PropertyRef Name="NotificationID" />
+            </Principal>
+            <Dependent Role="NotificationAssign">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PastPapers_Subjects">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="PastPapers" Type="Self.PastPaper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="PastPapers">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreferedTutorSubject_Subjects">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="PreferedTutorSubject" Type="Self.PreferedTutorSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="PreferedTutorSubject">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlinePaperMarkingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BankBranches" EntityType="Self.BankBranch" />
+          <EntitySet Name="Banks" EntityType="Self.Bank" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItem" />
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="ExamTypes" EntityType="Self.ExamType" />
+          <EntitySet Name="McqDetails" EntityType="Self.McqDetail" />
+          <EntitySet Name="Mediums" EntityType="Self.Medium" />
+          <EntitySet Name="NotificationAssigns" EntityType="Self.NotificationAssign" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="OnlineClasses" EntityType="Self.OnlineClass" />
+          <EntitySet Name="OnlineUsers" EntityType="Self.OnlineUser" />
+          <EntitySet Name="PastPapers" EntityType="Self.PastPaper" />
+          <EntitySet Name="PreferedTutorExamTypes" EntityType="Self.PreferedTutorExamType" />
+          <EntitySet Name="PreferedTutorMediums" EntityType="Self.PreferedTutorMedium" />
+          <EntitySet Name="PreferedTutorSubjects" EntityType="Self.PreferedTutorSubject" />
+          <EntitySet Name="Provinces" EntityType="Self.Province" />
+          <EntitySet Name="StudentsMcqAnswers" EntityType="Self.StudentsMcqAnswer" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_BankBranches_Banks" Association="Self.FK_BankBranches_Banks">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="BankBranches" EntitySet="BankBranches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartItems_PastPapers" Association="Self.FK_CartItems_PastPapers">
+            <End Role="PastPapers" EntitySet="PastPapers" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Districts_Provinces" Association="Self.FK_Districts_Provinces">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Districts" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_McqDetails_ExamTypes" Association="Self.FK_McqDetails_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="McqDetails" EntitySet="McqDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_ExamTypes" Association="Self.FK_PastPapers_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorExamTypes_ExamTypes" Association="Self.FK_PreferedTutorExamTypes_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="PreferedTutorExamTypes" EntitySet="PreferedTutorExamTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_ExamTypes" Association="Self.FK_Subjects_ExamTypes">
+            <End Role="ExamTypes" EntitySet="ExamTypes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_McqDetails_Subjects" Association="Self.FK_McqDetails_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="McqDetails" EntitySet="McqDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_Mediums" Association="Self.FK_PastPapers_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorMediums_Mediums" Association="Self.FK_PreferedTutorMediums_Mediums">
+            <End Role="Mediums" EntitySet="Mediums" />
+            <End Role="PreferedTutorMediums" EntitySet="PreferedTutorMediums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationAssign_Notifications" Association="Self.FK_NotificationAssign_Notifications">
+            <End Role="Notifications" EntitySet="Notifications" />
+            <End Role="NotificationAssign" EntitySet="NotificationAssigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PastPapers_Subjects" Association="Self.FK_PastPapers_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="PastPapers" EntitySet="PastPapers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreferedTutorSubject_Subjects" Association="Self.FK_PreferedTutorSubject_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="PreferedTutorSubject" EntitySet="PreferedTutorSubjects" />
+          </AssociationSet>
+          <EntitySet Name="ExamMapDetails" EntityType="OnlinePaperMarkingModel.ExamMapDetail" />
+          <EntitySet Name="UploadImages" EntityType="OnlinePaperMarkingModel.UploadImage" />
+          <EntitySet Name="TutorHotSpots" EntityType="OnlinePaperMarkingModel.TutorHotSpot" />
+          <EntitySet Name="SubjectImages" EntityType="OnlinePaperMarkingModel.SubjectImage" />
+          <AssociationSet Name="FK_SubjectImages_Mediums" Association="OnlinePaperMarkingModel.FK_SubjectImages_Mediums">
+            <End Role="Medium" EntitySet="Mediums" />
+            <End Role="SubjectImage" EntitySet="SubjectImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectImages_Subjects" Association="OnlinePaperMarkingModel.FK_SubjectImages_Subjects">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="SubjectImage" EntitySet="SubjectImages" />
+          </AssociationSet>
+          <EntitySet Name="tblTutors" EntityType="OnlinePaperMarkingModel.tblTutor" />
+          <AssociationSet Name="FK_tblTutors_Districts" Association="OnlinePaperMarkingModel.FK_tblTutors_Districts">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="tblTutor" EntitySet="tblTutors" />
+          </AssociationSet>
+          <EntitySet Name="OldUsers" EntityType="OnlinePaperMarkingModel.OldUser" />
+          <EntitySet Name="LoggedDetails" EntityType="OnlinePaperMarkingModel.LoggedDetail" />
+          <EntitySet Name="TutorQualifications" EntityType="OnlinePaperMarkingModel.TutorQualification" />
+          <EntitySet Name="PaperDownloadDetails" EntityType="OnlinePaperMarkingModel.PaperDownloadDetail" />
+          <EntitySet Name="PromoCodes" EntityType="OnlinePaperMarkingModel.PromoCode" />
+          <EntitySet Name="tblOnlineStudentMasters" EntityType="OnlinePaperMarkingModel.tblOnlineStudentMaster" />
+          <AssociationSet Name="FK_tblOnlineStudentMaster_ExamTypes" Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_ExamTypes">
+            <End Role="ExamType" EntitySet="ExamTypes" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOnlineStudentMaster_Mediums" Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Mediums">
+            <End Role="Medium" EntitySet="Mediums" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOnlineStudentMaster_Districts" Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Districts">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOnlineStudentMaster_Provinces" Association="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Provinces">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="tblOnlineStudentMaster" EntitySet="tblOnlineStudentMasters" />
+          </AssociationSet>
+          <EntitySet Name="Carts" EntityType="OnlinePaperMarkingModel.Cart" />
+          <EntitySet Name="Exams" EntityType="OnlinePaperMarkingModel.Exam" />
+          <AssociationSet Name="FK_CartItems_Cart" Association="OnlinePaperMarkingModel.FK_CartItems_Cart">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamMapDetails_Exams" Association="OnlinePaperMarkingModel.FK_ExamMapDetails_Exams">
+            <End Role="Exam" EntitySet="Exams" />
+            <End Role="ExamMapDetail" EntitySet="ExamMapDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_ExamTypes" Association="OnlinePaperMarkingModel.FK_Exams_ExamTypes">
+            <End Role="ExamType" EntitySet="ExamTypes" />
+            <End Role="Exam" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Mediums" Association="OnlinePaperMarkingModel.FK_Exams_Mediums">
+            <End Role="Medium" EntitySet="Mediums" />
+            <End Role="Exam" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Notifications" Association="OnlinePaperMarkingModel.FK_Exams_Notifications">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="Exam" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_PastPapers" Association="OnlinePaperMarkingModel.FK_Exams_PastPapers">
+            <End Role="PastPaper" EntitySet="PastPapers" />
+            <End Role="Exam" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exams_Subjects" Association="OnlinePaperMarkingModel.FK_Exams_Subjects">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Exam" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsMcqAnswers_Exams" Association="OnlinePaperMarkingModel.FK_StudentsMcqAnswers_Exams">
+            <End Role="Exam" EntitySet="Exams" />
+            <End Role="StudentsMcqAnswer" EntitySet="StudentsMcqAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorHotSpots_Exams" Association="OnlinePaperMarkingModel.FK_TutorHotSpots_Exams">
+            <End Role="Exam" EntitySet="Exams" />
+            <End Role="TutorHotSpot" EntitySet="TutorHotSpots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadImages_Exams" Association="OnlinePaperMarkingModel.FK_UploadImages_Exams">
+            <End Role="Exam" EntitySet="Exams" />
+            <End Role="UploadImage" EntitySet="UploadImages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ExamMapDetail">
+          <Key>
+            <PropertyRef Name="HotSpotID" />
+          </Key>
+          <Property Name="HotSpotID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="X" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Y" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Exam" Relationship="OnlinePaperMarkingModel.FK_ExamMapDetails_Exams" FromRole="ExamMapDetail" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="UploadImage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ExamId" Type="Int32" />
+          <NavigationProperty Name="Exam" Relationship="OnlinePaperMarkingModel.FK_UploadImages_Exams" FromRole="UploadImage" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="TutorHotSpot">
+          <Key>
+            <PropertyRef Name="HotSpotID" />
+          </Key>
+          <Property Name="HotSpotID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="X" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Y" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Exam" Relationship="OnlinePaperMarkingModel.FK_TutorHotSpots_Exams" FromRole="TutorHotSpot" ToRole="Exam" />
+        </EntityType>
+        <EntityType Name="SubjectImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="MediumId" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Medium" Relationship="OnlinePaperMarkingModel.FK_SubjectImages_Mediums" FromRole="SubjectImage" ToRole="Medium" />
+          <NavigationProperty Name="Subject" Relationship="OnlinePaperMarkingModel.FK_SubjectImages_Subjects" FromRole="SubjectImage" ToRole="Subject" />
+        </EntityType>
+        <Association Name="FK_SubjectImages_Mediums">
+          <End Type="OnlinePaperMarkingModel.Medium" Role="Medium" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.SubjectImage" Role="SubjectImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medium">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="SubjectImage">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectImages_Subjects">
+          <End Type="OnlinePaperMarkingModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.SubjectImage" Role="SubjectImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="SubjectImage">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTutor">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TutorInitials" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorFullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Religion" Type="Int32" />
+          <Property Name="Nationality" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FirstLanguage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorNIC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PostalID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PassportID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="InactivationDate" Type="DateTime" Precision="3" />
+          <Property Name="PreviousTutorNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="School_University" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="PreviousSchoolAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AcademicYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="AlternativeEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoginID" Type="Int32" />
+          <Property Name="DownloadDate" Type="DateTime" Precision="3" />
+          <Property Name="RegistartionDate" Type="DateTime" Precision="0" />
+          <Property Name="RegistrationFromTime" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationToTime" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsExported" Type="Boolean" />
+          <Property Name="Medium" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Occupation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PendingExamsCount" Type="Int32" Nullable="false" />
+          <Property Name="AdminApproval" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="District1" Relationship="OnlinePaperMarkingModel.FK_tblTutors_Districts" FromRole="tblTutor" ToRole="District" />
+          <Property Name="CompletedExamsCount" Type="Int32" Nullable="false" />
+          <Property Name="DownloadedPaperCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblTutors_Districts">
+          <End Type="OnlinePaperMarkingModel.District" Role="District" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.tblTutor" Role="tblTutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="tblTutor">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OldUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MobileNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LoggedDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int64" Nullable="false" />
+          <Property Name="LoggedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LoggedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="TutorQualification">
+          <Key>
+            <PropertyRef Name="QualificationID" />
+          </Key>
+          <Property Name="QualificationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int64" Nullable="false" />
+          <Property Name="CertificateType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PaperDownloadDetail">
+          <Key>
+            <PropertyRef Name="DownloadID" />
+          </Key>
+          <Property Name="DownloadID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="PaperId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PromoCode">
+          <Key>
+            <PropertyRef Name="PromoCodeID" />
+          </Key>
+          <Property Name="PromoCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PromoCode1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblOnlineStudentMaster">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentInitials" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentFullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Religion" Type="Int32" />
+          <Property Name="Nationality" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FirstLanguage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentNIC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PostalID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PassportID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="InactivationDate" Type="DateTime" Precision="3" />
+          <Property Name="PreviousStudentNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="School" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PreviousSchoolAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AcademicYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentGrade" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentClass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AlternativeEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LoginID" Type="Int32" />
+          <Property Name="OnlineStudentID" Type="Int32" />
+          <Property Name="DownloadDate" Type="DateTime" Precision="3" />
+          <Property Name="RegistartionDate" Type="DateTime" Precision="0" />
+          <Property Name="RegistrationFromTime" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationToTime" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsExported" Type="Boolean" />
+          <Property Name="DistrictId" Type="Int32" />
+          <Property Name="ProvinceId" Type="Int32" />
+          <Property Name="ExamTypeId" Type="Int32" />
+          <Property Name="MediumId" Type="Int32" />
+          <Property Name="PurchasedPaperCount" Type="Int32" Nullable="false" />
+          <Property Name="DownloadedPaperCount" Type="Int32" Nullable="false" />
+          <Property Name="IsPromoCodeUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ExamType" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_ExamTypes" FromRole="tblOnlineStudentMaster" ToRole="ExamType" />
+          <NavigationProperty Name="Medium" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Mediums" FromRole="tblOnlineStudentMaster" ToRole="Medium" />
+          <NavigationProperty Name="District1" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Districts" FromRole="tblOnlineStudentMaster" ToRole="District" />
+          <NavigationProperty Name="Province" Relationship="OnlinePaperMarkingModel.FK_tblOnlineStudentMaster_Provinces" FromRole="tblOnlineStudentMaster" ToRole="Province" />
+        </EntityType>
+        <Association Name="FK_tblOnlineStudentMaster_ExamTypes">
+          <End Type="OnlinePaperMarkingModel.ExamType" Role="ExamType" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.tblOnlineStudentMaster" Role="tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamType">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOnlineStudentMaster_Mediums">
+          <End Type="OnlinePaperMarkingModel.Medium" Role="Medium" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.tblOnlineStudentMaster" Role="tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medium">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOnlineStudentMaster_Districts">
+          <End Type="OnlinePaperMarkingModel.District" Role="District" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.tblOnlineStudentMaster" Role="tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOnlineStudentMaster_Provinces">
+          <End Type="OnlinePaperMarkingModel.Province" Role="Province" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.tblOnlineStudentMaster" Role="tblOnlineStudentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="tblOnlineStudentMaster">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int64" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SubTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsCheckOut" Type="Boolean" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="IsPromoApplied" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CartItems" Relationship="OnlinePaperMarkingModel.FK_CartItems_Cart" FromRole="Cart" ToRole="CartItem" />
+        </EntityType>
+        <EntityType Name="Exam">
+          <Key>
+            <PropertyRef Name="ExamID" />
+          </Key>
+          <Property Name="ExamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentLoginId" Type="Int32" Nullable="false" />
+          <Property Name="ExamTypeId" Type="Int32" Nullable="false" />
+          <Property Name="MediumId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="PastPaperId" Type="Int32" />
+          <Property Name="Tutor1LoginId" Type="Int32" />
+          <Property Name="Tutor2LoginId" Type="Int32" />
+          <Property Name="AssignToTutor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AssignToTutorReadyDate" Type="DateTime" Precision="3" />
+          <Property Name="TutorApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="TutorDeadlineDate" Type="DateTime" Precision="3" />
+          <Property Name="TutorCompletedDate" Type="DateTime" Precision="3" />
+          <Property Name="NotificationId" Type="Int64" />
+          <Property Name="ExamNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FirstPaperAnswerSheetsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SecondPaperAnswerSheetsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstPaperMarkedSheetsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SecondPaperMarkedSheetsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstPaperMarks" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SecondPaperMarks" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalMarks" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="StudentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TutorStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsFirstPaperCompleted" Type="Boolean" />
+          <Property Name="IsSecondPaperCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="TutorCommentsForFirstPaper" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TutorCommentsForSecondPaper" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdminAssignToTutor" Type="Boolean" Nullable="false" />
+          <Property Name="AdminAssignToTutorReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PriceForTutor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsPaidForTutor" Type="Boolean" Nullable="false" />
+          <Property Name="PaidDateForTutor" Type="DateTime" Precision="3" />
+          <Property Name="CreatedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsThirdPaperCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="FirstPaperRemainingTime" Type="Int32" Nullable="false" />
+          <Property Name="SecondPaperRemainingTime" Type="Int32" Nullable="false" />
+          <Property Name="ThirdPaperRemainingTime" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ExamMapDetails" Relationship="OnlinePaperMarkingModel.FK_ExamMapDetails_Exams" FromRole="Exam" ToRole="ExamMapDetail" />
+          <NavigationProperty Name="ExamType" Relationship="OnlinePaperMarkingModel.FK_Exams_ExamTypes" FromRole="Exam" ToRole="ExamType" />
+          <NavigationProperty Name="Medium" Relationship="OnlinePaperMarkingModel.FK_Exams_Mediums" FromRole="Exam" ToRole="Medium" />
+          <NavigationProperty Name="Notification" Relationship="OnlinePaperMarkingModel.FK_Exams_Notifications" FromRole="Exam" ToRole="Notification" />
+          <NavigationProperty Name="PastPaper" Relationship="OnlinePaperMarkingModel.FK_Exams_PastPapers" FromRole="Exam" ToRole="PastPaper" />
+          <NavigationProperty Name="Subject" Relationship="OnlinePaperMarkingModel.FK_Exams_Subjects" FromRole="Exam" ToRole="Subject" />
+          <NavigationProperty Name="StudentsMcqAnswers" Relationship="OnlinePaperMarkingModel.FK_StudentsMcqAnswers_Exams" FromRole="Exam" ToRole="StudentsMcqAnswer" />
+          <NavigationProperty Name="TutorHotSpots" Relationship="OnlinePaperMarkingModel.FK_TutorHotSpots_Exams" FromRole="Exam" ToRole="TutorHotSpot" />
+          <NavigationProperty Name="UploadImages" Relationship="OnlinePaperMarkingModel.FK_UploadImages_Exams" FromRole="Exam" ToRole="UploadImage" />
+        </EntityType>
+        <Association Name="FK_CartItems_Cart">
+          <End Type="OnlinePaperMarkingModel.Cart" Role="Cart" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.CartItem" Role="CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamMapDetails_Exams">
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.ExamMapDetail" Role="ExamMapDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="ExamMapDetail">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_ExamTypes">
+          <End Type="OnlinePaperMarkingModel.ExamType" Role="ExamType" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamType">
+              <PropertyRef Name="ExamTypeID" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="ExamTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Mediums">
+          <End Type="OnlinePaperMarkingModel.Medium" Role="Medium" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medium">
+              <PropertyRef Name="MediumID" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="MediumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Notifications">
+          <End Type="OnlinePaperMarkingModel.Notification" Role="Notification" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationID" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_PastPapers">
+          <End Type="OnlinePaperMarkingModel.PastPaper" Role="PastPaper" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PastPaper">
+              <PropertyRef Name="PastPaerID" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="PastPaperId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exams_Subjects">
+          <End Type="OnlinePaperMarkingModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsMcqAnswers_Exams">
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.StudentsMcqAnswer" Role="StudentsMcqAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="StudentsMcqAnswer">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorHotSpots_Exams">
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="1" />
+          <End Type="OnlinePaperMarkingModel.TutorHotSpot" Role="TutorHotSpot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="TutorHotSpot">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadImages_Exams">
+          <End Type="OnlinePaperMarkingModel.Exam" Role="Exam" Multiplicity="0..1" />
+          <End Type="OnlinePaperMarkingModel.UploadImage" Role="UploadImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exam">
+              <PropertyRef Name="ExamID" />
+            </Principal>
+            <Dependent Role="UploadImage">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnlinePaperMarkingModelStoreContainer" CdmEntityContainer="OnlinePaperMarkingEntities">
+          <EntitySetMapping Name="BankBranches">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.BankBranch">
+              <MappingFragment StoreEntitySet="BankBranches">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banks">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Bank">
+              <MappingFragment StoreEntitySet="Banks">
+                <ScalarProperty Name="BankID" ColumnName="BankID" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartItems">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItems">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="PastPaperId" ColumnName="PastPaperId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.District">
+              <MappingFragment StoreEntitySet="Districts">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="DistrictCode" ColumnName="DistrictCode" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamTypes">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.ExamType">
+              <MappingFragment StoreEntitySet="ExamTypes">
+                <ScalarProperty Name="ExamTypeID" ColumnName="ExamTypeID" />
+                <ScalarProperty Name="ExamTypeCode" ColumnName="ExamTypeCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="McqDetails">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.McqDetail">
+              <MappingFragment StoreEntitySet="McqDetails">
+                <ScalarProperty Name="McqID" ColumnName="McqID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="ExamTypeID" ColumnName="ExamTypeID" />
+                <ScalarProperty Name="QuestionNo" ColumnName="QuestionNo" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mediums">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Medium">
+              <MappingFragment StoreEntitySet="Mediums">
+                <ScalarProperty Name="MediumID" ColumnName="MediumID" />
+                <ScalarProperty Name="MediumCode" ColumnName="MediumCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationAssigns">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.NotificationAssign">
+              <MappingFragment StoreEntitySet="NotificationAssign">
+                <ScalarProperty Name="AssignID" ColumnName="AssignID" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="IsExpired" ColumnName="IsExpired" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
+                <ScalarProperty Name="NotificationHeader" ColumnName="NotificationHeader" />
+                <ScalarProperty Name="NotificationDetail" ColumnName="NotificationDetail" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineClasses">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.OnlineClass">
+              <MappingFragment StoreEntitySet="OnlineClasses">
+                <ScalarProperty Name="Master" ColumnName="Master" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineUsers">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.OnlineUser">
+              <MappingFragment StoreEntitySet="OnlineUser">
+                <ScalarProperty Name="ProfileCompletionPercentage" ColumnName="ProfileCompletionPercentage" />
+                <ScalarProperty Name="ProfileImagePath" ColumnName="ProfileImagePath" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ResetPassword" ColumnName="ResetPassword" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="RecUser" ColumnName="RecUser" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TrnFlag" ColumnName="TrnFlag" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PassWordExpiryDate" ColumnName="PassWordExpiryDate" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="PasswordResetCode" ColumnName="PasswordResetCode" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PastPapers">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PastPaper">
+              <MappingFragment StoreEntitySet="PastPapers">
+                <ScalarProperty Name="ThirdPaperTime" ColumnName="ThirdPaperTime" />
+                <ScalarProperty Name="HasThirdPaper" ColumnName="HasThirdPaper" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SecondPaperTime" ColumnName="SecondPaperTime" />
+                <ScalarProperty Name="FirstPaperTime" ColumnName="FirstPaperTime" />
+                <ScalarProperty Name="IsOnlineExam" ColumnName="IsOnlineExam" />
+                <ScalarProperty Name="MapImagePath" ColumnName="MapImagePath" />
+                <ScalarProperty Name="HasMap" ColumnName="HasMap" />
+                <ScalarProperty Name="MarkingSchemePath" ColumnName="MarkingSchemePath" />
+                <ScalarProperty Name="PastPaerID" ColumnName="PastPaerID" />
+                <ScalarProperty Name="PaperName" ColumnName="PaperName" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="ExamTypeID" ColumnName="ExamTypeID" />
+                <ScalarProperty Name="MediumID" ColumnName="MediumID" />
+                <ScalarProperty Name="BoxImagePath" ColumnName="BoxImagePath" />
+                <ScalarProperty Name="PaperPreviewPath" ColumnName="PaperPreviewPath" />
+                <ScalarProperty Name="PaperDownloadPath" ColumnName="PaperDownloadPath" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="McqQuestionCount" ColumnName="McqQuestionCount" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="HasMcq" ColumnName="HasMcq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreferedTutorExamTypes">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PreferedTutorExamType">
+              <MappingFragment StoreEntitySet="PreferedTutorExamTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="ExamTypeId" ColumnName="ExamTypeId" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreferedTutorMediums">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PreferedTutorMedium">
+              <MappingFragment StoreEntitySet="PreferedTutorMediums">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="MediumId" ColumnName="MediumId" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreferedTutorSubjects">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PreferedTutorSubject">
+              <MappingFragment StoreEntitySet="PreferedTutorSubject">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Province">
+              <MappingFragment StoreEntitySet="Provinces">
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsMcqAnswers">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.StudentsMcqAnswer">
+              <MappingFragment StoreEntitySet="StudentsMcqAnswers">
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+                <ScalarProperty Name="StudentLoginId" ColumnName="StudentLoginId" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="QuestionNo" ColumnName="QuestionNo" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="ExamTypeId" ColumnName="ExamTypeId" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceForTutor" ColumnName="PriceForTutor" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CodeFieldName" ColumnName="CodeFieldName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamMapDetails">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.ExamMapDetail">
+              <MappingFragment StoreEntitySet="ExamMapDetails">
+                <ScalarProperty Name="CreatedType" ColumnName="CreatedType" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="HotSpotID" ColumnName="HotSpotID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UploadImages">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.UploadImage">
+              <MappingFragment StoreEntitySet="UploadImages">
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorHotSpots">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.TutorHotSpot">
+              <MappingFragment StoreEntitySet="TutorHotSpots">
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="HotSpotID" ColumnName="HotSpotID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectImages">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.SubjectImage">
+              <MappingFragment StoreEntitySet="SubjectImages">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="MediumId" ColumnName="MediumId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTutors">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.tblTutor">
+              <MappingFragment StoreEntitySet="tblTutors">
+                <ScalarProperty Name="DownloadedPaperCount" ColumnName="DownloadedPaperCount" />
+                <ScalarProperty Name="CompletedExamsCount" ColumnName="CompletedExamsCount" />
+                <ScalarProperty Name="AdminApproval" ColumnName="AdminApproval" />
+                <ScalarProperty Name="PendingExamsCount" ColumnName="PendingExamsCount" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Medium" ColumnName="Medium" />
+                <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+                <ScalarProperty Name="RegistrationToTime" ColumnName="RegistrationToTime" />
+                <ScalarProperty Name="RegistrationFromTime" ColumnName="RegistrationFromTime" />
+                <ScalarProperty Name="RegistartionDate" ColumnName="RegistartionDate" />
+                <ScalarProperty Name="DownloadDate" ColumnName="DownloadDate" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="AlternativeEmail" ColumnName="AlternativeEmail" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="PreviousSchoolAddress" ColumnName="PreviousSchoolAddress" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="School_University" ColumnName="School/University" />
+                <ScalarProperty Name="PreviousTutorNo" ColumnName="PreviousTutorNo" />
+                <ScalarProperty Name="InactivationDate" ColumnName="InactivationDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+                <ScalarProperty Name="PostalID" ColumnName="PostalID" />
+                <ScalarProperty Name="TutorNIC" ColumnName="TutorNIC" />
+                <ScalarProperty Name="FirstLanguage" ColumnName="FirstLanguage" />
+                <ScalarProperty Name="TutorImage" ColumnName="TutorImage" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="TutorEmail" ColumnName="TutorEmail" />
+                <ScalarProperty Name="ContactNo2" ColumnName="ContactNo2" />
+                <ScalarProperty Name="ContactNo1" ColumnName="ContactNo1" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="TutorFullName" ColumnName="TutorFullName" />
+                <ScalarProperty Name="TutorLastName" ColumnName="TutorLastName" />
+                <ScalarProperty Name="TutorFirstName" ColumnName="TutorFirstName" />
+                <ScalarProperty Name="TutorInitials" ColumnName="TutorInitials" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OldUsers">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.OldUser">
+              <MappingFragment StoreEntitySet="OldUsers">
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoggedDetails">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.LoggedDetail">
+              <MappingFragment StoreEntitySet="LoggedDetails">
+                <ScalarProperty Name="LoggedDateTime" ColumnName="LoggedDateTime" />
+                <ScalarProperty Name="LoggedDate" ColumnName="LoggedDate" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorQualifications">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.TutorQualification">
+              <MappingFragment StoreEntitySet="TutorQualifications">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="QualificationID" ColumnName="QualificationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaperDownloadDetails">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PaperDownloadDetail">
+              <MappingFragment StoreEntitySet="PaperDownloadDetails">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PaperId" ColumnName="PaperId" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="DownloadID" ColumnName="DownloadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromoCodes">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.PromoCode">
+              <MappingFragment StoreEntitySet="PromoCodes">
+                <ScalarProperty Name="PromoCode1" ColumnName="PromoCode" />
+                <ScalarProperty Name="PromoCodeID" ColumnName="PromoCodeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOnlineStudentMasters">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.tblOnlineStudentMaster">
+              <MappingFragment StoreEntitySet="tblOnlineStudentMaster">
+                <ScalarProperty Name="IsPromoCodeUsed" ColumnName="IsPromoCodeUsed" />
+                <ScalarProperty Name="DownloadedPaperCount" ColumnName="DownloadedPaperCount" />
+                <ScalarProperty Name="PurchasedPaperCount" ColumnName="PurchasedPaperCount" />
+                <ScalarProperty Name="MediumId" ColumnName="MediumId" />
+                <ScalarProperty Name="ExamTypeId" ColumnName="ExamTypeId" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="IsExported" ColumnName="IsExported" />
+                <ScalarProperty Name="RegistrationToTime" ColumnName="RegistrationToTime" />
+                <ScalarProperty Name="RegistrationFromTime" ColumnName="RegistrationFromTime" />
+                <ScalarProperty Name="RegistartionDate" ColumnName="RegistartionDate" />
+                <ScalarProperty Name="DownloadDate" ColumnName="DownloadDate" />
+                <ScalarProperty Name="OnlineStudentID" ColumnName="OnlineStudentID" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="AlternativeEmail" ColumnName="AlternativeEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CurrentClass" ColumnName="CurrentClass" />
+                <ScalarProperty Name="CurrentGrade" ColumnName="CurrentGrade" />
+                <ScalarProperty Name="CurrentYear" ColumnName="CurrentYear" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="PreviousSchoolAddress" ColumnName="PreviousSchoolAddress" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="PreviousStudentNo" ColumnName="PreviousStudentNo" />
+                <ScalarProperty Name="InactivationDate" ColumnName="InactivationDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+                <ScalarProperty Name="PostalID" ColumnName="PostalID" />
+                <ScalarProperty Name="StudentNIC" ColumnName="StudentNIC" />
+                <ScalarProperty Name="FirstLanguage" ColumnName="FirstLanguage" />
+                <ScalarProperty Name="StudentImage" ColumnName="StudentImage" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
+                <ScalarProperty Name="ContactNo2" ColumnName="ContactNo2" />
+                <ScalarProperty Name="ContactNo1" ColumnName="ContactNo1" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="StudentFullName" ColumnName="StudentFullName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentInitials" ColumnName="StudentInitials" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="IsPromoApplied" ColumnName="IsPromoApplied" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="IsCheckOut" ColumnName="IsCheckOut" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exams">
+            <EntityTypeMapping TypeName="OnlinePaperMarkingModel.Exam">
+              <MappingFragment StoreEntitySet="Exams">
+                <ScalarProperty Name="ThirdPaperRemainingTime" ColumnName="ThirdPaperRemainingTime" />
+                <ScalarProperty Name="SecondPaperRemainingTime" ColumnName="SecondPaperRemainingTime" />
+                <ScalarProperty Name="FirstPaperRemainingTime" ColumnName="FirstPaperRemainingTime" />
+                <ScalarProperty Name="IsThirdPaperCompleted" ColumnName="IsThirdPaperCompleted" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="PaidDateForTutor" ColumnName="PaidDateForTutor" />
+                <ScalarProperty Name="IsPaidForTutor" ColumnName="IsPaidForTutor" />
+                <ScalarProperty Name="PriceForTutor" ColumnName="PriceForTutor" />
+                <ScalarProperty Name="AdminAssignToTutorReason" ColumnName="AdminAssignToTutorReason" />
+                <ScalarProperty Name="IsAdminAssignToTutor" ColumnName="IsAdminAssignToTutor" />
+                <ScalarProperty Name="TutorCommentsForSecondPaper" ColumnName="TutorCommentsForSecondPaper" />
+                <ScalarProperty Name="TutorCommentsForFirstPaper" ColumnName="TutorCommentsForFirstPaper" />
+                <ScalarProperty Name="IsSecondPaperCompleted" ColumnName="IsSecondPaperCompleted" />
+                <ScalarProperty Name="IsFirstPaperCompleted" ColumnName="IsFirstPaperCompleted" />
+                <ScalarProperty Name="TutorStatus" ColumnName="TutorStatus" />
+                <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="SecondPaperMarks" ColumnName="SecondPaperMarks" />
+                <ScalarProperty Name="FirstPaperMarks" ColumnName="FirstPaperMarks" />
+                <ScalarProperty Name="SecondPaperMarkedSheetsPath" ColumnName="SecondPaperMarkedSheetsPath" />
+                <ScalarProperty Name="FirstPaperMarkedSheetsPath" ColumnName="FirstPaperMarkedSheetsPath" />
+                <ScalarProperty Name="SecondPaperAnswerSheetsPath" ColumnName="SecondPaperAnswerSheetsPath" />
+                <ScalarProperty Name="FirstPaperAnswerSheetsPath" ColumnName="FirstPaperAnswerSheetsPath" />
+                <ScalarProperty Name="ExamNo" ColumnName="ExamNo" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="TutorCompletedDate" ColumnName="TutorCompletedDate" />
+                <ScalarProperty Name="TutorDeadlineDate" ColumnName="TutorDeadlineDate" />
+                <ScalarProperty Name="TutorApprovedDate" ColumnName="TutorApprovedDate" />
+                <ScalarProperty Name="AssignToTutorReadyDate" ColumnName="AssignToTutorReadyDate" />
+                <ScalarProperty Name="AssignToTutor" ColumnName="AssignToTutor" />
+                <ScalarProperty Name="Tutor2LoginId" ColumnName="Tutor2LoginId" />
+                <ScalarProperty Name="Tutor1LoginId" ColumnName="Tutor1LoginId" />
+                <ScalarProperty Name="PastPaperId" ColumnName="PastPaperId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="MediumId" ColumnName="MediumId" />
+                <ScalarProperty Name="ExamTypeId" ColumnName="ExamTypeId" />
+                <ScalarProperty Name="StudentLoginId" ColumnName="StudentLoginId" />
+                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

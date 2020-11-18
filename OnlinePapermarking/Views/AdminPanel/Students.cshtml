@@ -1,0 +1,202 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+
+
+
+<style>
+    .sidebar[data-color="blue"] .nav li.nav-Students > a:not([data-toggle="collapse"]),
+    .off-canvas-sidebar[data-color="blue"] .nav li.nav-Students > a:not([data-toggle="collapse"]),
+    .nav li.nav-Students i {
+        color: #0a4b7a;
+    }
+
+    .sidebar .nav li.nav-Students > a,
+    .off-canvas-sidebar .nav li.nav-Students > a {
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    }
+</style>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Students List</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile No.</th>
+                                <th>Register Date</th>
+                                <th>Purchased Papers</th>
+                                <th>Downloaded Papers</th>
+                                <th>Profile(View)</th>
+                                <th>Block/Unblock</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade profile-modal-lg" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Student Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group pb-1">
+                                    <label for="firstname">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" name="StudentFirstName" placeholder="Enter First name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pb-1">
+                                    <label for="firstname">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" name="StudentLastName" placeholder="Enter Lirst name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pb-1">
+                                    <label for="firstname">Birthday </label>
+                                    <input type="date" class="form-control" id="birthDay" name="DateOfBirth" placeholder="School">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group pb-1">
+                                    <label for="firstname">Address </label>
+                                    <input type="text" class="form-control" id="address" name="AddressLine1" placeholder="Enter Address">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname">Mobile number </label>
+                                    <input type="text" class="form-control" id="mobileNo" name="ContactNo1" placeholder="Enter Mobile number ">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label for="firstname">Email address</label>
+                                    <input type="text" class="form-control" id="email" name="Email" placeholder="Enter Email address">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname">Examination</label>
+                                    <select class="form-control" id="examType">
+                                        <option value="1">Ordinary Level</option>
+                                        <option value="2">Advanced Level</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label for="firstname">Exam Year</label>
+                                    <input type="number" class="form-control" id="examYear" placeholder="Enter Exam Year">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname">School</label>
+                                    <input type="text" class="form-control" id="school" placeholder="School">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="medium">Medium</label>
+                                    <select class="form-control" id="medium">
+                                        <option value="">---Select---</option>
+                                        @foreach (Medium mediums in Model.Mediums)
+                                        {
+                                            <option value="@mediums.MediumID">@mediums.Description</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <select class="form-control" id="district">
+                                        <option value="">---Select---</option>
+                                        @foreach (District district in Model.Districts)
+                                        {
+                                            <option value="@district.DistrictID">@district.DistrictName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="province">Province</label>
+                                    <select class="form-control" id="province">
+                                        <option value="">---Select---</option>
+                                        @foreach (Province province in Model.Provinces)
+                                        {
+                                            <option value="@province.ProvinceID">@province.ProvinceName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/students-page.js"></script>
+
+    <script>
+        var url1 = '@Url.Action("TutorProfile", "TutorDashboard")';
+    </script>
+
+
+}
+

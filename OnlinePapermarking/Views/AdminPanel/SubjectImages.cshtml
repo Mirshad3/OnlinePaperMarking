@@ -1,0 +1,125 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Subjects";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<input type="hidden" id="SubjectId" />
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <form id="RegisterValidation" action="" novalidate="novalidate">
+        <div class="card ">
+            <div class="card-header ">
+                <h5 class="title">Add Subject Images</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group has-label">
+                            <label>
+                                Exam Type
+                            </label>
+                            <select class="form-control" id="cmbExamType">
+                                @foreach (ExamType exmtype in Model.ExamTypes)
+                                {
+                                    <option value="@exmtype.ExamTypeID">@exmtype.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-label">
+                            <label>
+                                Subject
+                            </label>
+                            <select class="form-control" id="cmbSubject"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-label">
+                            <label>
+                                Medium
+                            </label>
+                            <select class="form-control" id="cmbMedium">
+                                @foreach (Medium exmtype in Model.Mediums)
+                                {
+                                    <option value="@exmtype.MediumID">@exmtype.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-label">
+                            <label>
+                                Image
+                            </label>
+                            <input class="form-control" name="" id="imgUpload" type="file" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button type="button" class="btn btn-outline-primary mr-10">Cancel</button>
+                <button type="button" class="btn btn-info" id="saveBtn">Save</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Subject Images</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="subjectTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ExamType</th>
+                            <th>SubjectName</th>
+                            <th>Medium</th>
+                            <th>Image Name</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <!--Datatable Plugin-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+    @*<script src="~/SiteJs/admin-subject-master-page.js"></script>*@
+
+
+    <script src="https://use.fontawesome.com/900c620bd0.js"></script>
+
+
+}

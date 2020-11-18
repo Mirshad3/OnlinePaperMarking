@@ -1,0 +1,18 @@
+﻿@using OnlinePapermarking.Models;
+@model List<PastPaper>
+
+
+@if (Model != null)
+{
+
+    foreach (PastPaper paper in Model)
+    {
+        <div>
+            <a href="javascript:void(0)">
+                <img src="~/Content/img/download/paper-2.png" alt="">
+                <p>@paper.PaperName</p>
+            </a>
+        </div>
+    }
+
+}

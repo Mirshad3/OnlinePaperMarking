@@ -1,0 +1,117 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Performance";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<style>
+    .link-Performance {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-Performance i.ico-Performance {
+        background: url(../../Content/MainDashboard/img/navigation/ico-Performance-sel.png) no-repeat center left;
+    }
+</style>
+<div class="page-content">
+
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Progress Analysis</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/Dashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Progress Analysis</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Latest Attemped Exams</h4>
+            <div id="chart-main"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Subject Wise Marks</h4>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label id="lblMarks">Select Subject</label>
+                            <div class="input-group">
+                                <select id="subjectsToChart" class="form-control">
+                                    @foreach (Subject subject in Model.Subjects)
+                                    {
+                                        <option value="@subject.SubjectID">@subject.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="chart1"></div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Science</h4>
+                        <div id="chart2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Sinhala</h4>
+                        <div id="chart3"></div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+</div>
+<!-- End Page-content -->
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/student-performance-page.js"></script>
+
+}

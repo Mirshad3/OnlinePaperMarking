@@ -1,0 +1,564 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "3")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@*@if (Session["SecondPaperExamIdForMap"] == null || Session["SecondPaperExamIdForMap"].ToString() == "")
+    {
+        Layout = null;
+        @Html.Action("ExamApprovals", "TutorDashboard");
+
+    }*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock - Tutor Corrections</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/MainDashboard/vendor/font-awesome/css/fontawesome-all.min.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/custom.css">
+
+    <link href="~/Content/css/jquery.hotspot.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+</head>
+<body data-layout="detached" data-topbar="colored" class="vertical-hidden">
+
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <input type="hidden" value="@Session["PaperExamIdForFirstPaperCorrections"]" id="examId" />
+
+    <div class="container-fluid">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="container-fluid">
+                        <div class="float-right">
+
+                            <!-- Mobile Search -->
+                            <div class="dropdown d-inline-block d-lg-none ml-2 wr-mobile-search">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
+
+                                    <form class="p-3">
+                                        <div class="form-group m-0">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary mobile-search-btn" type="submit"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- CART -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-cart-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">5</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-cart-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">3</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-notifications-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- User Profile -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded-circle header-profile-user" src="/Dashboard/LoadProfileImage?LoginId=@Session["LoginId"]" alt="Header Avatar">
+                                    <span class="d-none d-xl-inline-block ml-1">@Session["FirstName"]</span>
+                                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- item-->
+                                    <a class="dropdown-item font-size-13" href="/TutorDashboard/Dashboard">Profile</a>
+                                    <a class="dropdown-item font-size-13" href="#">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger font-size-13" href="/Home/LogOut">Logout</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- LOGO -->
+                            <div class="navbar-brand-box">
+                                <a href="#" class="logo logo-light">
+                                    <span class="logo-sm">
+                                        <img src="~/Content/img/logo-small.png" alt="disapamock">
+                                    </span>
+                                    <span class="logo-lg">
+                                        <img src="~/Content/img/logo-colored.png" alt="disapamock">
+                                    </span>
+                                </a>
+                            </div>
+
+                            <button type="button" class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect" id="vertical-menu-btn">
+                                <i class="fa fa-fw fa-bars"></i>
+                            </button>
+
+                            <!-- Desktop Search-->
+                            <form class="app-search d-none d-lg-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control font-size-13" placeholder="Search...">
+                                    <span class="bx bx-search-alt"></span>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </header> <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+                <div class="h-100">
+                    <div class="user-wid text-center py-4">
+                        <div class="user-img">
+                            <img src="~/Content/MainDashboard/img/avatar.png" alt="" class="avatar-md mx-auto rounded-circle">
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="text-dark font-weight-bold font-size-14">Richard Jones Anderson</a>
+                            <p class="text-body text-center mt-2 mb-0 ml-3 mr-3 font-size-11 lineheight-1-5">
+                                Thurstan College, Colombo 03
+                                Colombo District
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider ml-3 mr-3 mb-4"></div>
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu" class="mm-active">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled mm-show" id="side-menu">
+                            <li>
+                                <a href="#" class="waves-effect">
+                                    <i class="ico-dashboard"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-exams"></i>
+                                    <span>Exams</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Performance"></i>
+                                    <span>Performance</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Wishlist"></i>
+                                    <span>Wishlist</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Services"></i>
+                                    <span>Services</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-History"></i>
+                                    <span>History</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-myCart"></i>
+                                    <span>My Cart</span>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="dropdown-divider m-3"></div>
+                            </li>
+                            <li>
+                                <a href="#" class="waves-effect active">
+                                    <i class="ico-Profile"></i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-HelpCenter"></i>
+                                    <span>Help Center</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Signout"></i>
+                                    <span>Signout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="page-title mb-0 font-size-18">@Session["PaperNameForFirstPaperCorrections"]</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <table class="wr-upload-paper-main-tbl">
+                        <tr>
+                            <td>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row mb-4">
+                                            <div class="col-10">
+                                                <h4 class="card-title mt-2">Exam paper</h4>
+                                            </div>
+                                            <div class="col-2 text-right">
+                                                <button class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" type="button" id="btnTutorBankInfo" onclick="EditFirstPaperHotSpot()">Click to Edit</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="wr-paper-preview">
+                                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                <div id="theElement-a">
+                                                    <div class="carousel-inner" id="carouselInner">
+
+                                                    </div>
+                                                </div>
+
+                                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                    <!-- Finish exam popup -->
+                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0">Submit Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <h6 class="lineheight-1-5 mb-4">
+                                        If you have not completed answering the paper please click the Continue Answering button and resume the exam from where you stopped.
+                                    </h6>
+                                    <h6 class="lineheight-1-5">
+                                        By clicking upload answers you confirm to have completed the exam and you will be given 30 minutes up upload your final answers.
+                                    </h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium timerResume" data-dismiss="modal">Continue Answering</button>
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium exam-over" id="cd_stop" data-dismiss="modal" data-toggle="modal">Upload Answers</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time is up popup -->
+                    <button type="button" class="time-up-click d-none" data-toggle="modal" data-target=".time-up-modal" data-backdrop="static" data-keyboard="false"></button>
+                    <div class="modal fade time-up-modal" id="testname" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-toggle="modal" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0">Time is up!</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <h6 class="lineheight-1-5 mb-4">
+                                        If you have not completed answering the paper please click the Continue Answering button and resume the exam from where you stopped you will be given 30 minutes up upload your final answers.
+                                    </h6>
+                                    <h6 class="lineheight-1-5">
+                                        Exam Time is up! You will be given 30 minutes up upload your final answers.
+                                    </h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium exam-over" data-dismiss="modal">Continue Answering</button>
+                                    <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium exam-over" data-dismiss="modal">Upload Answers</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Page-content -->
+
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+    </div>
+
+    <div class="table-responsive" style="display:none">
+        <table class="table" id="errorTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ExamNo</th>
+                    <th>Student Name</th>
+                    <th>ExamType</th>
+                    <th>Subject</th>
+                    <th>Medium</th>
+                    <th>Year</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Vendor -->
+    <script src="~/Content/MainDashboard/js/jquery.js"></script>
+    <script src="~/Content/MainDashboard/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/MainDashboard/js/app.js"></script>
+    <script src="~/Content/MainDashboard/js/materialize.min.js"></script>
+
+    <script src="~/Scripts/jquery-hotspot-without-schema.js"></script>
+
+    <script src="~/SiteJs/first-paper-corrections-page.js"></script>
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+</body>
+</html>

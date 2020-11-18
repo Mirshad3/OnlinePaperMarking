@@ -1,0 +1,129 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "ProductList";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<style>
+    .link-Products {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-Products i.ico-Services {
+        background: url(../../Content/MainDashboard/img/navigation/ico-Services-sel.png) no-repeat center left;
+    }
+
+    .dropdown-divider.ml-3 {
+        display: none;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Exams Store</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/Dashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Exams Store</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-link show-lg collapseFilter-btn font-weight-medium" data-toggle="collapse" href="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                        <i class="fa fa-filter mr-2"></i>Filter
+                    </a>
+                    <div class="collapse show" id="collapseFilter">
+                        <a class="btn btn-link show-lg font-weight-medium border-bottom mb-2 text-secondary" data-toggle="collapse" href="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                            <i class="fa fa-times mr-2"></i>Close
+                        </a>
+
+                        <!-- Subjects -->
+                        <h5 class="font-weight-medium pb-1 mt-4">Subjects</h5>
+                        <div id="subjectList">
+
+                        </div>
+
+                        <div class="border-bottom mt-4"></div>
+                        <!-- Language -->
+                        <h5 class="font-weight-medium pb-1">Medium</h5>
+                        <div class="custom-control custom-radio mb-2">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
+                            <label class="custom-control-label" for="customRadio1">සිංහල</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-2">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">English</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio3">தமிழ்</label>
+                        </div>
+
+
+                        @*<div class="border-bottom mt-4"></div>*@
+                        <!-- Medium -->
+                        @*<h5 class="font-weight-medium pb-1 mt-4">Exam Type</h5>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="customRadio4" name="customRadio1" class="custom-control-input" checked="">
+                                <label class="custom-control-label" for="customRadio4" id="lblOrdinaryLevel">අ.පො.ස. සාමාන්‍ය පෙළ</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio5" name="customRadio1" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio5" id="lblAdvancedLevel">අ.පො.ස. උසස් පෙළ</label>
+                            </div>*@
+
+                        @*<div class="border-bottom mt-4"></div>*@
+                        <!-- Year -->
+                        @*<h5 class="font-weight-medium pb-1 mt-4">Year Range</h5>
+                            <div class="range-slider">
+                                <div id="slider-range" class="mr-1 ml-1"></div>
+                                <input type="text" id="amount" class="font-size-14 font-weight-normal border-0 p-0 m-0 mt-2 w-100 text-center">
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9">
+            <div class="row" id="papersList">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page-content -->
+
+@section scripts{
+
+    <script src="~/SiteJs/product-list-page.js"></script>
+    @*<script>
+            $("body").addClass("vertical-collpsed");
+        </script>*@
+}

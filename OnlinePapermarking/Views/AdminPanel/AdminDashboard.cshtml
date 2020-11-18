@@ -1,0 +1,332 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+@{
+    ViewBag.Title = "AdminDashboard";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+<style>
+    .sidebar[data-color="blue"] .nav li.nav-Dashboard > a:not([data-toggle="collapse"]),
+    .off-canvas-sidebar[data-color="blue"] .nav li.nav-Dashboard > a:not([data-toggle="collapse"]),
+    .nav li.nav-Dashboard i {
+        color: #0a4b7a;
+    }
+
+    .sidebar .nav li.nav-Dashboard > a,
+    .off-canvas-sidebar .nav li.nav-Dashboard > a {
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    }
+</style>
+
+<div class="panel-header panel-header-lg">
+    <canvas id="bigDashboardChart"></canvas>
+</div>
+<div class="content">
+
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    @*<div class="icon icon-primary">
+                                            <i class="now-ui-icons ui-2_chat-round"></i>
+                                        </div>*@
+                                    <h3 class="info-title" id="headerExsistingStudentCount">1457</h3>
+                                    <h6 class="stats-title">Existing Students</h6>
+                                </div>
+                                <hr />
+                                <div class="info">
+                                    @*<div class="icon icon-primary">
+                                            <i class="now-ui-icons ui-2_chat-round"></i>
+                                        </div>*@
+                                    <h3 class="info-title" id="headerActiveStudentCount">10</h3>
+                                    <h6 class="stats-title">Active Students in Existing Pool</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    @*<div class="icon icon-success">
+                                            <i class="now-ui-icons business_money-coins"></i>
+                                        </div>*@
+                                    <h3 class="info-title" id="headerNewStudentCount"></h3>
+                                    <h6 class="stats-title">New Students</h6>
+                                </div>
+                                <hr />
+                                <div class="info">
+                                    <h5 class="info-title" id="headerNewOlStudentCount"></h5>
+                                    <h5 class="info-title" id="headerNewAlStudentCount"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    @*<div class="icon icon-info">
+                                            <i class="now-ui-icons users_single-02"></i>
+                                        </div>*@
+                                    <h3 class="info-title" id="headerOnlineExamCount"></h3>
+                                    <h6 class="stats-title">Online Exams Purchased</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    @*<div class="icon icon-danger">
+                                            <i class="now-ui-icons objects_support-17"></i>
+                                        </div>*@
+                                    <h3 class="info-title" id="headerDownloadPaperCount"></h3>
+                                    <h6 class="stats-title">No of Past Paper Downloads</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*<div class="row">
+            <div class="col-lg-4">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="title">Shipped Products</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="lineChartExample"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="title">All products</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="title">24 Hours Performance</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="barChartSimpleGradientsNumbers"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Lecturers Pending List</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile No.</th>
+                                    <th>Register Date</th>
+                                    <th>Downloaded Papers</th>
+                                    <th>Profile(View)</th>
+                                    <th>Qualifications</th>
+                                    <th>Approve/Reject</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade profile-modal-lg" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Tutor Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group pb-1">
+                            <label for="firstname">First Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="Enter First name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group pb-1">
+                            <label for="firstname">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Enter Last name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group pb-1">
+                            <label for="firstname">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Enter Address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Email address</label>
+                            <input type="text" class="form-control" id="email" placeholder="Enter Email address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Mobile number </label>
+                            <input type="text" class="form-control" id="mobileNo" placeholder="Enter Mobile number ">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">NIC No</label>
+                            <input type="text" class="form-control" id="nicNo" placeholder="Enter NIC no">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Exam Types</label>
+                            <!-- Build your select: -->
+                            <select class="custom-select" id="examTypes" multiple="multiple">
+                                @foreach (ExamType exmtype in Model.ExamTypes)
+                                {
+                                    <option value="@exmtype.ExamTypeID">@exmtype.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Mediums</label>
+                            <!-- Build your select: -->
+                            <select class="custom-select" id="mediums" multiple="multiple">
+                                @foreach (Medium mediums in Model.Mediums)
+                                {
+                                    <option value="@mediums.MediumID">@mediums.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Subjects</label>
+                            <!-- Build your select: -->
+                            <select class="custom-select" id="subjects" multiple="multiple">
+                                @foreach (Subject subject in Model.Subjects)
+                                {
+                                    <option value="@subject.SubjectID">@subject.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Occupation</label>
+                            <!-- Build your select: -->
+                            <select class="form-control" id="occupation">
+                                <option value="">None selected</option>
+                                <option value="Lecture">Lecture</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="University Student">University Student</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">Works At</label>
+                            <input type="text" class="form-control" id="university" placeholder="University/School">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname">District</label>
+                            <!-- Build your select: -->
+                            <select class="form-control" id="district">
+                                <option value="">None selected</option>
+                                @foreach (District district in Model.Districts)
+                                {
+                                    <option value="@district.DistrictID">@district.DistrictName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts{
+
+    <!--Datatable Plugin-->
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/admin-dashboard-page.js"></script>
+
+    <script src="~/SiteJs/lectures-page.js"></script>
+
+}
+

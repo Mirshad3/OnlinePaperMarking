@@ -1,0 +1,114 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Payments";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+
+<style>
+    .sidebar[data-color="blue"] .nav li.nav-StuPayments > a:not([data-toggle="collapse"]),
+    .off-canvas-sidebar[data-color="blue"] .nav li.nav-StuPayments > a:not([data-toggle="collapse"]),
+    .nav li.nav-StuPayments i {
+        color: #0a4b7a;
+    }
+
+    .sidebar .nav li.nav-StuPayments > a,
+    .off-canvas-sidebar .nav li.nav-StuPayments > a {
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    }
+</style>
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<input type="hidden" id="SubjectId" />
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Payments</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group has-label">
+                        <label>
+                            From
+                        </label>
+                        <input class="form-control" name="" id="dpFromDate" type="date" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-label">
+                        <label>
+                            To
+                        </label>
+                        <input class="form-control" name="" id="dpToDate" type="date" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" class="btn btn-primary" id="searchBtn">Search</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Subjects</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="paymentTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>OrderNo</th>
+                            <th>Date</th>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+    <!--Datatable Plugin-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/payments-page.js"></script>
+
+}
+

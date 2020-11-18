@@ -1,0 +1,86 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "PaymentHistory";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<style>
+    .link-paymentHistory {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-paymentHistory i.ico-History {
+        background: url(../../Content/MainDashboard/img/navigation/ico-History-sel.png) no-repeat center left;
+    }
+</style>
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Transaction History</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/Dashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Transaction History</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Order No</th>
+                                    <th>Payment Date</th>
+                                    <th>Item Name</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/student-payment-history-page.js"></script>
+
+}

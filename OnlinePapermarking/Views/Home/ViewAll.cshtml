@@ -1,0 +1,598 @@
+﻿@*@using OnlinePapermarking.Models;
+    @model dynamic*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="~/Content/img/logo-small.png" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/animate/animate.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/owl.carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/owl.carousel/assets/owl.theme.default.min.css">
+    <link href="~/Content/css/slick.min.css" rel="stylesheet" />
+    <link href="~/Content/css/slick-theme.min.css" rel="stylesheet" />
+
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="~/Content/css/theme.css">
+    <link rel="stylesheet" href="~/Content/css/theme-elements.css">
+
+    <!-- Current Page CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/settings.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/layers.css">
+    <link rel="stylesheet" href="~/Content/vendor/rs-plugin/css/navigation.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="~/Content/css/skins/default.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/css/custom.css">
+
+    <style>
+        #resetEmailError, #invalidAlert, #newPasswordError, #confirmPasswordError {
+            display: none;
+        }
+    </style>
+
+</head>
+<body class="one-page" data-spy="scroll" data-target=".header-nav-main nav" data-offset="150">
+    <div class="body">
+        <input type="hidden" value="" id="email" />
+        <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+        <input type="hidden" value="@Session["ExamTypeId"]" id="examTypeId" />
+        <input type="hidden" value="@Session["MediumId"]" id="mediumId" />
+        <!-- Header -->
+        <header id="header" class="header-effect-shrink header-transparent" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyHeaderContainerHeight': 70, 'stickyStartAt': 120}">
+            <div class="header-body">
+                <div class="header-container container">
+                    <div class="header-row">
+                        <div class="header-column justify-content-start">
+                            <div class="header-logo border-left-0 px-4">
+                                <a href="/">
+                                    <img alt="disapamock" height="45" data-change-src="/Content/img/logo-colored.png" src="~/Content/img/logo-colored.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="header-column justify-content-end">
+
+                            <div class="header-nav">
+                                <div class="header-nav-main header-nav-main-uppercase header-nav-main-effect-1 header-nav-main-sub-effect-1">
+                                    <nav class="collapse">
+                                        <ul class="nav flex-column flex-lg-row" id="mainNav">
+                                            <li>
+                                                <a href="/" class="dropdown-item">Home</a>
+                                            </li>
+                                            @*<li>
+                                                <a href="/Home/PastPaperCatelog" class="dropdown-item">Past Paper Catalog </a>
+                                            </li>*@
+                                            <li>
+                                                <a href="/#services" class="dropdown-item">Services </a>
+                                            </li>
+                                            <li>
+                                                <a href="/#aboutus" class="dropdown-item">About</a>
+                                            </li>
+                                            <li>
+                                                <a href="/#footer" class="dropdown-item">Contact</a>
+                                            </li>
+
+
+
+                                            @if (Session["LoginId"] == null)
+                                            {
+                                                @* NOT LOGGED IN - START *@
+                                                <li class="dropdown dropdown-mega dropdown-mega-signin signin signin-custom ml-lg-3 mobile-hide" id="headerAccount">
+                                                    <div class="header-button d-none d-sm-flex border-right-0 border-left-0">
+                                                        <a class="btn btn-rounded btn-primary main-login-btn" href="javascript:void(0)">LOGIN</a>
+                                                    </div>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <div class="dropdown-mega-content">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div class="alert" id="invalidAlert">
+                                                                            Invalid Username or Password
+                                                                        </div>
+                                                                        <!-- SignIn - START -->
+                                                                        <div class="signin-form">
+                                                                            <div class="wr-registerForm">
+
+                                                                                <!-- Login partial layout - START -->
+                                                                                <span class="top-sub-title text-4 font-weight-bold">Sign In</span>
+                                                                                <h2 class="font-weight-bold text-8 mb-5">Welcome Back</h2>
+                                                                                <form id="shopLoginRegister">
+                                                                                    <fieldset id="SubmitForm">
+
+                                                                                        <div class="form-row">
+                                                                                            <div class="form-group col-lg-12">
+                                                                                                <label class="text-color-dark" for="">Username</label>
+                                                                                                <input type="text" value="" class="form-control bg-light-5 border-0 rounded" name="Email" id="" required>
+                                                                                            </div>
+                                                                                            <div class="form-group col-lg-12">
+                                                                                                <label class="text-color-dark" for="">Password</label>
+                                                                                                <input type="password" value="" class="form-control bg-light-5 border-0 rounded" name="Password" id="" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-row mb-3">
+                                                                                            <div class="form-group col">
+                                                                                                <div class="form-check checkbox-custom checkbox-default">
+                                                                                                    <input class="form-check-input" name="IsRemember" type="checkbox" value="true" id="signInRemember">
+                                                                                                    <label class="form-check-label" for="signInRemember">
+                                                                                                        Remember me
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group col text-right">
+                                                                                                <a href="#" id="headerRecover" class="forgot-pw text-color-dark d-block">Forgot password?</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-row mb-5">
+                                                                                            <div class="col-12 text-left">
+                                                                                                <a class="btn btn-primary btn-4 btn-fs-4 mb-2 btn-rounded btn-block" style="color:whitesmoke" id="loginBtn">Sign In</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-row">
+                                                                                            <p class="col text-center p-0">
+                                                                                                Don't have have an account? <a href="/Home/Register" class="text-primary">SignUp</a>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </form>
+                                                                                <!-- Login partial layout - END -->
+
+                                                                            </div>
+                                                                        </div><!-- SignIn - End -->
+                                                                        <!-- Password recovery - START -->
+                                                                        <div class="recover-form wr-registerForm">
+                                                                            <span class="top-sub-title text-4 font-weight-bold">Members</span>
+                                                                            <h2 class="font-weight-bold text-8 mb-5">Reset my Password</h2>
+
+                                                                            <ul class="nav nav-tabs nav-tabs-default registerForm-as" id="tabDefault" role="tablist">
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link active show" id="default-portfolio-tab" data-toggle="tab" href="#default-portfolio" role="tab" aria-controls="default-portfolio" aria-expanded="true">
+                                                                                        <h4>Email</h4>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link" id="default-process-tab" data-toggle="tab" href="#default-process" role="tab" aria-controls="default-process">
+                                                                                        <h4>Mobile</h4>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <div class="tab-content" id="tabDefaultContent">
+                                                                                <div class="tab-pane fade pt-4 show active" id="default-portfolio" role="tabpanel" aria-labelledby="default-portfolio-tab">
+                                                                                    <form action="/" id="frmResetPassword" method="post">
+                                                                                        <div class="form-row mb-4">
+                                                                                            <div class="form-group col mb-2">
+                                                                                                <input type="email" value="" maxlength="100" class="form-control bg-light-5 border-0 rounded" name="email" id="resetPasswordEmail" placeholder="E-mail" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="tab-pane fade pt-4" id="default-process" role="tabpanel" aria-labelledby="default-process-tab">
+                                                                                    <form action="/" id="frmResetPassword" method="post">
+                                                                                        <div class="form-row mb-4">
+                                                                                            <div class="form-group col mb-2">
+                                                                                                <input type="number" value="" maxlength="100" class="form-control bg-light-5 border-0 rounded" id="" placeholder="Mobile Number" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="row align-items-center">
+                                                                                    <div class="col">
+                                                                                        <a href="#" id="headerRecoverCancel" class="text-color-primary pl-0">Have an account?</a>
+                                                                                    </div>
+                                                                                    <div class="col text-right">
+                                                                                        <button type="button" class="btn btn-primary btn-4 btn-fs-4 mb-2 btn-rounded btn-block" id="resetPasswordBtn1">Submit</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div><!-- Password recovery - END -->
+                                                                        <!-- Verify Code Email - START -->
+                                                                        <div class="email-reset-code-form reset-code-new" style="display:none;">
+                                                                            <span class="top-sub-title text-4 font-weight-bold">Verify Email</span>
+                                                                            <h2 class="font-weight-bold text-8 mb-2">Get a Verfication Code</h2>
+                                                                            <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold" id="spanVerifyEmail"></span></p>
+                                                                            <div class="form-row mb-4">
+                                                                                <div class="form-group col mb-2">
+                                                                                    <input type="number" class="form-control bg-light-5 border-0 rounded" id="txtverificationCodeNew" placeholder="Enter Code" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row align-items-center">
+                                                                                <div class="col">
+                                                                                    <a href="javascript: void(0)" class="text-color-primary pl-0 resetScreen">Resend Code</a>
+                                                                                </div>
+                                                                                <div class="col text-right">
+                                                                                    <button type="button" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block" id="submitVerifyCodeBtn">Submit</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- Verify Code Email - END -->
+                                                                        <!-- Reset Code Email - START -->
+                                                                        <div class="email-reset-code-form change-password-reset-code" style="display:none;">
+                                                                            <span class="top-sub-title text-4 font-weight-bold">Email Reset</span>
+                                                                            <h2 class="font-weight-bold text-8 mb-2">Get a Verfication Code</h2>
+                                                                            <p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold" id="spanChangePasswordResetEmail"></span></p>
+                                                                            <div class="form-row mb-4">
+                                                                                <div class="form-group col mb-2">
+                                                                                    <input type="number" class="form-control bg-light-5 border-0 rounded" id="txtverificationCode" placeholder="Enter Code" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row align-items-center">
+                                                                                <div class="col">
+                                                                                    <a href="javascript: void(0)" class="text-color-primary pl-0 resetScreen">Resend Code</a>
+                                                                                </div>
+                                                                                <div class="col text-right">
+                                                                                    <button type="button" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block" id="resetPasswordBtn2">Submit</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- Reset Code Email - END -->
+                                                                        <!-- Change Password  - START -->
+                                                                        <div class="password-reset-form" style="display:none;">
+                                                                            <span class="top-sub-title text-4 font-weight-bold">Email Reset</span>
+                                                                            <h2 class="font-weight-bold text-8 mb-2">Change Password</h2>
+                                                                            @*<p class="p-0 mb-4">Verification code sent to <span class="font-weight-semibold">testemail@email.com</span></p>*@
+                                                                            <div class="form-row mb-4">
+                                                                                <div class="form-group col mb-2">
+                                                                                    <input type="password" class="form-control bg-light-5 border-0 rounded" id="txtNewPassword" placeholder="New Password" required>
+                                                                                    <div class="text-danger" id="newPasswordError">Email is required</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-row mb-4">
+                                                                                <div class="form-group col mb-2">
+                                                                                    <input type="password" class="form-control bg-light-5 border-0 rounded" id="txtConfirmPassword" placeholder="Confirm Password" required>
+                                                                                    <div class="text-danger" id="confirmPasswordError">Email is required</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row align-items-center">
+                                                                                <div class="col">
+                                                                                    @*<a href="javascript: void(0)" class="text-color-primary pl-0 resetScreen">Try another way</a>*@
+                                                                                </div>
+                                                                                <div class="col text-right">
+                                                                                    <button type="button" class="btn btn-primary btn-4 btn-fs-4 btn-rounded btn-block" id="resetPasswordBtn3">Submit</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- Change Password - END -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+
+                                                <li class="mobile-hide">
+                                                    <div class="header-button d-none d-sm-flex border-right-0 border-left-0">
+                                                        <a href="/Home/Register" class="btn btn-rounded btn-tertiary btn-4 ml-3">
+                                                            <span class="wrap">
+                                                                <span>REGISTER</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <li class="mobile-show">
+                                                    <a href="/Home/Login" class="btn btn-rounded btn-primary btn-4">
+                                                        <span class="wrap">
+                                                            <span>LOGIN</span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="mobile-show">
+                                                    <a href="/Home/Register" class="btn btn-rounded btn-tertiary btn-4 ml-3">
+                                                        <span class="wrap">
+                                                            <span>REGISTER</span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @* NOT LOGGED IN - END *@
+                                            }
+                                            else
+                                            {
+                                                @* LOGGED IN - START *@
+                                                <li class="dropdown dropdown-mega dropdown-mega-signin signin logged ml-lg-3" id="headerAccount">
+                                                    <a class="dropdown-item pl-lg-4">My Account</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <div class="dropdown-mega-content">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <table class="align-items-center mb-3" width="100%">
+                                                                            <tr>
+                                                                                <td width="65px">
+                                                                                    <img src="/Content/MainDashboard/img/avatar.png" class="img-fluid rounded-circle" alt="" width="48">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <h2 class="font-weight-medium text-3 mb-0">@Session["FirstName"] @Session["LastName"]</h2>
+                                                                                    <span class="font-size-12 text-color-light-3">@Session["Role"]</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+
+                                                                        <ul class="nav flex-column border-top pt-2">
+                                                                            @if (Session["UserRoleId"] == "2")
+                                                                            {
+                                                                                <li class="nav-item">
+                                                                                    <a href="/Dashboard/Dashboard" class="nav-link">Dashboard</a>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a href="/dashboard/StudentProfile" class="nav-link">Profile</a>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a href="/Home/LogOut" class="nav-link">Sign Out</a>
+                                                                                </li>
+                                                                            }
+                                                                            else if (Session["UserRoleId"] == "3")
+                                                                            {
+                                                                                <li class="nav-item">
+                                                                                    <a href="/TutorDashboard/Dashboard" class="nav-link">Dashboard</a>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a href="/dashboard/TutorProfile" class="nav-link">Profile</a>
+                                                                                </li>
+                                                                                <li class="nav-item">
+                                                                                    <a href="/Home/LogOut" class="nav-link">Sign Out</a>
+                                                                                </li>
+                                                                            }
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                @* LOGGED IN - END *@
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <button class="header-btn-collapse-nav mx-3" data-toggle="collapse" data-target=".header-nav-main nav">
+                                <span class="hamburguer">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Exam popup -->
+        <div id="small-dialog" class="dialog dialog-sm zoom-anim-dialog mfp-hide">
+            <div class="mfp-dialog-inner">
+                <h2 class="header-anim-dialog">
+                    <span class="pop-subject"> </span> Past Papers
+                    @if (Session["Loginid"] == null)
+                    {
+                        <a href="/Home/Login">Login to Download</a>
+                    }
+                    <span class="mfp-close"></span>
+                </h2>
+                <div class="pop-exam-checkAll">
+                    <div>
+                        <input type="checkbox" id="selall" name="selall">
+                        <label for="selall">Select all Past Papers</label>
+                    </div>
+                </div>
+                <div class="pop-exam-list" id="popupPaperList"> </div>
+                <div class="download-all-wrapper">
+                    <button class="btn-icon-effect-1 btn btn-outline btn-2 btn-tertiary mb-2" id="downloadAllBtn">
+                        <span class="wrap">
+                            <span>Download All</span>
+                            <i class="fas fa-download"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview pastpaper popup -->
+        <div class="modal popup-image-gallery" id="popup-image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="btn close-btn" title="Close" data-dismiss="modal" aria-label="Close">&#10006;<span></span></button>
+                        <div class="popup-slider-for" id="paperPreviewImages">
+                        </div>
+                        <h5 class="pagingInfo"></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div role="main" class="main bg-light-5">
+            <section class="page-header mb-0 parallax overlay overlay-color-dark overlay-show overlay-op-8 appear-animation" data-appear-animation="fadeIn" data-plugin-parallax data-plugin-options="{'speed': 1.5, 'parallaxHeight': '120%', 'offset': 60}" data-image-src="/Content/img/slides/multi-purpose/bg1.jpg">
+                <div class="container py-3 my-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="breadcrumb">
+                                <li><a href="/">Home</a></li>
+                                <li class="active">Past Paper Catalog</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="font-weight-bold text-color-light">Find Your Subjects</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="section pt-4 pb-5 paper-download">
+                <div class="container">
+
+                    <!-- Exam Language
+                <div class="home-language appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="200">
+                    <a href="javascript:void(0)" id="sinhalaTab" class="active">සිංහල</a>
+                    <a href="javascript:void(0)" id="englishTab" class="">English</a>
+                    <a href="javascript:void(0)" id="tamilTab" class="">தமிழ்</a>
+                </div>-->
+                    <!-- Examination Type
+                <div class="home-Examination-type appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                    <div class="row">
+                        <div class="col-sm-6"><a href="javascript:void(0)" id="olTab" class="active"><p></p><span>අ.පො.ස. සාමාන්‍ය පෙළ</span></a></div>
+                        <div class="col-sm-6"><a href="javascript:void(0)" id="alTab" class=""><p></p><span>අ.පො.ස. උසස් පෙළ</span></a></div>
+                    </div>
+                </div>-->
+                    <!-- Past papers -->
+                    <div class="appear-animation mt-4" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">
+                        <!-- Sinhala Past papers -->
+                        <div class="download-subjects-list Subjects-languageSinhala">
+                            <div id="sinhalaPapers" class="row">
+
+                            </div>
+                        </div>
+
+                        <!-- English Past papers -->
+                        <div class="download-subjects-list Subjects-languageEnglish">
+                            <div id="englishPapers" class="row">
+                            </div>
+                        </div>
+
+                        <!-- Tamil Past papers -->
+                        <div class="download-subjects-list Subjects-languageTamil">
+                            <div id="tamilPapers" class="row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past papers List -->
+            <div class="container pb-5 pastpaper-container" id="papersList"> </div>
+        </div>
+
+        <section class="section pt-5 pb-5 section-background section-height-3 call-to-action" data-plugin-image-background data-plugin-options="{'imageUrl': '/Content/img/parallax/parallax-1.jpg'}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 justify-content-center mb-1">
+                        <div class="call-to-action-content text-center appear-animation" data-appear-animation="fadeInLeftShorter">
+                            <h2 class="font-weight-normal text-color-light">We have more than 2500 exams to improve your skills</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 justify-content-center">
+                        <div class="call-to-action-btn text-center mt-3 appear-animation" data-appear-animation="fadeInRightShorter">
+                            <a href="/Home/Register" class="btn btn-light btn-rounded btn-tertiary btn-3 font-weight-semibold btn-h-5 btn-v-4">
+                                <span class="wrap">
+                                    <span>REGISTER</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact US - Footer -->
+        <footer id="footer" class="bg-light mt-0">
+            <div class="bg-light-5 footer-bg">
+                <div class="container pt-5 pb5">
+                    <div class="row">
+                        <div class="col-lg-5 mb-4 mb-lg-0">
+                            <a href="/Home" class="logo">
+                                <img alt="Logo" class="img-fluid mb-3" src="/Content/img/logo-small.png">
+                            </a>
+                            @*<p>Phasellus blandit massa enim. Nullam id varius nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc.</p>*@
+                            <ul class="social-icons social-icons-transparent social-icons-icon-light social-icons-lg">
+                                <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li class="social-icons-instagram"><a href="http://www.instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        @*<div class="col-lg-3 mb-4 mb-lg-0">
+                            <h2 class="text-3 mb-3">Workflow Solutions</h2>
+                            <ul class="list list-icon list-unstyled">
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Buy EZY Now</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Contact Us</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Hire Us</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Our Profile</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Get Support</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 mb-4 mb-lg-0">
+                            <h2 class="text-3 mb-3">Team Solutions</h2>
+                            <ul class="list list-icon list-unstyled">
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Buy EZY Now</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Contact Us</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Hire Us</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Our Profile</a></li>
+                                <li class="mb-2"><i class="fas fa-angle-right mr-2 ml-1"></i> <a href="#">Get Support</a></li>
+                            </ul>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="footer-copyright mt-0">
+                    <div class="container">
+                        <div class="align-items-center">
+                            <p class="text-md-right pb-0 mb-0">
+                                Copyrights © 2020 DIAPAMOCK. All Rights Reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+
+    <!-- Vendor -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/Content/vendor/common/common.min.js"></script>
+    <script src="~/Content/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="~/Content/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/slick.min.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/Content/js/theme.js"></script>
+
+    <!-- Current Page Vendor and Views -->
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="~/Content/js/theme.init.js"></script>
+
+    <!-- Logics & data passes to controller-->
+    <script src="~/SiteJs/index-page.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
+    <script src="~/SiteJs/view-all-page.js"></script>
+</body>
+</html>

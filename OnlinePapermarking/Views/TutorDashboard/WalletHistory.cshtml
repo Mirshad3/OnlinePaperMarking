@@ -1,0 +1,139 @@
+﻿@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "3")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@{
+    ViewBag.Title = "WalletHistory";
+    Layout = "~/Views/Shared/_mainPortalSideNavTutor.cshtml";
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<style>
+    .link-History {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-History i.ico-History {
+        background: url(../../Content/MainDashboard/img/navigation/ico-History-sel.png) no-repeat center left;
+    }
+</style>
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Wallet History</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/TutorDashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Wallet History</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body pt-1">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link font-size-14 active" data-toggle="tab" href="#home1" role="tab" aria-selected="false">
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">Pending to Recieve</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-size-14" data-toggle="tab" href="#profile1" role="tab" aria-selected="false">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block">Recieved</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content pt-4 text-muted">
+                        <div class="tab-pane active" id="home1" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Exam No</th>
+                                            <th>Paper Name</th>
+                                            <th>Marking Completed Date</th>
+                                            <th>Price</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="4" style="text-align:right">Total:</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="profile1" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table" id="recApprovedTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Exam No</th>
+                                            <th>Paper Name</th>
+                                            <th>Marking Completed Date</th>
+                                            <th>Paid Date</th>
+                                            <th>Price</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="5" style="text-align:right">Total:</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/tutor-wallet-history-page.js"></script>
+
+}
+

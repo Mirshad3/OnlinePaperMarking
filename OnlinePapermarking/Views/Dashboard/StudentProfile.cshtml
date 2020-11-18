@@ -1,0 +1,289 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "StudentProfile";
+    Layout = "~/Views/Shared/_mainPortalSideNav.cshtml";
+}
+
+<input type="hidden" id="loginId" value="@Session["LoginId"]" />
+<style>
+    .link-Profile {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-Profile i.ico-Profile {
+        background: url(../../Content/MainDashboard/img/navigation/ico-Profile-sel.png) no-repeat center left;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">Profile</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-widgets">
+
+                        <div class="text-center">
+                            <div class="avatar-upload">
+                                <div class="avatar-edit">
+                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                    <label for="imageUpload"></label>
+                                </div>
+                                <div class="avatar-preview">
+                                    <div id="imagePreview" style="background-image: url(/Dashboard/LoadProfileImage?LoginId=@Session["LoginId"]);">
+                                    </div>
+                                    @*<div id="imagePreview" src="/Dashboard/LoadProfileImage?LoginId=@Session["LoginId"]">
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <p class="text-dark font-weight-bold font-size-16 mb-2" id="pName">
+                                    @*Richard Jones Anderson*@
+                                </p>
+                                <p class="text-body mt-1 mb-1 lineheight-1-2" id="pSchool">
+                                    @*Thurstan College, Colombo 03<br /> Colombo District*@
+                                </p>
+                            </div>
+
+                            <div class="row mt-4 border-top pt-2 pb-2">
+                                <div class="col-sm-6">
+                                    <h6 class="text-muted mb-1">
+                                        Completed Exams
+                                    </h6>
+                                    <h5 class="mb-0" id="headerCompletedExams">0</h5>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="text-muted mb-1">
+                                        Pending Exams
+                                    </h6>
+                                    <h5 class="mb-0" id="headerPendingExams">0</h5>
+                                </div>
+                            </div>
+                            <div class="border-top pt-3">
+                                <h5 class="" id="headerProfileCompletion"></h5>
+                                <div class="progress" id="divProgressBar">
+                                    @*<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Personal Details</h4>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group pb-1">
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="StudentFirstName" placeholder="Enter First name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-1">
+                                <label for="firstname">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="StudentLastName" placeholder="Enter Lirst name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-1">
+                                <label for="firstname">Birthday </label>
+                                <input type="date" class="form-control" id="birthDay" name="DateOfBirth" placeholder="School">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group pb-1">
+                                <label for="firstname">Address </label>
+                                <input type="text" class="form-control" id="address" name="AddressLine1" placeholder="Enter Address">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstname">Mobile number </label>
+                                <input type="text" class="form-control" id="mobileNo" name="ContactNo1" placeholder="Enter Mobile number ">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label for="firstname">Email address</label>
+                                <input type="text" class="form-control" id="email" name="Email" placeholder="Enter Email address" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <a class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" id="btnPersonalInfo" style="color:whitesmoke">Submit Details</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Exam Type and Year</h4>
+                    <div class="form-group">
+                        <label for="firstname">Examination</label>
+                        <select class="form-control" id="examType">
+                            <option value="1">Ordinary Level</option>
+                            <option value="2">Advanced Level</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label for="firstname">Exam Year</label>
+                        <input type="number" class="form-control" id="examYear" placeholder="Enter Exam Year">
+                    </div>
+                    <div class="text-right mt-3">
+                        <a class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" style="color:whitesmoke" id="btnExamType">Submit Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">School Details</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstname">School</label>
+                                <input type="text" class="form-control" id="school" placeholder="School">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="medium">Medium</label>
+                                <select class="form-control" id="medium">
+                                    <option value="">---Select---</option>
+                                    @foreach (Medium mediums in Model.Mediums)
+                                    {
+                                        <option value="@mediums.MediumID">@mediums.Description</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="district">District</label>
+                                <select class="form-control" id="district">
+                                    <option value="">---Select---</option>
+                                    @foreach (District district in Model.Districts)
+                                    {
+                                        <option value="@district.DistrictID">@district.DistrictName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="province">Province</label>
+                                <select class="form-control" id="province">
+                                    <option value="">---Select---</option>
+                                    @foreach (Province province in Model.Provinces)
+                                    {
+                                        <option value="@province.ProvinceID">@province.ProvinceName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <a class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" id="btnSchoolInfo" style="color:whitesmoke">Submit Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- End Page-content -->
+
+@section scripts{
+
+    <script src="~/SiteJs/student-profile-page.js"></script>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageUpload").change(function () {
+            readURL(this);
+
+            var fileUpload = $("#imageUpload").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            fileData.append("LoginId", $("#loginId").val());
+
+            $.ajax({
+                type: "Post",
+                url: "/Dashboard/SaveUserProfileImage",
+                contentType: false,
+                processData: false,
+                data: fileData,
+                success: function (result) {
+                    if (result.success) {
+                        Notification("Success", "Submitted Successfully", "success");
+                    } else {
+                        Notification("Error", result.message, "danger");
+                    }
+                }
+            })
+        });
+    </script>
+}

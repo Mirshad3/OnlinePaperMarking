@@ -1,0 +1,254 @@
+﻿@using OnlinePapermarking.Models;
+@model dynamic
+
+@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "Papers";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+<style>
+    .sidebar[data-color="blue"] .nav li.nav-Paper > a:not([data-toggle="collapse"]),
+    .off-canvas-sidebar[data-color="blue"] .nav li.nav-Paper > a:not([data-toggle="collapse"]),
+    .nav li.nav-Paper i {
+        color: #0a4b7a;
+    }
+
+    .sidebar .nav li.nav-Paper > a,
+    .off-canvas-sidebar .nav li.nav-Paper > a {
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+<input type="hidden" id="hiddenPaperId" />
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <form id="RegisterValidation" action="" novalidate="novalidate">
+        <div class="card ">
+            <div class="card-header ">
+                <h5 class="title">Add New Paper</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Exam Type
+                            </label>
+                            <select class="form-control" id="cmbExamType">
+                                @foreach (ExamType exmtype in Model.ExamTypes)
+                                {
+                                    <option value="@exmtype.ExamTypeID">@exmtype.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Medium
+                            </label>
+                            <select class="form-control" id="cmbMedium">
+                                @foreach (Medium mediums in Model.Mediums)
+                                {
+                                    <option value="@mediums.MediumID">@mediums.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Subject
+                            </label>
+                            <select class="form-control" id="cmbSubject">
+                                @foreach (Subject subject in Model.Subjects)
+                                {
+                                    <option value="@subject.SubjectID">@subject.Description</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Paper Name
+                            </label>
+                            <input class="form-control" name="" id="txtPaperName" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Year
+                            </label>
+                            <input class="form-control" name="" id="txtYear" type="number" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Preview Image
+                            </label>
+                            <input class="form-control" name="PreviewImage" id="previewImage" type="file" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Paper(pdf file)
+                            </label>
+                            <input class="form-control" name="PaperPdf" id="paperPdf" type="file" accept=".pdf" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Marking Scheme(pdf file)
+                            </label>
+                            <input class="form-control" name="MarkingScheme" id="markingScheme" type="file" accept=".pdf" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Map Image
+                            </label>
+                            <input class="form-control" name="MapImage" id="mapImage" type="file" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                First Paper Time(Minutes)
+                            </label>
+                            <input class="form-control" name="" id="txtFirstPaperTime" type="number" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Second Paper Time(Minutes)
+                            </label>
+                            <input class="form-control" name="" id="txtSecondPaperTime" type="number" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-label">
+                            <label>
+                                Third Paper Time(Minutes)
+                            </label>
+                            <input class="form-control" name="" id="txtThirdPaperTime" type="number" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="optionCheckboxes1" id="cbHaveMcq" required="">
+                                <span class="form-check-sign"></span>
+                                Have Mcq
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="optionCheckboxes2" id="cbHasMap" required="">
+                                <span class="form-check-sign"></span>
+                                Has Map
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="optionCheckboxes4" id="cbHasThirdPaper" required="">
+                                <span class="form-check-sign"></span>
+                                Has Third Paper
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="optionCheckboxes3" id="cbIsOnlineExam" required="">
+                                <span class="form-check-sign"></span>
+                                Is Onlie Exam
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <div class="form-check pull-left p0">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="optionCheckboxes" id="cbIsActive" required="" checked>
+                        <span class="form-check-sign"></span>
+                        Active
+                    </label>
+                </div>
+                <button type="button" class="btn btn-outline-danger mr-10" id="cancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="title">Papers</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="paperTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Paper Name</th>
+                            <th>Exam Type</th>
+                            <th>Medium</th>
+                            <th>Subject</th>
+                            <th>Year</th>
+                            <th>Preview Image</th>
+                            <th>Paper(Pdf)</th>
+                            <th>Marking Scheme</th>
+                            <th>Map Image</th>
+                            <th>First Paper Time</th>
+                            <th>Second Paper Time</th>
+                            <th>Third Paper Time</th>
+                            <th>Have Mcq</th>
+                            <th>Has Map</th>
+                            <th>Has Third Paper</th>
+                            <th>Is Online Exam</th>
+                            <th>Active</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <!--Datatable Plugin-->
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/SiteJs/papers-page.js"></script>
+
+    <script src="https://use.fontawesome.com/900c620bd0.js"></script>
+}
+

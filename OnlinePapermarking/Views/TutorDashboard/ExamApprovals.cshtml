@@ -1,0 +1,310 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "3")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+
+@{
+    Layout = "~/Views/Shared/_mainPortalSideNavTutor.cshtml";
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<input type="hidden" value="" id="examId" />
+<style>
+    .link-exams {
+        color: #187FB5 !important;
+        border-left: 2px solid #187FB5;
+    }
+
+    #sidebar-menu ul li a.link-exams i.ico-exams {
+        background: url(../../Content/MainDashboard/img/navigation/ico-exams-sel.png) no-repeat center left;
+    }
+</style>
+<div class="page-content">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title mb-0 font-size-18">My Exam Portal</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/TutorDashboard/Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">My Exam Portal</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body pt-1">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link font-size-14 active" data-toggle="tab" href="#home1" role="tab" aria-selected="false">
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">Pending</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-size-14" data-toggle="tab" href="#profile1" role="tab" aria-selected="false">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block">Approved</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-size-14" data-toggle="tab" href="#messages1" role="tab" aria-selected="false">
+                                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                <span class="d-none d-sm-block">Completed</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content pt-4 text-muted">
+                        <div class="tab-pane active" id="home1" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ExamNo</th>
+                                            <th>Student Name</th>
+                                            <th>ExamType</th>
+                                            <th>Subject</th>
+                                            <th>Medium</th>
+                                            <th>Year</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="profile1" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table" id="recApprovedTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ExamNo</th>
+                                            <th>Student Name</th>
+                                            <th>ExamType</th>
+                                            <th>Subject</th>
+                                            <th>Medium</th>
+                                            <th>Year</th>
+                                            <th>Approved Date</th>
+                                            <th>Deadline</th>
+                                            <th>Paper 1#</th>
+                                            <th>Paper 2#</th>
+                                            <th>Map</th>
+                                            <th>Marking Scheme</th>
+                                            <th>Upload Answers</th>
+                                            <th>Complete Marking</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="messages1" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table" id="recCompletedTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ExamNo</th>
+                                            <th>Student Name</th>
+                                            <th>ExamType</th>
+                                            <th>Subject</th>
+                                            <th>Medium</th>
+                                            <th>Year</th>
+                                            <th>Approved Date</th>
+                                            <th>Deadline Date</th>
+                                            <th>Completed Date</th>
+                                            <th>Paper 1#</th>
+                                            <th>Paper 2#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade upload-modal-lg" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radio1stPaper" value="1">
+                        <label class="form-check-label" for="radio1stPaper">1st Paper</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radio2ndPaper" value="2">
+                        <label class="form-check-label" for="radio2ndPaper">2nd Paper</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="lblMarks"></label>
+                    <div class="input-group">
+                        <input type="number" id="numMarks" value="0" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Upload File</label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" readonly="">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Browse<input type="file" accept="image/*" id="imgInp" size="5" multiple>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+                                <button type="button" class="btn btn-info radius-4 font-weight-medium waves-effect waves-light w-100" id="popupSaveBtn">View Previous Uploads</button>
+                            </div>*@
+                    </div>
+
+                    @*<img id="img-upload">*@
+                    @*<div class="gallery"></div>*@
+                </div>
+                <div class="form-group">
+                    <label for="firstname" class="active">Comments</label>
+                    <textarea class="form-control" id="tbComments" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" id="popupSaveBtn">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- Complete confirmation modal -->
+<div class="modal fade complete-confirmation-modal" id="completeConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Whould you like to complete this exam?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" id="popupConfirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade view-paper2" id="testname" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-toggle="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="headerPaper2Name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<button class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium w-100" id="downloadBtn">Download Results</button>*@
+                <button class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium w-100 mb-2" onclick="ViewMyAnswers()">View My Answers</button>
+                <button class="btn btn-outline-success waves-effect waves-light radius-4 font-weight-medium w-100" onclick="ViewStudentUploads()">View Student Uploads</button>
+                <div class="form-group mt-4">
+                    <label for="firstname" class="active">Comments</label>
+                    <textarea class="form-control" rows="6" id="txtAreaPaper2Comment" readonly></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade view-pape1" id="testname" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-toggle="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="headerPaper1Name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<button class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium w-100" id="downloadBtn">Download Results</button>*@
+                <button class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium w-100 mb-2" onclick="ViewMyAnswersForFirstPaper()">View My Uploads</button>
+                <button class="btn btn-outline-success waves-effect waves-light radius-4 font-weight-medium w-100" onclick="ViewStudentUploadsForFirstPaper()">View Student Uploads</button>
+                <div class="form-group mt-4">
+                    <label for="firstname" class="active">Comments</label>
+                    <textarea class="form-control" rows="6" id="txtAreaPaper1Comment" readonly></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
+    <script src="~/SiteJs/tutor-exam-approval-page.js"></script>
+
+    <script>
+        var url = '@Url.Action("SecondPaperCorrections", "TutorDashboard")';
+        var url2 = '@Url.Action("FirstPaperCorrections", "TutorDashboard")';
+    </script>
+
+}
+

@@ -1,0 +1,218 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "1")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    ViewBag.Title = "LecturePayments";
+    Layout = "~/Views/Shared/_adminPanelSideNav.cshtml";
+}
+
+<style>
+    .sidebar[data-color="blue"] .nav li.nav-Tutor > a:not([data-toggle="collapse"]),
+    .off-canvas-sidebar[data-color="blue"] .nav li.nav-Tutor > a:not([data-toggle="collapse"]),
+    .nav li.nav-Tutor i {
+        color: #0a4b7a;
+    }
+
+    .sidebar .nav li.nav-Tutor > a,
+    .off-canvas-sidebar .nav li.nav-Tutor > a {
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    }
+</style>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+
+<input type="hidden" value="@Session["LoginId"]" id="loginId" />
+<input type="hidden" value="" id="examId" />
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Lecture Payments</h5>
+            </div>
+            <div class="card-body">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link font-size-14 active" data-toggle="tab" href="#home1" role="tab" aria-selected="false">
+                            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                            <span class="d-none d-sm-block">Pending To Pay</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-size-14" data-toggle="tab" href="#profile1" role="tab" aria-selected="false">
+                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                            <span class="d-none d-sm-block">Paid</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content pt-4 text-muted">
+                    <div class="tab-pane active" id="home1" role="tabpanel">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-label">
+                                    <label>
+                                        From
+                                    </label>
+                                    <input class="form-control" name="" id="dpPendingFromDate" type="date" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-label">
+                                    <label>
+                                        To
+                                    </label>
+                                    <input class="form-control" name="" id="dpPendingToDate" type="date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary" id="searchPendingBtn">Search</button>
+                        </div>
+
+                        <hr />
+                        <div class="table-responsive mt-4 pt-4">
+                            <table class="table" id="recPendingTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ExamNo</th>
+                                        <th>Completed Date</th>
+                                        <th>Tutor Name</th>
+                                        <th>Email</th>
+                                        <th>Paper Name</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="7" style="text-align:right">Total:</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <button type="button" class="btn btn-info" id="submitBtn">Paid</button>
+                    </div>
+                    <div class="tab-pane" id="profile1" role="tabpanel">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-label">
+                                    <label>
+                                        From
+                                    </label>
+                                    <input class="form-control" name="" id="dpPaidFromDate" type="date" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-label">
+                                    <label>
+                                        To
+                                    </label>
+                                    <input class="form-control" name="" id="dpPaidToDate" type="date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary" id="searchPaidBtn">Search</button>
+                        </div>
+
+                        <hr />
+
+                        <div class="table-responsive mt-4 pt-4">
+                            <table class="table" id="recApprovedTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ExamNo</th>
+                                        <th>Completed Date</th>
+                                        <th>Tutor Name</th>
+                                        <th>Email</th>
+                                        <th>Paper Name</th>
+                                        <th>Paid Date</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="7" style="text-align:right">Total:</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade upload-modal-lg" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">Assign Tutor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tutor</label>
+                    <div class="input-group">
+                        <select id="cmbTutors" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="firstname" class="active">Comments</label>
+                    <textarea class="form-control" id="tbComments" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary radius-4 font-weight-medium waves-effect waves-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary radius-4 font-weight-medium waves-effect waves-light" id="popupSaveBtn">Assign</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section scripts{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+
+    <script src="~/SiteJs/lecture-payments-page.js"></script>
+
+}
+

@@ -1,0 +1,1002 @@
+﻿@if (Session["LoginId"] == null)
+{
+    Layout = null;
+    @Html.Action("CheckCookies", "Home");
+
+}
+
+@if (Session["SecondPaperExamId"] == null)
+{
+    Layout = null;
+    @Html.Action("RedirectToExamPage", "Dashboard");
+
+}
+
+@if (Session["UserRoleId"] != null)
+{
+    if (Session["UserRoleId"].ToString() != "2")
+    {
+        Layout = null;
+        @Html.Action("ReturnToHome", "Home");
+    }
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Disapamock - Upload Paper</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Responsive HTML5 Template">
+    <meta name="author" content="Disapamock">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/MainDashboard/vendor/font-awesome/css/fontawesome-all.min.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="~/Content/MainDashboard/css/custom.css">
+
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+    <style>
+        .thank-you-pop {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .thank-you-pop img {
+                width: 76px;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+                margin-bottom: 25px;
+            }
+
+            .thank-you-pop h1 {
+                font-size: 42px;
+                margin-bottom: 25px;
+                color: #5C5C5C;
+            }
+
+            .thank-you-pop p {
+                font-size: 20px;
+                margin-bottom: 27px;
+                color: #5C5C5C;
+            }
+
+            .thank-you-pop h3.cupon-pop {
+                font-size: 25px;
+                margin-bottom: 40px;
+                color: #222;
+                display: inline-block;
+                text-align: center;
+                padding: 10px 20px;
+                border: 2px dashed #222;
+                clear: both;
+                font-weight: normal;
+            }
+
+                .thank-you-pop h3.cupon-pop span {
+                    color: #03A9F4;
+                }
+
+            .thank-you-pop a {
+                display: inline-block;
+                margin: 0 auto;
+                padding: 9px 20px;
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 14px;
+                background-color: #8BC34A;
+                border-radius: 17px;
+            }
+
+                .thank-you-pop a i {
+                    margin-right: 5px;
+                    color: #fff;
+                }
+
+        #ignismyModal .modal-header {
+            border: 0px;
+        }
+    </style>
+
+</head>
+<body data-layout="detached" data-topbar="colored" class="vertical-hidden">
+
+    <input type="hidden" value="@Session["LoginId"]" id="loginId" />
+    <input type="hidden" value="@Session["SecondPaperExamId"]" id="examId" />
+    <input type="hidden" value="" id="isRedirect" />
+
+    <div class="container-fluid">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="container-fluid">
+                        <div class="float-right">
+
+                            <!-- Mobile Search -->
+                            <div class="dropdown d-inline-block d-lg-none ml-2 wr-mobile-search">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
+
+                                    <form class="p-3">
+                                        <div class="form-group m-0">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary mobile-search-btn" type="submit"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- CART -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-cart-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">5</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-cart-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="badge badge-danger badge-pill">3</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-notifications-dropdown">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#!" class="small"> View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-simplebar="init" style="max-height: 230px;">
+                                        <div class="simplebar-wrapper" style="margin: 0px;">
+                                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                    <div class="simplebar-content-wrapper">
+                                                        <div class="simplebar-content" style="padding: 0px;">
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                                            <i class="bx bx-cart"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">James Lemire</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">It will seem like simplified English.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <div class="avatar-xs mr-3">
+                                                                        <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                                            <i class="bx bx-badge-check"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">If several languages coalesce the grammar</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="" class="text-reset notification-item">
+                                                                <div class="media">
+                                                                    <img src="~/Content/MainDashboard/img/avatar.png" class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                                                                    <div class="media-body">
+                                                                        <h6 class="mt-0 mb-1">Salena Layfield</h6>
+                                                                        <div class="font-size-12 text-muted">
+                                                                            <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
+                                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><div class="simplebar-placeholder" style="width: 0px; height: 390px;"></div>
+                                        </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div>
+                                    </div>
+                                    <div class="p-2 border-top">
+                                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                            <i class="mdi mdi-arrow-right-circle mr-1"></i> View More..
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- User Profile -->
+                            <div class="dropdown d-inline-block">
+                                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img class="rounded-circle header-profile-user" src="/Dashboard/LoadProfileImage?LoginId=@Session["LoginId"]" alt="Header Avatar">
+                                    <span class="d-none d-xl-inline-block ml-1">@Session["FirstName"]</span>
+                                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- item-->
+                                    <a class="dropdown-item font-size-13" href="/Dashboard/Dashboard">Dashboard</a>
+                                    <a class="dropdown-item font-size-13" href="#">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger font-size-13" href="/Home/LogOut">Logout</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- LOGO -->
+                            <div class="navbar-brand-box">
+                                <a href="#" class="logo logo-light">
+                                    <span class="logo-sm">
+                                        <img src="~/Content/img/logo-small.png" alt="disapamock">
+                                    </span>
+                                    <span class="logo-lg">
+                                        <img src="~/Content/img/logo-colored.png" alt="disapamock">
+                                    </span>
+                                </a>
+                            </div>
+
+                            <button type="button" class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect" id="vertical-menu-btn">
+                                <i class="fa fa-fw fa-bars"></i>
+                            </button>
+
+                            <!-- Desktop Search-->
+                            <form class="app-search d-none d-lg-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control font-size-13" placeholder="Search...">
+                                    <span class="bx bx-search-alt"></span>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </header> <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+                <div class="h-100">
+                    <div class="user-wid text-center py-4">
+                        <div class="user-img">
+                            <img src="~/Content/MainDashboard/img/avatar.png" alt="" class="avatar-md mx-auto rounded-circle">
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="text-dark font-weight-bold font-size-14">Richard Jones Anderson</a>
+                            <p class="text-body text-center mt-2 mb-0 ml-3 mr-3 font-size-11 lineheight-1-5">
+                                Thurstan College, Colombo 03
+                                Colombo District
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider ml-3 mr-3 mb-4"></div>
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu" class="mm-active">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled mm-show" id="side-menu">
+                            <li>
+                                <a href="#" class="waves-effect">
+                                    <i class="ico-dashboard"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-exams"></i>
+                                    <span>Exams</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Performance"></i>
+                                    <span>Performance</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Wishlist"></i>
+                                    <span>Wishlist</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Services"></i>
+                                    <span>Services</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-History"></i>
+                                    <span>History</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-myCart"></i>
+                                    <span>My Cart</span>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="dropdown-divider m-3"></div>
+                            </li>
+                            <li>
+                                <a href="#" class="waves-effect active">
+                                    <i class="ico-Profile"></i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-HelpCenter"></i>
+                                    <span>Help Center</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class=" waves-effect">
+                                    <i class="ico-Signout"></i>
+                                    <span>Signout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="page-title mb-0 font-size-18" id="headerPaperName">@Session["SecondPaperName"]</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <table class="wr-upload-paper-main-tbl">
+                        <tr>
+                            <td>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">Exam paper</h4>
+                                        <div class="wr-paper-preview">
+                                            <div style="text-align:center">
+                                                <iframe src="/Exam/GetSecondPaper" frameborder="0" height="750px" width="100%"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="card-title upload-contdown-status mb-4">
+                                            Status - <p id="cd_status">Not Started</p>
+                                        </h4>
+                                        <h1 class="text-center display-4 final-countdown-start">
+                                            <span id="cd_h">00</span>: <span id="cd_m">00</span>: <span id="cd_s">00</span>
+                                        </h1>
+                                        <h1 class="text-center display-4 final-countdown-upload" style="display:none;">
+                                            00: <p id="inner-countdown"></p>
+                                        </h1>
+                                        <a href="javascript:void(0)" id="cd_start" class="w-100 btn btn-info waves-effect waves-light radius-4 font-weight-medium mt-3">Click This to Start Timer</a>
+
+
+                                        <!-- Set TIME -->
+                                        <input type="text" hidden value="120" id="cd_seconds" />
+
+
+                                        <div class="upload-main-card" style="display:none;">
+                                            <button type="button" id="cd_pause" class="w-100 btn btn-primary waves-effect waves-light radius-4 font-weight-medium mt-3" data-toggle="modal" data-target=".bs-example-modal-center" data-backdrop="static" data-keyboard="false">Submit Answers</button>
+                                        </div>
+                                        <div class="paper-upload-section" style="display:none;">
+                                            <div class="form-group mt-4">
+                                                <label>Upload Paper</label>
+                                                <div class="input-group">
+                                                    <input type="file" accept="image/*" class="form-control" id="imgInp" multiple>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="w-100 btn btn-primary waves-effect waves-light radius-4 font-weight-medium mt-1" id="btnUpload">Upload Answers</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (Convert.ToBoolean(Session["HasMap"]) == true)
+                                {
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <h4 class="card-title mb-3">
+                                                Mark on Map
+                                            </h4>
+                                            <button type="button" class="w-100 btn btn-success waves-effect waves-light radius-4 font-weight-medium" id="goToMapBtn">Go to Map</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!-- End Page-content -->
+
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+    </div>
+
+    <a class="btn btn-primary" data-toggle="modal" href="#ignismyModal" id="popunBtn" style="display:none">open Popup</a>
+    <!-- modal -->
+    <div class="modal fade" id="ignismyModal" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+
+                <div class="modal-body">
+                    <div class="thank-you-pop">
+                        <img src="~/Images/green_check.png" alt="">
+                        <h1>Success!</h1>
+                        <p id="modalP"></p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modalOkBtn" data-dismiss="modal">Ok</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Finish exam popup -->
+    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Submit Confirmation</h5>
+                </div>
+                <div class="modal-body">
+                    <h6 class="lineheight-1-5 mb-4">
+                        If you have not completed answering the paper please click the Continue Answering button and resume the exam from where you stopped.
+                    </h6>
+                    <h6 class="lineheight-1-5">
+                        By clicking upload answers you confirm to have completed the exam and you will be given 30 minutes up upload your final answers.
+                    </h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium timerResume" data-dismiss="modal">Continue Answering</button>
+                    <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium exam-over" id="cd_stop" data-dismiss="modal" data-toggle="modal">Upload Answers</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time is up popup -->
+    <button type="button" class="time-up-click d-none" data-toggle="modal" data-target=".time-up-modal" data-backdrop="static" data-keyboard="false"></button>
+    <div class="modal fade time-up-modal" id="testname" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-toggle="modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Time is up!</h5>
+                </div>
+                <div class="modal-body">
+                    <h6 class="lineheight-1-5 mb-4">
+                        If you have not completed answering the paper please click the Continue Answering button and resume the exam from where you stopped you will be given 30 minutes up upload your final answers.
+                    </h6>
+                    <h6 class="lineheight-1-5">
+                        Exam Time is up! You will be given 30 minutes up upload your final answers.
+                    </h6>
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-success waves-effect waves-light radius-4 font-weight-medium exam-over" data-dismiss="modal">Continue Answering</button>*@
+                    <button type="button" class="btn btn-outline-primary waves-effect waves-light radius-4 font-weight-medium exam-over" data-dismiss="modal">Upload Answers</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive" style="display:none">
+        <table class="table" id="errorTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ExamNo</th>
+                    <th>Student Name</th>
+                    <th>ExamType</th>
+                    <th>Subject</th>
+                    <th>Medium</th>
+                    <th>Year</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Vendor -->
+    <script src="~/Content/MainDashboard/js/jquery.js"></script>
+    <script src="~/Content/MainDashboard/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/MainDashboard/js/app.js"></script>
+    <script src="~/Content/MainDashboard/js/materialize.min.js"></script>
+
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        //disable cut/copy/rightclick
+        $(function () {
+            $(this).bind("contextmenu", function (e) {
+                e.preventDefault();
+            });
+
+            $(this).bind('cut copy', function (e) {
+                e.preventDefault();
+            });
+        });
+
+
+        //PDF Height
+        //var winHeight = jQuery(window).height() - 300;
+        //$('.wr-paper-preview iframe').css({ "height": winHeight + "px" });
+
+
+        //Exam Completed - use this function incase the user refresh the browser
+        function examCompleted() {
+            $('.upload-main-card, .final-countdown-start').hide(0);
+            $('.paper-upload-section').slideDown();
+            $('.final-countdown-upload').show();
+
+            //Increace the time here (Minutes , Seconds)
+            countdown("inner-countdown", 30, 0);
+        }
+        $(".exam-over").click(function () {
+            examCompleted();
+        });
+
+
+        //30 Min Countdown
+        function countdown(elementName, minutes, seconds) {
+            var element, endTime, hours, mins, msLeft, time;
+
+            function twoDigits(n) {
+                return (n <= 9 ? "0" + n : n);
+            }
+
+            function updateTimer() {
+                msLeft = endTime - (+new Date);
+                if (msLeft < 1000) {
+                    element.innerHTML = "Time is up!";
+                    $('.final-countdown-upload').html('<span>Time is up!</span>');
+                    $('.final-countdown-upload').addClass('red');
+
+                } else {
+                    time = new Date(msLeft);
+                    hours = time.getUTCHours();
+                    mins = time.getUTCMinutes();
+                    element.innerHTML = (hours ? hours + ': ' + twoDigits(mins) : mins) + ': ' + twoDigits(time.getUTCSeconds());
+                    setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+                }
+            }
+
+            element = document.getElementById(elementName);
+            endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
+            updateTimer();
+        }
+
+        //MAIN COUNTDOWN
+        $(document).ready(function () {
+
+            var timeCount = 0;
+
+            (function ($) {
+
+                $.extend({
+
+                    APP: {
+
+                        formatTimer: function (a) {
+                            if (a < 10) {
+                                a = '0' + a;
+                            }
+                            return a;
+                        },
+
+                        startTimer: function (dir) {
+
+                            var a;
+
+                            // save type
+                            $.APP.dir = dir;
+
+                            // get current date
+                            $.APP.d1 = new Date();
+
+                            switch ($.APP.state) {
+
+                                case 'pause':
+
+                                    // resume timer
+                                    // get current timestamp (for calculations) and
+                                    // substract time difference between pause and now
+                                    $.APP.t1 = $.APP.d1.getTime() - $.APP.td;
+
+                                    break;
+
+                                default:
+
+                                    // get current timestamp (for calculations)
+                                    $.APP.t1 = $.APP.d1.getTime();
+
+                                    // if countdown add ms based on seconds in textfield
+                                    if ($.APP.dir === 'cd') {
+                                        $.APP.t1 += parseInt($('#cd_seconds').val()) * 60000;
+                                    }
+
+                                    break;
+
+                            }
+
+                            // reset state
+                            $.APP.state = 'alive';
+                            $('#' + $.APP.dir + '_status').html('In-progress');
+
+                            // start loop
+                            $.APP.loopTimer();
+
+                        },
+
+                        pauseTimer: function () {
+
+                            // save timestamp of pause
+                            $.APP.dp = new Date();
+                            $.APP.tp = $.APP.dp.getTime();
+
+                            // save elapsed time (until pause)
+                            $.APP.td = $.APP.tp - $.APP.t1;
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Resume');
+
+                            // set state
+                            $.APP.state = 'pause';
+                            $('#' + $.APP.dir + '_status').html('Paused');
+
+                        },
+
+                        stopTimer: function () {
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Restart');
+
+                            // set state
+                            $.APP.state = 'stop';
+                            $('#' + $.APP.dir + '_status').html('Upload Answers');
+
+                        },
+
+                        resetTimer: function () {
+
+                            // reset display
+                            $('#' + $.APP.dir + '_ms,#' + $.APP.dir + '_s,#' + $.APP.dir + '_m,#' + $.APP.dir + '_h').html('00');
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Start');
+
+                            // set state
+                            $.APP.state = 'reset';
+                            $('#' + $.APP.dir + '_status').html('Not Started');
+
+                        },
+
+                        endTimer: function (callback) {
+
+                            // change button value
+                            $('#' + $.APP.dir + '_start').val('Restart');
+
+                            // set state
+                            $.APP.state = 'end';
+
+                            // invoke callback
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
+
+                        },
+
+                        loopTimer: function () {
+
+                            var td;
+                            var d2, t2;
+
+                            var ms = 0;
+                            var s = 0;
+                            var m = 0;
+                            var h = 0;
+
+                            if ($.APP.state === 'alive') {
+
+                                // get current date and convert it into
+                                // timestamp for calculations
+                                d2 = new Date();
+                                t2 = d2.getTime();
+
+                                // calculate time difference between
+                                // initial and current timestamp
+                                if ($.APP.dir === 'sw') {
+                                    td = t2 - $.APP.t1;
+                                    // reversed if countdown
+                                } else {
+                                    td = $.APP.t1 - t2;
+                                    if (td <= 0) {
+                                        // if time difference is 0 end countdown
+                                        $.APP.endTimer(function () {
+                                            $.APP.resetTimer();
+                                            $('#' + $.APP.dir + '_status').html('Time is Up!');
+                                            $(".time-up-click").trigger("click");
+                                            $('.final-countdown-start').addClass('countdown-red');
+                                        });
+                                    }
+                                }
+
+                                // calculate milliseconds
+                                ms = td % 1000;
+                                if (ms < 1) {
+                                    ms = 0;
+                                } else {
+                                    // calculate seconds
+                                    s = (td - ms) / 1000;
+                                    if (s < 1) {
+                                        s = 0;
+                                    } else {
+                                        // calculate minutes
+                                        var m = (s - (s % 60)) / 60;
+                                        if (m < 1) {
+                                            m = 0;
+                                        } else {
+                                            // calculate hours
+                                            var h = (m - (m % 60)) / 60;
+                                            if (h < 1) {
+                                                h = 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // substract elapsed minutes & hours
+                                ms = Math.round(ms / 100);
+                                s = s - (m * 60);
+                                m = m - (h * 60);
+
+                                // update display
+                                $('#' + $.APP.dir + '_ms').html($.APP.formatTimer(ms));
+                                $('#' + $.APP.dir + '_s').html($.APP.formatTimer(s));
+                                $('#' + $.APP.dir + '_m').html($.APP.formatTimer(m));
+                                $('#' + $.APP.dir + '_h').html($.APP.formatTimer(h));
+
+                                timeCount = timeCount + 1;
+
+                                if (timeCount === 3000) {
+                                    $.ajax({
+                                        type: "Post",
+                                        url: "/Exam/UpdateSecondPaperUsedTime?ExamId=" + $('#examId').val() + "&Hours=" + h + "&Minuites=" + m,
+                                        success: function (result) {
+
+                                        }
+                                    })
+
+                                    timeCount = 0
+                                }
+
+                                // loop
+                                $.APP.t = setTimeout($.APP.loopTimer, 1);
+
+                            } else {
+
+                                // kill loop
+                                clearTimeout($.APP.t);
+                                return true;
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+                $('#cd_start').click(function () {
+                    $(this).hide();
+                    $('.upload-main-card').slideDown();
+                    $.APP.startTimer('cd');
+                });
+                $('.timerResume').click(function () {
+                    $.APP.startTimer('cd');
+                });
+
+                $('#sw_stop,#cd_stop').click(function () {
+                    $.APP.stopTimer();
+                });
+
+                $('#sw_pause,#cd_pause').click(function () {
+                    $.APP.pauseTimer();
+                });
+
+
+
+
+            })(jQuery);
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        var areYouReallySure = false;
+        function areYouSure() {
+            if (allowPrompt) {
+                if (!areYouReallySure && true) {
+                    areYouReallySure = true;
+                    var confMessage = "***************************************\n\n W A I T !!! \n\nBefore leaving our site, follow CodexWorld for getting regular updates on Programming and Web Development.\n\n\nCLICK THE *CANCEL* BUTTON RIGHT NOW\n\n***************************************";
+                    return confMessage;
+                }
+            } else {
+                allowPrompt = true;
+            }
+        }
+
+        var allowPrompt = true;
+        window.onbeforeunload = areYouSure;
+    </script>
+
+    <script src="~/SiteJs/second-paper-exam-page.js"></script>
+</body>
+</html>
